@@ -1,0 +1,351 @@
+\documentclass[10pt,letterpaper]{article}
+\usepackage[english]{babel}
+\usepackage{graphicx}
+\usepackage[margin=2cm]{geometry}
+
+\usepackage{subcaption}
+\usepackage{mathtools}
+\usepackage{amsfonts}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\newcommand{\dif}[1][]{\mathrm{d} {#1}\,}
+\newcommand{\rb}[1]{ \left(  {#1} \right) }
+\newcommand{\frb}[1]{ \left(  {#1} \right) }
+
+% \usepackage[amsmath,thmmarks,standard]{ntheorem}
+\newtheoremstyle{break}
+{\topsep}
+{\topsep}%
+{\normalfont}
+{}%
+{\bfseries}
+{}%
+{\newline}
+{}%
+\theoremstyle{break}
+\newtheorem{exercise}{Exercise}
+\newtheorem*{information}{Information}
+\newtheorem{solution}{Solution}
+\newtheorem*{solutioninformation}{Solution Information}
+
+\begin{document}
+
+\title{}
+\date{}
+
+\maketitle
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+\begin{exercise}[Total Variation of Rarefaction wave]
+    Consider the rarefaction wave 
+    \begin{align}
+     u(x,t)
+     = 
+     \left\{
+     \begin{array}{ll}
+        u_l & x < f'(u_l) t,
+        \\
+        \frac 1 2 \frac x t & f'(u_l)t < x < f'(u_r)t,
+        \\
+        u_r & f'(u_r)t < x.
+     \end{array}
+     \right.
+    \end{align}
+    This solves Burgers' equation ($f(u)=u^2$) with initial data 
+    \begin{align}
+     u_{0}(x)
+     = 
+     \left\{
+     \begin{array}{cc}
+        u_l & x < 0,
+        \\
+        u_r & x > 0,
+     \end{array}
+     \right.
+    \end{align}
+    where $u_l < u_r$. 
+    \begin{enumerate}
+     \item Compute the total variation of $u(\cdot,t)$ for all times $t \geq 0$.
+     \item Show that
+     \begin{align}
+      TV(u_{0}) = \sup\left\{ \int u_0(x) \phi'(x) dx \;\middle|\; \phi \in C^{1}(\mathbb R) \text{ with compact support}, \; \max |\phi| \leq 1 \right\}
+     \end{align}
+    \end{enumerate}
+\end{exercise}
+
+
+\begin{solution}
+    \begin{enumerate}
+     \item 
+     For $t = 0$, the total variation is just the jump of $u_0$, that is, $TV(u(\cdot,0)) = |u_l - u_r|$.
+     Therefore we now assume that $t > 0$.
+     
+     The function $u$ is continuous, and it is constant outside of the interval $[ f'(u_l)t, f'(u_r)t ]$.
+     Using the formulation of total variation for piecewise smooth functions, we see that 
+     \begin{align}
+      TV(u(\cdot,t))
+      =
+      \int_{-\infty}^{\infty} | \partial_x u(\cdot,t) | dx
+      =
+      \int_{f'(u_l)t}^{f'(u_r)t} | \partial_x u(\cdot,t) | dx
+     \end{align}
+     We can substitute the definition of $u$ and the flux. Then we use the fundamental theorem of calculus:
+     \begin{align}
+      TV(u(\cdot,t))
+      =
+      \int_{2 u_l t}^{2 u_r t} \frac 1 {2t} dx
+      =
+      \frac 1 2 ( 2 u_l t - 2 u_r t ) \frac 1 {2t}
+      =
+      u_r - u_l.
+     \end{align}
+     Note that the total variation stays constant. 
+    
+     
+     \item Recall that $TV(u_{0}) = u_r - u_l$. Now pick any test function $\phi \in C^{1}(\mathbb R)$ with compact support, satisfying $\max |\phi| \leq 1$.
+     We compute 
+     \begin{align}
+      \int u_0(x) \phi'(x) dx
+      &
+      =
+      \int_{-\infty}^{0} u_0(x) \phi'(x) dx
+      +
+      \int_{0}^{-\infty} u_0(x) \phi'(x) dx
+      \\&
+      =
+      -
+      u_0(0-) \phi(x)
+      +
+      u_0(0+) \phi(x)
+      =
+      -
+      u_l \phi(x)
+      +
+      u_r \phi(x)
+      .
+     \end{align}
+     On the one hand, since $|\phi|$ is bounded from above by $1$, the integral is bounded from above by $u_r - u_l$.
+     This implies that the total variation is upper bound for the supremum.
+     On the other hand, the supremum attains the value $u_r - u_l$ when we pick any test function satisfying the above constraints 
+     such that $\phi(0) = 1$. 
+    \end{enumerate}
+\end{solution}
+
+
+
+
+
+\begin{exercise}[Rarefaction Wave]
+    Find the rarefaction wave for the following conservation law and initial data:
+    \begin{align}
+     \partial_t u + \partial_x \left( \exp(u) \right) = 0,
+     \quad 
+     u_{0}(x)
+     = 
+     \left\{
+     \begin{array}{cc}
+        1 & x < 0,
+        \\
+        2 & x > 0.
+     \end{array}
+     \right.
+    \end{align}
+\end{exercise}
+
+\begin{solution}
+    From the formulation 
+    \begin{align}
+     \partial_t u + \exp(u) \partial_x u = 0
+    \end{align}
+    the direction of the characteristics are apparent. 
+    In particular, they move to the right regardless of the value of $u$. 
+    Drawing a picture immediately shows that we need to fill the area 
+    \begin{align}
+     f'(1) < x/t < f'(2)
+    \end{align}
+    with values to define the solution. 
+    We pick characteristics emerging from the origin (otherwise, they would emerge from a shock).
+    
+    Along each characteristics along which the value $u^{\ast}$ is transported, we have 
+    \begin{align}
+     x = f'(u^{\ast}) t
+     \quad\Longleftrightarrow\quad
+     x = \exp(u^{\ast}) t
+     \quad\Longleftrightarrow\quad
+     \ln(x/t) = u^{\ast}
+     .
+    \end{align}
+    Consequently, the rarefaction wave is given by 
+    \begin{align}
+     u(x,t)
+     = 
+     \left\{
+     \begin{array}{ll}
+        u_l & x < \exp(u_l) t,
+        \\
+        \ln(x/t) & \exp(u_l)t < x < \exp(u_r)t,
+        \\
+        u_r & \exp(u_r)t < x.
+     \end{array}
+     \right.
+    \end{align}
+\end{solution}
+
+
+
+
+
+
+\begin{exercise}[Another Shock wave]
+    Solve Burgers' equation ($f(u)=u^2$) with initial data 
+    \begin{align}
+     u_{0}(x)
+     = 
+     \left\{
+     \begin{array}{cc}
+        1 & x < 0,
+        \\
+        (1-x)/2 & 0 < x < 1,
+        \\
+        0 & x > 1.
+     \end{array}
+     \right.
+    \end{align}
+    Find the solution with the method of characteristics and tools you already know.
+    At what time does the solution change its structure? 
+\end{exercise}
+
+\begin{solution}
+    The characteristics over the interval $[0,1]$ travel with speed $2u^{\ast}$, where $u^{\ast}$ is the value along the characteristic.
+    We see that they merge at time $t=1/2$ and position $x=1$. At that point, the solution will be discontinuity,
+    \begin{align}
+     u(x,1)
+     = 
+     \left\{
+     \begin{array}{cc}
+        1 & x < 1,
+        \\
+        0 & x > 1,
+     \end{array}
+     \right.
+    \end{align}
+    and from there on, the solutions will be a traveling discontinuity. The speed of the discontinuity is $1$, as can be checked by the Rankine-Hugoniot condition.
+\end{solution}
+
+
+
+\begin{exercise}[Flux discontinuous in $x$]
+
+    \textit{Conservation laws where the flux is discontinuous in $x$ have attracted some attention over the past years. The following example models, e.g., traffic flow with varying speed limits.}
+    \\
+    
+    \noindent 
+    Consider the conservation law 
+    \begin{align}
+     \partial_t u + \partial_x\left( a(x) u \right) = 0
+    \end{align}
+    with speed variable 
+    \begin{align}
+     a(x)
+     = 
+     \left\{
+     \begin{array}{cc}
+        1 & x < 0,
+        \\
+        2 & x > 0.
+     \end{array}
+     \right.
+    \end{align}
+    \begin{enumerate}
+        \item
+        Sketch a solution with the method of characteristics.
+        For which $(x,t)$ is it a strong solution?
+        \item
+        Show that it is a weak solution under the simplifying assumption that the initial data $u_0 \in C^{1}(\mathbb R)$ are differentiable. 
+        \textit{You can use an argument similar to the RH condition. You do not need an explicit formula for $u$.}
+    \end{enumerate}
+\end{exercise}
+
+\begin{solution}
+    \begin{enumerate}
+        \item
+        To the left of the line $x=0$, the characteristics emerge with speed $1$, whereas to the right of $x=0$, they emerge with speed $2$.
+        All the characteristics on the left eventually reach the line $x=0$, from whereon they proceed with speed $2$.
+        The solution is continuous but not necessarily differentiable at $x=0$.
+        If the initial data $u_{0}$ are differentiable at $x_0 \in \mathbb R$, then it is differentiable at the characteristic emerging at $x_0$, except for the crossover at $x=0$.
+        Wherever the solution is differentiable, it is also a strong solution. 
+        \item
+        Suppose that the function $u_0 \in C^{1}(\mathbb R)$ is differentiable. 
+        The solution constructed above is differentiable to the left of $x=0$ and to the right of $x=0$, but not across that line.
+        Consequently, it is a strong solution there.
+        
+        Suppose that $\phi$ is a compactly supported smooth function. 
+        \begin{align}
+         &
+         \int_{\mathbb R} \int_{0}^{\infty} u \partial_t \phi + a u \partial_x \phi \;dxdt
+         \\&\qquad
+         =
+         \int_{x < 0} \int_{0}^{\infty} u \partial_t \phi + a u \partial_x \phi \;dxdt
+         + 
+         \int_{x > 0} \int_{0}^{\infty} u \partial_t \phi + a u \partial_x \phi \;dxdt
+         \\
+         &\qquad
+         =
+         -
+         \int_{x < 0} \int_{0}^{\infty} \partial_t u \phi + a \partial_x u \phi \;dxdt
+         - 
+         \int_{x > 0} \int_{0}^{\infty} \partial_t u \phi + a \partial_x u \phi \;dxdt
+         \\&\qquad \qquad 
+         +
+         \int_{0}^{\infty} u(-0,t) \phi \;dt
+         - 
+         \int_{0}^{\infty} 2u(+0,t) \phi \;dt
+         \\&\qquad \qquad 
+         +
+         \int_{x < 0} u(x,0) \phi \;dx
+         + 
+         \int_{x > 0} u(x,0) \phi \;dx
+         \\&\qquad 
+         =
+         \int_{0}^{\infty} u(-0,t) \phi \;dt
+         - 
+         \int_{0}^{\infty} 2u(+0,t) \phi \;dt
+         +
+         \int_{\mathbb R} u_{0}(x) \phi \;dx
+         .
+        \end{align}
+        The two integrals over the time axis cancel out.
+        The proof is complete.
+    \end{enumerate}
+\end{solution}
+
+
+\end{document}

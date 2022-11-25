@@ -3,13 +3,17 @@
 \usepackage{graphicx}
 \usepackage[margin=2cm]{geometry}
 
+\usepackage{subcaption}
+\usepackage{mathtools}
 \usepackage{amsfonts}
 \usepackage{amsmath}
+\usepackage{amssymb}
 \usepackage{amsthm}
 \newcommand{\dif}[1][]{\mathrm{d} {#1}\,}
 \newcommand{\rb}[1]{ \left(  {#1} \right) }
 \newcommand{\frb}[1]{ \left(  {#1} \right) }
 
+% \usepackage[amsmath,thmmarks,standard]{ntheorem}
 \newtheoremstyle{break}
 {\topsep}
 {\topsep}%
@@ -25,19 +29,45 @@
 \newtheorem{solution}{Solution}
 \newtheorem*{solutioninformation}{Solution Information}
 
+\begin{document}
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-
-
-%========================================================================
 \title{Characteristics and Weak solutions}
 \date{}
 
-\begin{document}
-
 \maketitle
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 \begin{information}
 	A function $u$ is said to be a \emph{weak solution} to the initial value problem (IVP)
@@ -54,45 +84,6 @@
 	\end{gather}%
 \end{information}
 
-\begin{solutioninformation}
-	Before we begin to understand the solutions for the exercises in this problem sheet, we first briefly describe the method of characteristics for solving non-linear first-order partial differential equations. To keep the discussion concise, we forgo the rigorous arguments, although, the arguments presented can be made rigorous (for details see \cite{Evans,Fritz}).
-
-	Let us consider the following PDE
-	\begin{gather} \label{cmPDE}
-		\dfrac{du}{dt}+b\frb{x,t,u} \dfrac{du}{dx}=c\frb{x,t,u}, \quad x \in \mathbb{R}, t \in \mathbb{R}^+
-	\end{gather}
-	with an initial condition
-	\begin{gather} \label{cmIC}
-		u(x,0)=u_0(x)\ .
-	\end{gather}
-	While this is not the most general setup the method can treat, it is general enough for our purpose. The main idea of the method of characteristics is to find curves in the $x-t$ plane, along which the PDE reduces to an appropriate system of first-order ODEs. These curves are also known as \textit{characteristics}. 
-
-	For a fixed x-intercept $\xi$, consider the following ODE
-	\begin{gather} \label{charODE}
-		\dfrac{dx}{dt} =b\frb{x,t,u}
-		\quad
-		x(0) = \xi.
-	\end{gather}
-	Under sufficient regularity conditions, one can find a unique solution of \eqref{charODE} as $\hat x (\xi,t) = x(t;\xi)$ (parameterized by the initial x-intercept). Thus, along the curve $\{\hat x (\xi,t), t\}$, the PDE \eqref{cmPDE} reduces to the following ODE
-	\begin{gather} \label{mainODE}
-		\dfrac{d}{dt}\hat u \frb{\xi,t}=c\frb{\hat x,t,\hat u} \quad \hat u\frb{\xi,0}=u_0\frb{\xi},
-	\end{gather}
-	where $\hat u(\xi,t) = u( \hat x(\xi,t),t) = u( x(t;\xi),t)$. Again, under sufficient regularity conditions we can find a unique solution for \eqref{mainODE}.
-
-	Finally, we need to express the solution in terms of the $(x,t)$. In order to do this, we need to solve for $\xi$ from the equation $x = \hat x\frb{\xi,t}$, i.e., we need to find a smooth function $\hat \xi=\hat \xi(x,t)$ such that
-	\begin{gather} \label{xxi}
-		x=\hat x\frb{\hat \xi(x,t),t}.
-	\end{gather}
-	The existence of a function $\hat \xi(x,t)$ satisfying \eqref{xxi} is ensured if $\hat x_\xi\ne0$, due to the inverse function theorem. Thus, the solution to \eqref{cmPDE},\eqref{cmIC} is given by
-	\begin{gather} \label{cmSol}
-		u(x,t)=\hat u\frb{\hat \xi(x,t) ,t}.
-	\end{gather}
-
-	Let us now return to the exercise, where we work with conservation laws of the form:
-	\begin{gather} 
-		\dfrac{du}{dt}+\dfrac{d f(u)}{dx}=0.
-	\end{gather}
-\end{solutioninformation}
 
 
 \begin{exercise}
@@ -118,9 +109,7 @@
 			=-\int_{t_{1}}^{t_{2}}f\frb{u\frb{x_{2},t}} \dif t
 				+\int_{t_{1}}^{t_{2}}f\frb{u\frb{x_{1},t}} \dif t\ .
 	\end{gather}
-	For $f(u)=au$, the conservation law is reduced to the advection equation. Substituting $f\!\left(u\right)=au$ into (\ref{weakForm})
-	yields
-	
+	For $f(u)=au$, the conservation law is reduced to the advection equation. Substituting $f\!\left(u\right)=au$ into (\ref{weakForm}) yields
 	\begin{gather} \label{AdvecIntForm}
 		\int_{x_{1}}^{x_{2}}u\frb{x,t_{2}} \dif x
 				-\int_{x_{1}}^{x_{2}}u\frb{x,t_{1}} \dif x
@@ -156,6 +145,49 @@
 	from which we conclude that for any integrable function $u_{0}\!\left(x\right)$, $u\!\left(x,t\right)=u_{0}\text{\!}\left(x-at\right)$ is a solution to the advection equation on integral form.
 \end{solution}
 	
+
+\begin{solutioninformation}
+	Before we begin to understand the solutions for the exercises in this problem sheet,
+	we first briefly describe the method of characteristics for solving non-linear first-order partial differential equations.
+	To keep the discussion concise, we forgo the rigorous arguments, although,
+	the arguments presented can be made rigorous (for details see the literature references below.).
+
+	Let us consider the following PDE
+	\begin{gather} \label{cmPDE}
+		\dfrac{du}{dt}+b\frb{x,t,u} \dfrac{du}{dx}=c\frb{x,t,u}, \quad x \in \mathbb{R}, t \in \mathbb{R}^+
+	\end{gather}
+	with an initial condition
+	\begin{gather} \label{cmIC}
+		u(x,0)=u_0(x)\ .
+	\end{gather}
+	While this is not the most general setup the method can treat, it is general enough for our purpose.
+	The main idea of the method of characteristics is to find curves in the $x-t$ plane, along which the PDE reduces to an appropriate system of first-order ODEs. These curves are also known as \textit{characteristics}. 
+
+	For a fixed x-intercept $\xi$, consider the following ODE
+	\begin{gather} \label{charODE}
+		\dfrac{dx}{dt} =b\frb{x,t,u}
+		\quad
+		x(0) = \xi.
+	\end{gather}
+	Under sufficient regularity conditions, one can find a unique solution of \eqref{charODE} as $\hat x (\xi,t) = x(t;\xi)$ (parameterized by the initial x-intercept). Thus, along the curve $\{\hat x (\xi,t), t\}$, the PDE \eqref{cmPDE} reduces to the following ODE
+	\begin{gather} \label{mainODE}
+		\dfrac{d}{dt}\hat u \frb{\xi,t}=c\frb{\hat x,t,\hat u} \quad \hat u\frb{\xi,0}=u_0\frb{\xi},
+	\end{gather}
+	where $\hat u(\xi,t) = u( \hat x(\xi,t),t) = u( x(t;\xi),t)$. Again, under sufficient regularity conditions we can find a unique solution for \eqref{mainODE}.
+
+	Finally, we need to express the solution in terms of the $(x,t)$. In order to do this, we need to solve for $\xi$ from the equation $x = \hat x\frb{\xi,t}$, i.e., we need to find a smooth function $\hat \xi=\hat \xi(x,t)$ such that
+	\begin{gather} \label{xxi}
+		x=\hat x\frb{\hat \xi(x,t),t}.
+	\end{gather}
+	The existence of a function $\hat \xi(x,t)$ satisfying \eqref{xxi} is ensured if $\hat x_\xi\ne0$, due to the inverse function theorem. Thus, the solution to \eqref{cmPDE},\eqref{cmIC} is given by
+	\begin{gather} \label{cmSol}
+		u(x,t)=\hat u\frb{\hat \xi(x,t) ,t}.
+	\end{gather}
+	Let us now return to the exercise, where we work with conservation laws of the form:
+	\begin{gather} 
+		\dfrac{du}{dt}+\dfrac{d f(u)}{dx}=0.
+	\end{gather}
+\end{solutioninformation}
 
 \begin{exercise}
 	Equation \eqref{conLaw} with $f(u)=u^2/2$ is known as (the inviscid) Burgers equation. Draw the characteristics of the solution in the $x$-$t$ plane, driven by the initial condition
@@ -358,9 +390,9 @@
 			J \dif y\dif \tau\ 
 	\end{gather}
 	where
-	\[
-	J = \text{Det} \left( \frac{\partial(x,t)}{\partial(y,\tau)} \right) = 1.
-	\]
+	\begin{gather}
+		J = \text{Det} \left( \frac{\partial(x,t)}{\partial(y,\tau)} \right) = 1.
+	\end{gather}
 	The integral simplifies to
 	\begin{align} \label{Bsum1}
 		B\frb{\phi,u_1}&=\int_0^\infty \int_{-\infty}^0
@@ -372,7 +404,6 @@
 			 &= \int_0^\infty \widetilde \phi(0,\tau) \left[(u_m - u_l) s_m + \frac{u_l^2}{2} - \frac{u_m^2}{2} \right] \dif \tau - \int_{-\infty}^{\infty} \left[\widetilde \phi(y,\tau) u_1(y+s_m \tau,\tau) \right]\Big|_{\tau=0} \dif y\\
 			 &= - \int_{-\infty}^{\infty} \phi(x,0) u_1(x,0) \dif x.
 	\end{align}
-	
 	Next, let us consider $B\frb{\phi,u_2}$. Note that the $u_2$ may suffer from a singularity as $t \rightarrow 0^+$. Thus, we isolate the possible singularity using an $1>\epsilon > 0$ by splitting the integral
 	\begin{align}
 	B\frb{\phi,u_2} &=  \int_0^\epsilon \int_{-\infty}^\infty \Big(\phi_t u +\phi_x f\frb{u_2}\Big)\dif x\dif t +  \int_\epsilon^\infty \int_{-\infty}^\infty \Big(\phi_t u_2 +\phi_x f\frb{u_2}\Big)\dif x\dif t \\
@@ -443,7 +474,6 @@
 	\begin{gather}
 		\hat x\frb{\xi,t}=\xi e^t\ .
 	\end{gather}
-	
 	The IVP for $u$ on the characteristics is
 	\begin{gather}
 		\dfrac{d\hat u}{dt}=-u
