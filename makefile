@@ -11,3 +11,4 @@ exercises:
 	pdflatex exercise02.tex
 	pdflatex exercise03.tex
 	pdflatex exercise04.tex
+	pdflatex exercise04a.tex
