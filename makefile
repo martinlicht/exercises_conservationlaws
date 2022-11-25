@@ -12,3 +12,10 @@ exercises:
 	pdflatex exercise03.tex
 	pdflatex exercise04.tex
 	pdflatex exercise04a.tex
+	pdflatex exercise05.tex
+	pdflatex exercise06.tex
+	pdflatex exercise06a.tex
+	pdflatex exercise07.tex
+	pdflatex exercise08.tex
+	pdflatex exercise09.tex
+	pdflatex exercise10.tex

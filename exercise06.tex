@@ -1,657 +1,127 @@
-%Typeset with LaTeX
-%\documentclass{owrart}
-\documentclass[10pt,reqno]{amsart}
-\usepackage[a4paper,margin=1.0in]{geometry}
-\UseRawInputEncoding
-%% -------------------------------------------------------------------------------
-%% Enter additionally required packages below this comment.
-\usepackage{algorithm}
-\usepackage{algpseudocode}
+\documentclass[10pt,letterpaper]{article}
+\usepackage[english]{babel}
+\usepackage{graphicx}
+\usepackage[margin=2cm]{geometry}
 
-\makeatletter
-% Reinsert missing \algbackskip
-\def\algbackskip{\hskip-\ALG@thistlm}
-\makeatother
+\usepackage{float}
+\usepackage{subfloat}
+\usepackage{caption}
+\usepackage{subcaption}
+\usepackage{listings}
 
-\usepackage{amsmath}
 \usepackage{mathtools}
-%\usepackage[a4paper]{geometry}
-%\usepackage{amsfonts}
+\usepackage{amsfonts}
+\usepackage{amsmath}
 \usepackage{amssymb}
 \usepackage{amsthm}
-\usepackage{mathrsfs}
-\usepackage{bm}
-\usepackage{algpseudocode}
-\usepackage{upgreek}
-\usepackage{subcaption}
-% \usepackage{showkeys} %%%%%%%%%
-% \usepackage{amscd}
-% \usepackage{latexsym}
-% \usepackage{nicefrac} 3
-% \usepackage{cite}
- %\usepackage{epic}
-% \usepackage{eepic}
-% \usepackage{fancybox}
+\newcommand{\dif}[1][]{\mathrm{d} {#1}\,}
+\newcommand{\rb}[1]{ \left(  {#1} \right) }
+\newcommand{\frb}[1]{ \left(  {#1} \right) }
+\newcommand{\norm}[1]{ \left\|  {#1} \right\| }
+\newcommand{\jph}{{j+\frac{1}{2}}}
+\newcommand{\jmh}{{j-\frac{1}{2}}}
 
 
-
-\usepackage{graphicx}
-\usepackage{epstopdf}
-
-\mathtoolsset{showonlyrefs}
-
-%\usepackage{epstopdf}
-%\usepackage{graphicx} 
-
-%\usepackage[pdf]{pstricks}
-
-\usepackage[shortlabels]{enumitem}
-%Standard operator
-\newcommand{\abs}[1]{\lvert #1\rvert}
-\newcommand{\supp}{Peratorname{supp}}
-\newcommand{\grad}{{\mathbf{grad}}}
-\newcommand{\curl}{\normalfont{\text{curl}}}
-\newcommand{\Log}{\text{Log}}
-\newcommand{\cc}{{\normalfont{\text{c}}}}
-\newcommand{\loc}{{\normalfont{\text{loc}}}}
-
-\DeclareMathOperator*{\argmax}{arg\,max}
-\DeclareMathOperator*{\argmin}{arg\,min}
-
-% Package for colors
-\usepackage{xcolor}
-\definecolor{ao}{rgb}{0.0, 0.5, 0.0}
-
-%Edit colors
-
-
-
-
-
-
-
-%\usepackage{fancyhdr}
-%\usepackage{datetime}
-%
-%\fancyhf{}
-%\fancyfoot[L]{\fontsize{10}{12} \today \ \currenttime}
-%\pagestyle{fancy} \usepackage{tikz}
-
-\DeclareSymbolFont{extraup}{U}{zavm}{m}{n}
-\DeclareMathSymbol{\varheart}{\mathalpha}{extraup}{86}
-\DeclareMathSymbol{\vardiamond}{\mathalpha}{extraup}{87}
-
-\usepackage{chngcntr}
-\counterwithout{equation}{subsection}
-\counterwithout{equation}{section} 
-
-\usepackage{tikz}
-
-\newcommand\encircle[1]{%
-  \tikz[baseline=(X.base)] 
-    \node (X) [draw, shape=circle, inner sep=0] {\strut #1};}
-
-\usepackage{pifont}
-
-\usepackage{fancyhdr}
-\usepackage[us,12hr]{datetime} % `us' makes \today behave as usual in TeX/LaTeX
-\fancypagestyle{plain}{
-\fancyhf{}
-\rhead{\footnotesize Version of \today}
-\lhead{\thepage}
-\renewcommand{\headrulewidth}{0pt}}
-\pagestyle{plain}
-
-\usepackage{color}
-\newcommand{\half}{\frac{1}{2}}
-
-\newcommand{\norm}[1]{\left \lVert #1 \right \rVert}
-\newcommand{\snorm}[1]{\left \lvert #1 \right \rvert}
-
-%fields, mathbb operators
-\mathbb{R}
-
-
-% Boundary Integral Operators
-% 
-
-%
-%\DeclareMathOperator*{\argmax}{arg\,max}
-%\DeclareMathOperator*{\argmin}{arg\,min}
-
-\newcommand{\Id}{\mathsf{Id}}
-\newcommand{{\D}}{\normalfont{\text{D}}}
-\newcommand{{\G}}{\normalfont{\text{G}}}
-\newcommand{{\U}}{\normalfont{\text{U}}}
-\newcommand{{\I}}{\normalfont{\text{I}}}
-\newcommand{{\per}}{\normalfont{\text{per}}}
-\newcommand{{\y}}{{\boldsymbol{{y}}}}
-\newcommand{\Of}{\mathsf{f}}
-
-\newcommand{{\bc}}{{\bf c}}
-\newcommand{{\bx}}{{\bf x}}
-\newcommand{{\by}}{{\bf y}}
-\newcommand{{\bz}}{{\bf z}}
-\newcommand{{\bd}}{{\bf d}}
-\renewcommand{\d}{\!\!\operatorname{d}}
-
-% Traces
-\newcommand{\traced}{\gamma_{\text{D}}}
-\newcommand{\tracen}{\gamma_{\text{N}}}
-\newcommand{\dual}[2]{\left \langle #1,#2 \right \rangle}
-\newcommand{\dotp}[2]{\left ( #1,#2 \right )}
-
-% Matrix trace
-\newcommand{\tr}[1]{\text{tr}\left ( #1 \right )}
-
-\newtheorem{theorem}{Theorem}[section]
-\newtheorem{corollary}[theorem]{Corollary}
-\newtheorem{lemma}[theorem]{Lemma}
-\newtheorem{prob}[theorem]{Problem}
-\newtheorem{definition}[theorem]{Definition}
-\newtheorem{assumption}[theorem]{Assumption}
-\newtheorem{proposition}[theorem]{Proposition}
-\newtheorem{example}[theorem]{Example}
-\newtheorem{problem}[theorem]{Problem}
-
-\theoremstyle{remark}
-\newtheorem{remark}{Remark}
-%\newtheorem{assumption}[remark]{Assumption}
-%\newtheorem{example}[remark]{Example}
-%\newtheorem{problem}[thm]{Problem}
-
-
-%\numberwithin{equation}{section}
+% \usepackage[amsmath,thmmarks,standard]{ntheorem}
+\newtheoremstyle{break}
+{\topsep}
+{\topsep}%
+{\normalfont}
+{}%
+{\bfseries}
+{}%
+{\newline}
+{}%
+\theoremstyle{break}
+\newtheorem{exercise}{Exercise}
+\newtheorem*{information}{Information}
+\newtheorem{solution}{Solution}
+\newtheorem*{solutioninformation}{Solution Information}
 
 \begin{document}
-%\begin{talk}
-%
-%---------
-% TITLE
-%---------
-%
 
-\title{Exercise Set 3\\ 
-MATH-459--Numerical Methods for Conservation Laws \\  
-Autumn Semester 2021
-}
-
-\author{Professor: Martin W. Licht \\ Assistant: Fernando Henriquez B. \\ Published on 6.10.21} 
+\title{Additional Finite Difference Methods}
+\date{}
 
 \maketitle
 
 
 
-\subsection*{1. Non-conservative scheme}
-${}$\\
 
-\noindent Consider the non-conservative scheme for Burgers' equation:
-\begin{equation}
-	U^{n+1}_j = 	U^{n}_j +  	2 \frac{k}{h} U^{n}_j \left( 	U^{n}_j - U^{n}_{j-1} \right).
-\end{equation}
-Show that this scheme maps non-negative monotonely increasing sequences onto non-negative monotonely increasing sequences. 
 
-\textit{Remark: while this scheme is not conservative, is still of interest in a few contexts. The non-negativity condition is due to the upwinding implicit in the scheme.}
-${}$\\
+\begin{exercise}[Non-conservative scheme]
+	Consider the non-conservative scheme for Burgers' equation:
+	\begin{equation}
+		U^{n+1}_j = 	U^{n}_j +  	2 \frac{k}{h} U^{n}_j \left( 	U^{n}_j - U^{n}_{j-1} \right).
+	\end{equation}
+	Show that this scheme maps non-negative monotonely increasing sequences onto non-negative monotonely increasing sequences. 
 
+	\textit{Remark: while this scheme is not conservative, is still of interest in a few contexts. The non-negativity condition is due to the upwinding implicit in the scheme.}
+\end{exercise}
 
+\begin{solution}
 
-\subsection*{2. Monotonicity of FTCS}
-${}$\\
+\end{solution}
 
 
-\noindent What is the flux of the FTCS scheme for the transport equation? Relate it to other fluxes that you know. Determine whether the FTCS scheme is monotone.
-${}$\\
+\begin{exercise}[Monotonicity of FTCS]
+	What is the flux of the FTCS scheme for the transport equation? Relate it to other fluxes that you know. Determine whether the FTCS scheme is monotone.
+\end{exercise}
 
+\begin{solution}
 
+\end{solution}
 
 
-\subsection*{3. Order of schemes}
-${}$\\
 
 
-\noindent Show that the FTFS scheme for the transport equation is of order $(1,1)$ and that the FTCS scheme is of order $(2,1)$.
-${}$\\
 
 
 
 
-\subsection*{4. Order of schemes}
-${}$\\
+\begin{exercise}[3. Order of schemes]
+	Show that the FTFS scheme for the transport equation is of order $(1,1)$ and that the FTCS scheme is of order $(2,1)$.
+\end{exercise}
 
+\begin{solution}
 
-\noindent Under what conditions is a linear scheme $F(U,V) = w_1 U + w_2 V$ a monotone scheme?
-Describe the discrete Kruzkov entropy entropy-flux pairs.
-${}$\\
+\end{solution}
 
 
 
 
-\subsection*{5. Roe flux}
-${}$\\
 
-\noindent Show that the Roe flux can be written as 
-\begin{equation}
-	F(U,V) = \frac{ f(V) + f(U) }{2} + \frac{1}{2} \operatorname{sgn}( V - U ) |f(V) - f(U)|.
-\end{equation}
-Either show that the Roe flux is monotonicity-preserving or give a counter example. 
-${}$\\
+\begin{exercise}[Order of schemes]
+	Under what conditions is a linear scheme $F(U,V) = w_1 U + w_2 V$ a monotone scheme?
+	Describe the discrete Kruzkov entropy entropy-flux pairs.
+\end{exercise}
 
+\begin{solution}
 
+\end{solution}
 
 
-% \end{exerciseList}
 
-\end{document}
 
 
-\Head{6}{Godunov's Method}
 
 
+\begin{exercise}[Roe flux]
+	Show that the Roe flux can be written as 
+	\begin{equation}
+		F(U,V) = \frac{ f(V) + f(U) }{2} + \frac{1}{2} \operatorname{sgn}( V - U ) |f(V) - f(U)|.
+	\end{equation}
+	Either show that the Roe flux is monotonicity-preserving or give a counter example. 
+\end{exercise}
 
+\begin{solution}
 
+\end{solution}
 
 
 
-\item
-Discuss qualitatively the derivation of \emph{Godunov's method}; sketch each step in the solution process. Which part of the algorithm can make its implementation particularly difficult?
 
-\item
-Consider the scalar conservation law
-\begin{gather}%
-	u_t+f(u)_x=0\ ,
-\end{gather}%
-and initial condition
-\begin{gather}%
-	u(x,0)=\begin{cases}
-		u_l & x<0\\
-		u_r & 0<x
-	\end{cases}\ ,
-\end{gather}%
-where the flux $f$ is convex ($f''>0$).
-Godunov's method relies on finding the intermediate state $u^*=u^*(u_l,u_r)$ for which $u(0,t)=u^*$, for $t>0$.
-\begin{enumerate}
-\item
-Show that this intermediate state is given by the following:
-\begin{align*}
-	&1.\ \ f'(u_l), f'(u_r)\ge 0 \ \ \Longrightarrow \ \ u^*=u_l \\
-	&2.\ \ f'(u_l), f'(u_r)\le 0 \ \ \Longrightarrow \ \ u^*=u_r \\[0.5em]
-	&3.\ \ f'(u_l) \ge 0\ge f'(u_r) \ \ \Longrightarrow \ \
-		u^*=\begin{cases}
-			u_l & s>0 \\
-			u_r & s<0
-		\end{cases}\ ,
-		\qquad s=\frac{f(u_r)-f(u_r)}{u_r-u_l}\\[0.5em]
-	&4.\ \ f'(u_l) < 0 < f'(u_r)  \ \ \Longrightarrow \ \ u^*=u_m\ ,
-		\qquad\text{where $u_m$ is the solution to $f'\frb{u_m}=0$.}
-\end{align*}
 
-\item
-Use (a) to show that Godunov's flux is given by
-\begin{gather} \label{GodFlx}
-	F(u_l,u_r)=\begin{cases}
-			\displaystyle
-			\min_{u_l\le u\le u_r} f(u) & u_l\le u_r \\[1em]
-			\displaystyle
-			\max_{u_r\le u\le u_l} f(u) & u_l> u_r 
-		\end{cases}\ .
-\end{gather}%
-\item
-Show that Godunov's flux \eqref{GodFlx} is monotone.
-\end{enumerate}
 
 
-
-\item
-The purpose of this exercise is to illustrate the \emph{Lax-Wendroff Theorem}.
-This theorem states that if there exists a sequence $\{(h_l,k_l)\}_l^\infty$ with $k_l = \lambda h_l$ ($\lambda$ is kept constant), such that the corresponding numerical solutions $\left\{ v_{l}\right\} _{l=1}^{\infty}$ obtained by a conservative method converges to some function $u$, then the limit $u$ is a weak solution of the conservation law. Notice that to deduce the conclusion, we assume that $v_{l}$ converges as $l\rightarrow\infty$.
-That is, convergence is not a conclusion of the Lax-Wendroff theorem.
-Also recall that in general weak solutions are not unique, so the theorem does not guarantee the limit is the correct entropy solution. 
-
-Consider a conservative method 
-\begin{gather}%
-	v_{j}^{n+1}=v_{j}^{n} -\frac{k}{h}\sqb{F\frb{v_{j}^{n},v_{j+1}^{n}}-F\frb{v_{j-1}^{n},v_{j}^{n}}}
-\end{gather}%
-where the numerical flux F is given by 
-\begin{gather}%
-	F\frb{v,w}=\begin{cases}
-		f(v) & \frac{f(v)-f\frb{w}}{v-w}\geq0\\[0.5em]
-		f\frb{w} & \frac{f(v)-f\frb{w}}{v-w}<0
-	\end{cases}\ .
-\end{gather}%
-\begin{enumerate}
-\item
-Construct the entropy solution to the following initial value problem
-\begin{gather} \label{IVP}
-	u_{t}+\rb{\frac{1}{2}u^{2}}_{x}=0
-	\quad
-		u(x,0)=\begin{cases}
-		-1 & x<1\\
-		1 & x>1
-	\end{cases}\ .
-\end{gather}%
-%satisfying the initial condition
-%\begin{gather} \label{incond2}
-%	u(x,0)=\begin{cases}
-%		-1 & x<1\\
-%		1 & x>1
-%	\end{cases}\ .
-%\end{gather}%
-\item
-Fix $k/h=0.5$, and implement the above method to \eqref{IVP}, in $x\in(0,2)$, $0<t\le0.25$, with the initial data 
-discretized using cell averages. On the boundaries, set $u(0,t)=-1$, and $u\frb{2,t}=1$.
-
-\item Run the computations by choosing i) $h_l = \frac{2}{l}$, ii)$h_l = \frac{2}{2 l}$, iii) $h_l = \frac{2}{2 l + 1}$, for $l\in\mathbb{N}$.
-
-\item
-What can you deduce from your results regarding the each of the three sequences of numerical solutions obtained.
-Explain your results and conclude how they fit with the Lax-Wendroff theorem.
-\end{enumerate}
-
-
-
-
-
-
-
-
-
-
-\documentclass{article}
-
-
-
-\usepackage{../auxFiles/ExStyPac}
-
-
-\usepackage[framed]{../auxFiles/mcode}
-
-
-
-\usepackage{bm}
-
-\input ../auxFiles/mac.tex
-
-
-
-
-
-
-%========================================================================
-\begin{document}
-
-
-
-\Head{6}{Godunov's Method (Solution)}
-
-
-
-
-
-\begin{exerciseList}
-
-
-\item
-
-Godunov's method can be outlined in two steps.
-Suppose we have an approximation $v^n$ of the solution $u$ at $t_n$.
-(i) Define $\widetilde{u}^{n}(x,t)$ for all $x$ and $t_n<t<t_{n+1}=t_n+k$ as the exact solution to the conservation law, satisfying the initial condition
-\begin{gather} \label{GodIn}
-	\wt u^n\frb{x,t_n}=v^n_j
-	\quad
-	x\in(x_{j-1/2},x_{j+1/2})
-	\quad\forall j\ .
-\end{gather}
-(ii) Average the resulting function $\widetilde{u}^{n}\frb{x,t_{n+1}}$ over each cell $(x_{j-1/2},x_{j+1/2})$ to obtain the approximation
-\begin{gather} \label{GogAvg}
-	v_{j}^{n+1}=\frac{1}{h}\int_{x_{j-1/2}}^{x_{j+1/2}}\tilde{u}^{n}\frb{x,t_{n+1}}\dif x
-\end{gather}
-at $t_{n+1}$.
-Now this procedure can be repeated to advance to the next time-step.
-
-In Step (i), we need to solve an exact Riemann problem at each cell-interface, over a small time interval $(t_n,t_{n+1})$. Since $\wt u^n$ is a solution to the conservation law, \eqref{GogAvg} yields
-\begin{gather} \label{Godavg2}
-	v_{j}^{n+1} &=\frac{1}{h}\int_{x_{j-1/2}}^{x_{j+1/2}}\tilde{u}^{n}\frb{x,t_{n}}\dif x\\
-		&\quad -\frac{1}{h}\rb{
-			\int_{t_n}^{t_n+k} f\frb{\tilde{u}^{n}\frb{x_{j-1/2},t}}\dif t
-			-\int_{t_n}^{t_n+k} f\frb{\tilde{u}^{n}\frb{x_{j-1/2},t}}\dif t}\ .
-\end{gather}
-First notice that
-\begin{gather}
-	v^n_j=\frac{1}{h}\int_{x_{j-1/2}}^{x_{j+1/2}}\tilde{u}^{n}\frb{x,t_{n}}\dif x\ ,
-\end{gather}
-since $\wt u^n$ satisfies \eqref{GodIn}.
-Now, let us look at the other two integrals in \eqref{Godavg2}.
-Because $\wt u^n\frb{\cdot,t_n}$ is piecewise constant, with a discontinuity at each $x_{j-1/2}$, and given that the time step $k$ is sufficiently small, $\wt u^n\frb{x_{j-1/2},\cdot}$ is constant. Let
-\begin{gather}
-	\tilde{u}^{n}\frb{x_{j-1/2},t}=u^*\frb{v^n_{j-1},v^n_{j}}
-	\quad
-	t\in(t_n,t_{n+1})\ .
-\end{gather}
-So, if we take
-\begin{gather}
-	F(u_l,u_r)=f\frb{u^*(u_l,u_r)}=\frac{1}{k}\int_{t_n}^{t_n+k} f\frb{u^*(u_l,u_r)}\dif t\ ,
-\end{gather}
-then \eqref{GogAvg} becomes
-\begin{gather} \label{GodCons}
-	v^{n+1}_j=v^n_j-\frac{k}{h}\Big[ F\frb{v^n_{j+1},v^n_{j}} -F\frb{v^n_{j},v^n_{j-1}}\Big]\ .
-\end{gather}
-This is how the method is applied in practice, provided we can find $u^*$. Unfortunately, evaluating the intermediate can be very expensive, and at times impossible. This motivates the need to construct \textit{approximate Riemann solvers}.
-
-
-
-\item
-Consider the scalar conservation law
-\begin{gather}
-	u_t+f(u)_x=0\ ,
-\end{gather}
-and initial condition
-\begin{gather}
-	u(x,0)=\begin{cases}
-		u_l & x<0\\
-		u_r & 0<x
-	\end{cases}\ ,
-\end{gather}
-where the flux $f$ is convex ($f''>0$).
-Godunov's method relies on finding the intermediate state $u^*=u^*(u_l,u_r)$ for which $u(0,t)=u^*$, for $t>0$.
-\begin{enumerate}
-\item
-We show that $u^*$ is given by
-\begin{align*}
-	&1.\ \ f'(u_l), f'(u_r)\ge 0 \ \ \Longrightarrow \ \ u^*=u_l \\
-	&2.\ \ f'(u_l), f'(u_r)\le 0 \ \ \Longrightarrow \ \ u^*=u_r \\[0.5em]
-	&3.\ \ f'(u_l) \ge 0\ge f'(u_r) \ \ \Longrightarrow \ \
-		u^*=\begin{cases}
-			u_l & s>0 \\
-			u_r & s<0
-		\end{cases}\ ,
-		\qquad s=\frac{f(u_r)-f(u_r)}{u_r-u_l}\\[0.5em]
-	&4.\ \ f'(u_l) < 0 < f'(u_r)  \ \ \Longrightarrow \ \ u^*=u_m\ ,
-		\qquad\text{where $u_m$ is the solution to $f'\frb{u_m}=0$.}
-\end{align*}
-Note that since $f$ is strictly convex, the Jacobian $f^\prime$ is a strictly increasing function.
-
-Suppose $f'(u_l), f'(u_r)\ge 0$.
-If $u_l>u_r$, the entropy solution is a shock moving at speed given by the RH condition
-\begin{gather} \label{RHJumpCond}
-	s=\frac{f(u_l)-f(u_r)}{u_l-u_r}\,
-\end{gather}
-and $f'(u_l) > s > f'(u_r)$ according to the entropy condition.
-This implies that the shock speed is positive, and thus we have $u^*=u_l$. 
-If $u_l\le u_r$, the entropy solution is a rarefaction wave.
-Since $f'(u_l)>0$, the left front of the wave moves to the right, and thus $u^*=u_l$.
-
-Next suppose $f'(u_l), f'(u_r)\le 0$.
-By similar arguments we get $u^*=u_r$.
-
-If $f'(u_l) \ge 0\ge f'(u_r)$, the entropy solution is a shock, and the intermediate state $u^*$ is determined by the sign of the shock speed \eqref{RHJumpCond}.
-
-Finally suppose $f'(u_l) < 0 < f'(u_r)$.
-Then, the entropy solution is a rarefaction wave.
-This time $x=0$ falls inside the rarefaction fan.
-As we have seen in a previous exercise (see exercise set 3), the rarefaction solution is given by $u(x,t)=w\frb{x/t}$, where $w$ is the solution to $f'\frb{w\frb{\xi}}=\xi$.
-Since we are interested in the value of $u$ at $x=0$, we have $u^*=w\frb{0}$.
-
-\item
-Before we begin, let as remark that since $f$ is strictly convex, the its maximum on a given closed interval $[u_1,u_2]$ is achieved its maximum at an end point of the interval. Furthermore, there exists a unique $\theta$ where $f^\prime$ vanishes. This point corresponds to the global minima of $f$. If $\theta \in (u_1,u_2)$, then f achieves its minimum at $\theta$, else at an end point of the interval.
-To show that Godunove's flux is given by
-\begin{gather} \label{GodFlx}
-	F(u_l,u_r)=\begin{cases}
-			\displaystyle
-			\min_{u_l\le u\le u_r} f(u) & u_l\le u_r \\[1em]
-			\displaystyle
-			\max_{u_r\le u\le u_l} f(u) & u_l> u_r 
-		\end{cases}\ .
-\end{gather}
-we look at the different possible cases.
-
-If $u_l>u_r$, the entropy solution is a shock.
-In this case, $u^*$ is determined by the sign of $s$.
-If $f(u_l)>f(u_r)$, then $u^*=u_l$, and if $f(u_l)<f(u_r)$, then $u^*=u_r$.
-Either way, $f\frb{u^*}$ is the maximum of $f$ in $[u_r,u_l]$.
-
-If $u_l\le u_r$, the entropy solution is a rarefaction wave.
-This is possible only when 1,2 or 4 are valid.
-If 1 is valid, $f$ is increasing in $[u_l,u_r]$, and $f(u_l)$ is the minimum of $f$ in this interval.
-Similarly, if 2 is valid, $f$ is decreasing in $[u_l,u_r]$, and $f(u_r)$ is the minimum of $f$ in this interval.
-If 4 is valid, $f$ achieves its minimum at the internal point $u_m$, where $f'\frb{u_m}=0$.
-
-
-\item
-To show that Goduno's flux, given by \eqref{GodFlx}, is monotone, we show that it is non-decreasing in its first argument and non-increasing in its second argument.
-If $u_l<u_r$ and $\eps>0$ is small enough, then
-\begin{gather}
-	F\frb{u_l+\eps,u_r}=\min_{u_l+\eps\le u\le u_r} f(u) \ge \min_{u_l\le u\le u_r} f(u)
-		=F(u_l,u_r)\ ,
-\end{gather}
-and if $u_l\ge u_r$, then
-\begin{gather}
-	F\frb{u_l+\eps,u_r}=\max_{u_r\le u\le u_l+\eps} f(u) \ge \max_{u_r\le u\le u_l} f(u)
-		=F(u_l,u_r)\ .
-\end{gather}
-Similarly, one can show that $F$ is non-increasing in its second argument.
-\end{enumerate}
-
-
-
-\item\label{exLWTNonConvSeq}
-\begin{enumerate}
-\item
-Since Burgers equation is convex and
-\begin{gather} \label{InCond}
-	u(x,0)=\begin{cases}
-		-1 & x<1\\
-		1 & x>1
-	\end{cases}\ ,
-\end{gather}
-that is $u_l<u_r$, a shock is not admissible.
-Therefore, the entropy solution must be a rarefaction wave.
-The exact solution to the problem with initial data \eqref{InCond} is given by
-\begin{gather}
-	u(x,t)=\begin{cases}
-		-1 & x\leq-t+1\\
-		\frac{x-1}{t} & -t+1<x\leq t+1\\
-		1 & \; x>t+1
-	\end{cases}\ .
-\end{gather}
-
-\item[(b),(c)]
-\addtocounter{enumii}{2}
-See Matlab code attached at the end of this manual. Experiment with different values of $l$.
-
-\item
-We notice that in case of $k_{l}=\frac{1}{2l}$, for any choice
-of $l\in\mathbb{N}$, we get an approximation to the entropy solution,
-and that the sequence of solutions converges as $l\rightarrow\infty$.
-In the case $k_{l}=\frac{1}{2l+1}$, for any choice of $l\in\mathbb{N}$ we get the entropy violating solution of a stationary discontinuity.
-Therefore, the sequence of solutions obtained by taking $k_{l}=\frac{1}{2l+1}$ converges to the same entropy violating solution as $l\rightarrow\infty$.
-Note that in either case, the converged solution is still a weak solution, which is in accordance with the Lax-Wendroff theorem. However, by taking $k_{l}=\frac{1}{l}$, the numerical solution does not converge to any solution with the current scheme.
-\end{enumerate}
-
-
-\end{exerciseList}
-
-
-%\begin{figure}[H] 
-%\center
-%
-%\subfloat[\label{fig:Exc4_2a_U}]{\input{Exc4_2a_U.tikz}
-%
-%}\hspace{10mm}\subfloat[\label{fig:Exc4_2a_C}]{\input{Exc4_2a_C.tikz}
-%
-%}
-%
-%\caption{\label{fig:Exc4_2b} Exercise 1.3b. Initial data $u_0(x)$ Eq. 16 applied to the inviscid burgers equation. The two shocks move away from each other with equal speed and never merge. \textbf{(a)} Initial data. \textbf{(b)} Characteristics. }
-%
-%\end{figure}
-
-\newpage
-\begin{lstlisting}
-
-% Solution05: Problem 3
-% This script was written for EPFL MATH459, Numerical Methods for
-% Conservation Laws. The invisvid Burgers equation is solved using the
-% Roe flux
-
-clc
-clear all
-close all
-
-% Initial left and right states for the Riemann Problem
-U0 = @(x) -1*(x<1) + 1*(x>1);
-
-FinalTime = 0.25;
-
-% Roe flux
-RoeFlux =@(UL,UR) 0.5*UL.^2.*( (UL+UR) >=0) + 0.5*UR.^2.*( (UL+UR) <0);
-
-
-% Discretization
-l = 50:10:100;
-%l = 51:10:101;
-%l = 50:5:100;
-
-M = length(l);
-
-for i=1:M
-    h = 2/l(i);
-    k = 0.5*h;
-    xf = 0:h:2;
-    xc = 0.5*h:h:2-0.5*h;
-    N  = length(xc);
-    
-    % Finding cell-average values of initial condition
-    % Since we are looking at first-order schemes, it is enough to
-    % approximate the integrals using the mid-point quadrature rule. This
-    % essentially means we take the cell-center values as the cell-averages
-    U = U0(xc);
-    
-    time = 0;
-    while(time<FinalTime)
-        
-        if(time+k>FinalTime)
-            k = FinalTime-time;
-        end
-        
-        U_ext = [U(1),U,U(end)];
-        
-        Flux  = RoeFlux(U_ext(1:end-1),U_ext(2:end));
-        
-        U = U - (k/h)*(Flux(2:end) - Flux(1:end-1));
-        
-        time = time + k;
-    end
-    
-    figure(1)
-    plot(xc,U,'LineWidth',2)
-    title(['Solution on a mesh with h = 2/',num2str(l(i))])
-    hold all
-    pause(0.1)
-    
-end
-
-
-
-
-\end{lstlisting}
 \end{document}

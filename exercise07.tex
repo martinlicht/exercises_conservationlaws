@@ -1,295 +1,438 @@
-\documentclass{article}
+\documentclass[10pt,letterpaper]{article}
+\usepackage[english]{babel}
+\usepackage{graphicx}
+\usepackage[margin=2cm]{geometry}
+
+\usepackage{float}
+\usepackage{subfloat}
+\usepackage{caption}
+\usepackage{subcaption}
+\usepackage{listings}
+
+\usepackage{mathtools}
+\usepackage{amsfonts}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\newcommand{\dif}[1][]{\mathrm{d} {#1}\,}
+\newcommand{\rb}[1]{ \left(  {#1} \right) }
+\newcommand{\frb}[1]{ \left(  {#1} \right) }
+\newcommand{\norm}[1]{ \left\|  {#1} \right\| }
+\newcommand{\jph}{{j+\frac{1}{2}}}
+\newcommand{\jmh}{{j-\frac{1}{2}}}
+\newcommand{\sqb}[1]{ \left(  {#1} \right) }
 
 
+% \usepackage[amsmath,thmmarks,standard]{ntheorem}
+\newtheoremstyle{break}
+{\topsep}
+{\topsep}%
+{\normalfont}
+{}%
+{\bfseries}
+{}%
+{\newline}
+{}%
+\theoremstyle{break}
+\newtheorem{exercise}{Exercise}
+\newtheorem*{information}{Information}
+\newtheorem{solution}{Solution}
+\newtheorem*{solutioninformation}{Solution Information}
 
-\usepackage{../auxFiles/ExStyPac}
-
-
-
-\input ../auxFiles/mac.tex
-\graphicspath{{./figures/}}
-
-
-
-
-
-%========================================================================
 \begin{document}
 
+\title{Linear Systems}
+\date{}
+
+\maketitle
 
 
-\Head{7}{Linear Systems}
 
 
 
 
-This exercise pertains to \emph{Godunov's method} for linear systems with constant coefficients,
-\begin{gather} \label{linSys}
-	q_{t}+Aq_{x}=0\ .
-\end{gather}%
-On linear systems, Godunov's method reduces to a generalization of the upwind method where the numerical flux is given by the following equivalent expressions 
-\begin{gather}%al{GudFlx}
-	F\frb{Q_l,Q_r} &=AQ_l+A^{-}\rb{Q_r-Q_l}\\
-		& =AQ_r-A^{+}\rb{Q_r-Q_l}
+
+
+
+
+
+
+
+
+
+
+
+\begin{exercise}
+
+	%\item
+	%Write Gudonov's scheme for \eqref{linSys} with flux \eqref{GudFlx}.
+
+	This exercise pertains to \emph{Godunov's method} for linear systems with constant coefficients,
+	\begin{gather} \label{linSys}
+		q_{t}+Aq_{x}=0\ .
+	\end{gather}%
+	On linear systems, Godunov's method reduces to a generalization of the upwind method where the numerical flux is given by the following equivalent expressions 
+	\begin{align}%al{GudFlx}
+		F\frb{Q_l,Q_r}
+		&=AQ_l+A^{-}\rb{Q_r-Q_l}\\
+		&=AQ_r-A^{+}\rb{Q_r-Q_l}
 		=\frac{1}{2}A\rb{Q_r+Q_l}-\frac{1}{2}|A|\rb{Q_r-Q_l}\ .
-\end{gather}%a
-Where $|A|=A^+-A^-$ and $A^{\pm}=S\Lambda^{\pm}S^{-1}$. Here $\Lam^+$ and $\Lam^-$ are diagonal matrices with non-negative and non-positive entries, respectively, such that $S^{-1}AS=\Lam$ is the spectral decomposition of $A$,  with $\Lam=\Lam^+ +\Lam^-$.
-Especially, notice that
-$$
-	A=A^{+}+A^{-}\ .
-$$
-Consider the one dimensional acoustics equation
-\begin{gather} \label{AcEq}
-	\sqb{\mat{ p \\ v }}_{t} +\sqb{\mat{ u_{0} & K_{0} \\ 1/\rho_{0} & u_{0}}} \sqb{\mat{ p \\ v }}_{x}=0\ .
-\end{gather}%
-This system is derived from the nonlinear Euler equation by linearizing around some fixed state, as sound waves are small perturbation in a background media.
-Here, $K_{0}$ is the compressibility modulus, and $u_{0}$ and $\rho_{0}$ are the the velocity and pressure, respectively.
-The speed of sound in the medium is given by
-$$
-	c_{0}=\sqrt{K_{0}/\rho_{0}}\ .
-$$
+	\end{align}%a
+	Where $|A|=A^+-A^-$ and $A^{\pm}=S\Lambda^{\pm}S^{-1}$. Here $\Lambda^+$ and $\Lambda^-$ are diagonal matrices with non-negative and non-positive entries, respectively, such that $S^{-1}AS=\Lambda$ is the spectral decomposition of $A$,  with $\Lambda=\Lambda^+ +\Lambda^-$.
+	Especially, notice that
+	\begin{align}
+		A=A^{+}+A^{-}\ .
+	\end{align}
+	Consider the one dimensional acoustics equation
+	\begin{align} \label{AcEq}
+		\sqb{ 
+			\begin{array}{c} p \\ v \end{array}
+		}_{t} 
+		+
+		\sqb{
+			\begin{array}{cc} u_{0} & K_{0} \\ 1/\rho_{0} & u_{0} \end{array}
+		}
+		\sqb{
+			\begin{array}{c} p \\ v \end{array}
+		}_{x}=0\ .
+	\end{align}%
+	This system is derived from the nonlinear Euler equation by linearizing around some fixed state, as sound waves are small perturbation in a background media.
+	Here, $K_{0}$ is the compressibility modulus, and $u_{0}$ and $\rho_{0}$ are the the velocity and pressure, respectively.
+	The speed of sound in the medium is given by
+	\begin{align}
+		c_{0}=\sqrt{K_{0}/\rho_{0}}\ .
+	\end{align}
+
+	\begin{enumerate}
+
+		\item
+		For \eqref{AcEq}, calculate $A^{+}$ and $A^{-}$. 
+
+
+		\item
+		What is the CFL condition of Godunov's method for \eqref{AcEq}?
+
+
+		\item
+		Implement Godunov's method for \eqref{AcEq} the following two sets of initial data
+		\begin{gather} \label{inData1}
+			p(x,0)=\sin\frb{2\pi x}\ ,
+			\quad
+			v(x,0)=0, \quad \text{with periodic BC}
+		\end{gather}%
+		\begin{gather} \label{inData2}
+			p(x,0)=\begin{cases}
+				0 & x<0\\
+				1 & x>0
+			\end{cases}\ ,
+			\quad
+			v(x,0)=0, , \quad \text{with open BC}.
+		\end{gather}%
+		Use $u_{0}=1/2$, $K_{0}=1$, $p_{0}=1$ and solve on the interval
+		$x\in\left[-1,1\right]$ with $h=0.01$ to $T=0.4$ and an appropriate
+		time-step satisfying the CFL condition.
+
+		\item
+		In the solution driven by \eqref{inData2}, are the discontinuities visible in the numerical solution at $T=0.4$? Plot and compare with the exact solution at the final time.
+
+		\item
+		Now, run your code with the initial data
+		\begin{gather} \label{inData3}
+			p(x,0)=\begin{cases}
+				1 & x<0\\
+				\sin\frb{2\pi x} & x>0
+			\end{cases}\ ,
+			\quad
+			v(x,0)=0\ .
+		\end{gather}%
+		Does the exact solution preserve the discontinuities present in the initial condition? Are you able to observe the discontinuities in the numerical solution at $T=0.4$?
+
+
+
+
+		%\item
+		%The Godunov's method requires the solution of
+		%Riemann problems at every cell boundary in each timestep. In practice,
+		%solving all these Riemann problems is expensive, particularly for
+		%nonlinear equation. In the Godunov method, outlined in solution set
+		%4 to exercise set 4, we discard most information in the solved Riemann
+		%problem by taking the average of the solution over the grid cell.
+		%In this process large numerical errors are introduced. This suggest
+		%that we may be able to obtain equally good numerical results with
+		%an \textbf{approximate Riemann} solution obtained by less expensive
+		%means. There are many ways to go about constructing an approximate
+		%Riemann solver, one of the most popular Riemann solvers currently
+		%in use is the Roe's approximate Riemann solver. This method was presented
+		%during the lecture. The idea is to solve a constant coeffiicient linear
+		%system of conservation laws instead of the original nonlinear system,
+		%i.e., solve a modified conservation law with flux $\hat{f}\left(u\right)=\hat{A}\left(u_{l},u_{r}\right)u$
+		%for each cell boundary. \textbf{(a)} State the conditions that should
+		%be imposed on the coefficient matrix $\hat{A}\left(u_{l},u_{r}\right)$.
+		%\textbf{(b)} What does each statement imply? \textbf{(c)} Determine
+		%$\hat{A}\left(u_{l},u_{r}\right)$ for a general scalar conservation
+		%law. \textbf{(d)} Determine a numerical flux function when using Roe's
+		%approximate Riemann solver.
+
+
+
+
+	\end{enumerate}
+\end{exercise}
+
+\begin{solution}
+	\begin{enumerate}
+		\item
+		We start by calculating the spectral decomposition of
+		\begin{gather}
+			A=\sqb{
+				\begin{array}{cc}
+					u_{0} & K_{0}\\
+					1/\rho_{0} & u_{0}
+				\end{array}
+			}\ .
+		\end{gather}
+		Since this is a $2\times2$ matrix, this can be done easily.
+		We have
+		\begin{gather}
+			\Lambda_{1}=u_{0}-c_{0},
+			\quad
+			S_{1}=\rb{-\rho_{0}c_{0}\ ,\ 1}^T\ ,
+		\end{gather}
+		and
+		\begin{gather}
+			\Lambda_{2}=u_{0}+c_{0},
+			\quad
+			S_{2}=\rb{\rho_{0}c_{0}\ , \ 1}^T\ ,
+		\end{gather}
+		where $c_{0}=\sqrt{K_{0}/\rho_{0}}$.
+		Thus,
+		\begin{equation}
+			S=\sqb{\begin{array}{cc}
+				-\rho_{0}c_{0} & \rho_{0}c_{0}\\
+				1 & 1
+			\end{array}}
+			\quad
+			S^{-1}=\frac{1}{2\rho_{0}c_{0}}
+				\sqb{\begin{array}{cc}
+					-1 & \rho_{0}c_{0}\\
+					1 & \rho_{0}c_{0}
+				\end{array}}\ .
+		\end{equation}
+		The matrices $\Lambda^{+}$ and $\Lambda^{-}$ can be expressed as
+		\begin{gather}
+			\Lambda^{+}=\sqb{\begin{array}{cc}
+				\Lambda_1^+ & 0\\
+				0 & \Lambda_2^+
+			\end{array}}
+			\qquad
+			\Lambda^{-}=\sqb{\begin{array}{cc}
+				\Lambda_1^- & 0\\
+				0 & \Lambda_2^-
+			\end{array}}\ 
+		\end{gather}
+		where $\Lambda_s^+ = \max\left(\Lambda_s,0\right)$ and $\Lambda_s^- = \min\left(\Lambda_s,0\right)$ for $s=1,2$. Thus we obtain
+		\begin{gather}
+			A^{+}=S\Lambda^{+}S^{-1}
+				=\frac{1}{2}\sqb{\begin{array}{cc}
+					(\Lambda_1^+ + \Lambda_2^+) & \rho_{0}c_{0} (-\Lambda_1^+ + \Lambda_2^+)\\
+					(\rho_0c_0)^{-1} (-\Lambda_1^+ + \Lambda_2^+)& (\Lambda_1^+ + \Lambda_2^+)
+				\end{array}}
+		\end{gather}
+		and
+		\begin{gather}
+			A^{-}=S\Lambda^{-}S^{-1}
+				=\frac{1}{2}\sqb{\begin{array}{cc}
+					(\Lambda_1^- + \Lambda_2^-) & \rho_{0}c_{0} (-\Lambda_1^- + \Lambda_2^-)\\
+					(\rho_0c_0)^{-1} (-\Lambda_1^- + \Lambda_2^-)& (\Lambda_1^- + \Lambda_2^-)
+				\end{array}}\ .
+		\end{gather}
+
+
+		\item
+		The CFL condition is a necessary condition for stability.
+		Here, the CFL condition requires that for each eigenvalue $\Lambda_{s}$ of $A$, the following must hold
+		\begin{gather}
+			\frac{|\Lambda_{s}|k}{h} \leq1\ .
+		\end{gather}
+		Making use of the eigenvalue structure for the given system, we arrive at the condition
+		\begin{equation}
+			\left(|u_{0}|+c_{0}\right)\frac{k}{h}\leq1\ .
+		\end{equation}
+
+
+
+		\item
+		See the Matlab code attached at the end of this solution manual.
+
+
+		\item
+		See figures generated by the Matlab code.
+		Since the conservation law is a linear system, we know that discontinuities move only along characteristics and can not spontaneously form.
+		If the initial condition is smooth and satisfies the boundary conditions, then the solution is also smooth.
+		When using the second set of initial conditions, which is  discontinuous, the discontinuities
+		seem to get smeared out as the scheme advances.
+		This is however due to numerical diffusion in the scheme, and not because discontinuities disappear.
+
+
+		\item
+		See figures generated by the Matlab code attached at the end of this solution manual.
+		With this third set of initial conditions, it is not straightforward to locate the shocks as these are smeared out to a point where they are indistinguishable from other smooth regions of the solution.
+
+		Using the generalized upwind method for the linear system, we resolve and propagate information in a proper up-winded manner yielding less numerical diffusion than other schemes that return monotone solutions over discontinuities, such as the Lax-Friedrichs method.
+		However, the upwind method is still only a first order method and in general first order methods are not suitable for long time integration or resolving fine details.
+		Note that in the case of a linear system we can actually construct the exact solution.
+		See the Matlab code attached for an example on how to do this. 
+
+
+	% \lstinputlisting{./07Code/Exercise7.m}
+	\begin{lstlisting}
+		% Solution07
+		% This script was written for EPFL MATH459, Numerical Methods for
+		% Conservation Laws.
+		% The one dimensional linearized acoustic equations are solved with
+		% periodic/open boundary conditions, and initial data
+		% as given in the exercise.
+
+		clc
+		clear all
+		close all
+
+		% Initial data set
+		data = 3;
+		switch data
+			case 1
+				pIC =@(x) sin(2*pi*x);
+				vIC =@(x) 0*x;
+				bc  = 'Periodic';
+			case 2
+				pIC =@(x) 1*(x>0);
+				vIC =@(x) 0*x;
+				bc  = 'Open';
+			case 3
+				pIC =@(x) 1*(x<0) + sin(2*pi*x).*(x>=0);
+				vIC =@(x) 0*x;
+				bc  = 'Open';
+		end
+
+		% Define Discretization and time parameters
+		h  = 0.01;
+		xf = -1:h:1;
+		xc = (-1+0.5*h):h:(1-0.5*h);
+		N  = length(xc);
+		Tfinal = 0.4;
+		CFL    = 0.5;
+
+		% Physical constants [u0,k0,p0]
+		u0 = 1/2;
+		K0 = 1;
+		p0 = 1;
+		c0 = sqrt(K0/p0);
+
+		% Find various matrices
+		A      = [u0,K0;1/p0,u0];
+		S      = [-p0*c0, p0*c0; 1,1];
+		Sinv   = [-1, p0*c0; 1, p0*c0]/(2*p0*c0);
+		Lambda = [u0-c0,0;0,u0+c0];
+		absA   = S*abs(Lambda)*Sinv;
+
+
+		% Averaging initial conditions
+		% Cell-center values sufficient for first-order schemes
+		U = [pIC(xc);vIC(xc)];
+
+		time = 0; iter = 0;
+		plot_every = 10;
+
+		% Solve
+		while time < Tfinal
+			
+			k = CFL*h/(abs(u0) + c0);
+			if(time + k > Tfinal)
+				k = Tfinal - time;
+			end
+			
+			% Applying boundary conditions to obtain extended vector
+			U_ext = apply_bc(U,bc);
+			
+			Flux = GodunovFlux(A,absA,U_ext(:,1:end-1),U_ext(:,2:end));
+			U = U - k/h*(Flux(:,2:end) - Flux(:,1:end-1));
+			
+			time = time + k;
+			iter = iter + 1;
+			
+			if(mod(iter,plot_every)==0 || time ==Tfinal)
+				% Finding exact solution at the current time
+				Uexact = find_exact(pIC,vIC,S,Sinv,Lambda,xc,time);
+				
+				% Visualize the solution
+				figure(1)
+				subplot(2,1,1)
+				plot(xc,U(1,:),'-r','LineWidth',2);
+				hold all
+				plot(xc,Uexact(1,:),'--k','LineWidth',2);
+				ylim([-2 2]);xlim([-1 1]);
+				legend('Numerical Pressure','Exact Pressure','Location','Best')
+				grid on;
+				title(['Time = ',num2str(time)])
+				hold off
+				
+				subplot(2,1,2)
+				plot(xc,U(2,:),'-r','LineWidth',2);
+				hold all
+				plot(xc,Uexact(2,:),'--k','LineWidth',2);
+				ylim([-2 2]);xlim([-1 1]);
+				legend('Numerical Velocity','Exact Velocity','Location','Best')
+				grid on;
+				hold off
+				
+			end
+			
+		end
+	\end{lstlisting}
+
+	
+	% \lstinputlisting{./07Code/GodunovFlux.m}
+	\begin{lstlisting}
+		function Flux = GodunovFlux(A,absA,UL,UR)
+
+		Flux = 0.5*A*(UL+UR) - 0.5*absA*(UR-UL);
+
+		end
+	\end{lstlisting}
+
+	% \lstinputlisting{./07Code/apply_bc.m}
+	\begin{lstlisting}
+		% Function returns an extended vector, based on
+		% the type of boundary condition requested
+
+		function U_ext = apply_bc(U,bc)
+
+		switch bc
+			case 'Periodic'
+				U_ext = [U(:,end) , U, U(:,1)];
+			case 'Open'
+				U_ext = [U(:,1)   , U, U(:,end)];
+		end
+	\end{lstlisting}
+	
+	% \lstinputlisting{./07Code/find_exact.m}
+	\begin{lstlisting}
+		% Function evaluates the exact solution at a given time
+
+		function Uexact = find_exact(pIC,vIC,S,Sinv,Lambda,xc,time)
+
+		VSelect = @(V,IDX) V(IDX,:);
+		V0 =@(x) Sinv*[pIC(x);vIC(x)];
+		VT_1 =@(x) VSelect(V0(x),1);
+		VT_2 =@(x) VSelect(V0(x),2);
+
+		Uexact = S*[VT_1(xc-Lambda(1,1)*time);
+		VT_2(xc-Lambda(2,2)*time)];
+	\end{lstlisting}
+	
+
+	\end{enumerate}
+\end{solution}
+	
 
-
-
-
-\begin{exerciseList}
-
-
-%\item
-%Write Gudonov's scheme for \eqref{linSys} with flux \eqref{GudFlx}.
-
-
-\item
-For \eqref{AcEq}, calculate $A^{+}$ and $A^{-}$. 
-
-
-\item
-What is the CFL condition of Godunov's method for \eqref{AcEq}?
-
-
-\item
-Implement Godunov's method for \eqref{AcEq} the following two sets of initial data
-\begin{gather} \label{inData1}
-	p(x,0)=\sin\frb{2\pi x}\ ,
-	\quad
-	v(x,0)=0, \quad \text{with periodic BC}
-\end{gather}%
-\begin{gather} \label{inData2}
-	p(x,0)=\begin{cases}
-		0 & x<0\\
-		1 & x>0
-	\end{cases}\ ,
-	\quad
-	v(x,0)=0, , \quad \text{with open BC}.
-\end{gather}%
-Use $u_{0}=1/2$, $K_{0}=1$, $p_{0}=1$ and solve on the interval
-$x\in\left[-1,1\right]$ with $h=0.01$ to $T=0.4$ and an appropriate
-time-step satisfying the CFL condition.
-
-\item
-In the solution driven by \eqref{inData2}, are the discontinuities visible in the numerical solution at $T=0.4$? Plot and compare with the exact solution at the final time.
-
-\item
-Now, run your code with the initial data
-\begin{gather} \label{inData3}
-	p(x,0)=\begin{cases}
-		1 & x<0\\
-		\sin\frb{2\pi x} & x>0
-	\end{cases}\ ,
-	\quad
-	v(x,0)=0\ .
-\end{gather}%
-Does the exact solution preserve the discontinuities present in the initial condition? Are you able to observe the discontinuities in the numerical solution at $T=0.4$?
-
-
-
-
-%\item
-%The Godunov's method requires the solution of
-%Riemann problems at every cell boundary in each timestep. In practice,
-%solving all these Riemann problems is expensive, particularly for
-%nonlinear equation. In the Godunov method, outlined in solution set
-%4 to exercise set 4, we discard most information in the solved Riemann
-%problem by taking the average of the solution over the grid cell.
-%In this process large numerical errors are introduced. This suggest
-%that we may be able to obtain equally good numerical results with
-%an \textbf{approximate Riemann} solution obtained by less expensive
-%means. There are many ways to go about constructing an approximate
-%Riemann solver, one of the most popular Riemann solvers currently
-%in use is the Roe's approximate Riemann solver. This method was presented
-%during the lecture. The idea is to solve a constant coeffiicient linear
-%system of conservation laws instead of the original nonlinear system,
-%i.e., solve a modified conservation law with flux $\hat{f}\left(u\right)=\hat{A}\left(u_{l},u_{r}\right)u$
-%for each cell boundary. \textbf{(a)} State the conditions that should
-%be imposed on the coefficient matrix $\hat{A}\left(u_{l},u_{r}\right)$.
-%\textbf{(b)} What does each statement imply? \textbf{(c)} Determine
-%$\hat{A}\left(u_{l},u_{r}\right)$ for a general scalar conservation
-%law. \textbf{(d)} Determine a numerical flux function when using Roe's
-%approximate Riemann solver.
-
-
-
-\end{exerciseList}
-
-\end{document}
-
-
-
-
-
-
-\documentclass{article}
-
-
-
-\usepackage{../auxFiles/ExStyPac}
-
-\usepackage[framed]{../auxFiles/mcode}
-
-
-
-
-
-\input ../auxFiles/mac.tex
-\graphicspath{{./figures/}}
-
-
-
-
-
-%========================================================================
-\begin{document}
-
-
-
-\Head{7}{Linear Systems (Solution)}
-
-
-
-
-
-\begin{exerciseList}
-
-
-
-%\item
-%To write the scheme in explicit
-%form we simply insert the flux in the conservation law and reduce
-%to get
-%\begin{gather}
-%	U_{j}^{n+1}=U_{j}^{n}
-%		-\frac{k}{h}\left[A^{-}\left(U_{j+1}^{n}-U_{j}^{n}\right)
-%			+A^{+}\left(U_{j}^{n}-U_{j-1}^{n}\right)\right]\ .
-%\end{gather}
-
-\item
-We start by calculating the spectral decomposition of
-\begin{gather}
-	A=\sqb{\mat{
-		u_{0} & K_{0}\\
-		1/\rho_{0} & u_{0}
-	}}\ .
-\end{gather}
-Since this is a $2\times2$ matrix, this can be done easily.
-We have
-\begin{gather}
-	\lambda_{1}=u_{0}-c_{0},
-	\quad
-	S_{1}=\rb{-\rho_{0}c_{0}\ ,\ 1}^T\ ,
-\end{gather}
-and
-\begin{gather}
-	\lambda_{2}=u_{0}+c_{0},
-	\quad
-	S_{2}=\rb{\rho_{0}c_{0}\ , \ 1}^T\ ,
-\end{gather}
-where $c_{0}=\sqrt{K_{0}/\rho_{0}}$.
-Thus,
-\begin{equation}
-	S=\sqb{\mat{
-		-\rho_{0}c_{0} & \rho_{0}c_{0}\\
-		1 & 1
-	}}
-	\quad
-	S^{-1}=\frac{1}{2\rho_{0}c_{0}}
-		\sqb{\mat{
-			-1 & \rho_{0}c_{0}\\
-			1 & \rho_{0}c_{0}
-		}}\ .
-\end{equation}
-The matrices $\Lambda^{+}$ and $\Lambda^{-}$ can be expressed as
-\begin{gather}
-	\Lambda^{+}=\sqb{\mat{
-		\lambda_1^+ & 0\\
-		0 & \lambda_2^+
-	}}
-	\qquad
-	\Lambda^{-}=\sqb{\mat{
-		\lambda_1^- & 0\\
-		0 & \lambda_2^-
-	}}\ 
-\end{gather}
-where $\lambda_s^+ = \max\left(\lambda_s,0\right)$ and $\lambda_s^- = \min\left(\lambda_s,0\right)$ for $s=1,2$. Thus we obtain
-\begin{gather}
-	A^{+}=S\Lambda^{+}S^{-1}
-		=\frac{1}{2}\sqb{\mat{
-			(\lambda_1^+ + \lambda_2^+) & \rho_{0}c_{0} (-\lambda_1^+ + \lambda_2^+)\\
-			(\rho_0c_0)^{-1} (-\lambda_1^+ + \lambda_2^+)& (\lambda_1^+ + \lambda_2^+)
-		}}
-\end{gather}
-and
-\begin{gather}
-	A^{-}=S\Lambda^{-}S^{-1}
-		=\frac{1}{2}\sqb{\mat{
-			(\lambda_1^- + \lambda_2^-) & \rho_{0}c_{0} (-\lambda_1^- + \lambda_2^-)\\
-			(\rho_0c_0)^{-1} (-\lambda_1^- + \lambda_2^-)& (\lambda_1^- + \lambda_2^-)
-		}}\ .
-\end{gather}
-
-
-\item
-The CFL condition is a necessary condition for stability.
-Here, the CFL condition requires that for each eigenvalue $\lambda_{s}$ of $A$, the following must hold
-\begin{gather}
-	\frac{|\lambda_{s}|k}{h} \leq1\ .
-\end{gather}
-Making use of the eigenvalue structure for the given system, we arrive at the condition
-\begin{equation}
-	\left(|u_{0}|+c_{0}\right)\frac{k}{h}\leq1\ .
-\end{equation}
-
-
-
-\item
-See the Matlab code attached at the end of this solution manual.
-
-
-\item
-See figures generated by the Matlab code.
-Since the conservation law is a linear system, we know that discontinuities move only along characteristics and can not spontaneously form.
-If the initial condition is smooth and satisfies the boundary conditions, then the solution is also smooth.
-When using the second set of initial conditions, which is  discontinuous, the discontinuities
-seem to get smeared out as the scheme advances.
-This is however due to numerical diffusion in the scheme, and not because discontinuities disappear.
-
-
-\item
-See figures generated by the Matlab code attached at the end of this solution manual.
-With this third set of initial conditions, it is not straightforward to locate the shocks as these are smeared out to a point where they are indistinguishable from other smooth regions of the solution.
-
-Using the generalized upwind method for the linear system, we resolve and propagate information in a proper up-winded manner yielding less numerical diffusion than other schemes that return monotone solutions over discontinuities, such as the Lax-Friedrichs method.
-However, the upwind method is still only a first order method and in general first order methods are not suitable for long time integration or resolving fine details.
-Note that in the case of a linear system we can actually construct the exact solution.
-See the Matlab code attached for an example on how to do this. 
-
-
-\end{exerciseList}
-
-
-%\newpage
-\lstinputlisting{./Code/Exercise7.m}
-\newpage
-\lstinputlisting{./Code/GodunovFlux.m}
-\lstinputlisting{./Code/apply_bc.m}
-\lstinputlisting{./Code/find_exact.m}
 \end{document}

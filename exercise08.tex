@@ -1,255 +1,292 @@
-\documentclass{article}
+\documentclass[10pt,letterpaper]{article}
+\usepackage[english]{babel}
+\usepackage{graphicx}
+\usepackage[margin=2cm]{geometry}
 
+\usepackage{float}
+\usepackage{subfloat}
+\usepackage{caption}
+\usepackage{subcaption}
+\usepackage{listings}
 
-
-\usepackage{../auxFiles/ExStyPac}
-
-
-
-\input ../auxFiles/mac.tex
-\graphicspath{{./figures/}}
-\newcommand{\iph}{{i + \frac{1}{2}}}
-\newcommand{\imh}{{i - \frac{1}{2}}}
-
-
-
-
-%========================================================================
-\begin{document}
-
-
-
-\Head{8}{Incremental form and Harten's lemma}
-
-
-
-Consider the conservation law
-\begin{gather} \label{conlaw}
-	u_t+f(u)_x=0,
-\end{gather}%
-and the numerical scheme
-\begin{gather} \label{genscheme}
-	u^{n+1}_i = G(u^n_{i-k},...,u^n_{i+k}).
-\end{gather}%
-We say that the scheme \eqref{genscheme} can be put in \textit{incremental form} if there exists two incremental coefficients $C_\iph = C(u_{i-k+1}^n,...,u_{i+k}^n)$ and $D_\iph = D(u_{i-k+1}^n,...,u_{i+k}^n)$, which can be used to re-write the scheme as
-\begin{gather} \label{incform}
-	u^{n+1}_i = u_i^n - C_\imh \Delta^-u^n_i + D_\iph \Delta^+u^n_i,
-\end{gather}%
-where $\Delta^+u_i = u_{i+1} - u_i$ and $\Delta^-u_i = u_i- u_{i-1}$. Harten's lemma states that a scheme written in incremental form is TVD if i) $C_\iph \geq 0$, ii) $D_\iph \geq 0$ and iii) $C_\iph + D_\iph \leq 1$.
-
-\begin{exerciseList}
-
-\item Prove that any 3-point consistent, conservative scheme with numerical flux $F_\iph$ admits an incremental form with coefficients
-\[
-C_\iph = \frac{k}{h} \left(\frac{f(u_{i+1}) - F_\iph}{\Delta^+u_i} \right), \qquad D_\iph = \frac{k}{h} \left(\frac{f(u_{i}) - F_\iph}{\Delta^+u_i}\right).
-\]
-
-
-\item
-Consider a conservative scheme with
-\begin{itemize}
-\item Lax-Friedrich flux:
-\[
-F^{LF}(u,v)= \frac{1}{2} \left( f(u) + f(v) - \frac{h}{k} (v-u)\right),
-\]
-\item Local Lax-Friedrich/ Rusanov flux:
-\[
-F^{LLF}(u,v)= \frac{1}{2} \left( f(u) + f(v) - \alpha (v-u)\right), \quad \alpha = \max_u|f^\prime(u)|,
-\]
-\item Lax-Wendroff flux:
-\[
-F^{LW}(u,v)= \frac{1}{2} \left( f(u) + f(v) - \frac{k}{h} f^\prime\left( \frac{u+v}{2}\right)(f(v) - f(u))\right),
-\]
-\item Roe flux:
-\[
-F^{Roe}(u,v)= \frac{1}{2} \left( f(u) + f(v) - \alpha (v-u)\right), \quad \alpha = \left|\frac{f(v) -f(u)}{v-u}\right|.
-\]
-\end{itemize}
-\begin{enumerate}
-\item Find the incremental coefficients for each flux. 
-\item Check whether all three conditions of Harten's lemma are satisfied with each flux.
-\item Based on your conclusions from 7.2(b), can you say whether the numerical solution obtained with a TVD scheme is guaranteed to converge to an entropy solution?
-\end{enumerate}
-
-\item
-Let $f(u) = c u$. Consider a scheme with the hybrid flux,
-\[
-F(u,v) = \theta F^{LW} + (1-\theta) F^{LF}, \quad 0 \leq \theta \leq 1,
-\]
-which is nothing but a convex combination of the Lax-Friedrich and Lax-Wendroff fluxes. Assuming the usual CFL condition, can you find a $\theta$ that will lead to a TVD scheme?
-
-
-
-
-\end{exerciseList}
-
-
-\end{document}
-
-
-
-
-\documentclass{article}
-
-
-
-\usepackage{../auxFiles/ExStyPac}
-
-\usepackage[framed]{../auxFiles/mcode}
-
+\usepackage{mathtools}
+\usepackage{amsfonts}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\newcommand{\dif}[1][]{\mathrm{d} {#1}\,}
+\newcommand{\rb}[1]{ \left(  {#1} \right) }
+\newcommand{\frb}[1]{ \left(  {#1} \right) }
+\newcommand{\norm}[1]{ \left\|  {#1} \right\| }
+\newcommand{\jph}{{j+\frac{1}{2}}}
+\newcommand{\jmh}{{j-\frac{1}{2}}}
+\newcommand{\sqb}[1]{ \left(  {#1} \right) }
 \newcommand{\iph}{{i + \frac{1}{2}}}
 \newcommand{\imh}{{i - \frac{1}{2}}}
 \newcommand{\ipo}{{i + 1}}
 
 
+% \usepackage[amsmath,thmmarks,standard]{ntheorem}
+\newtheoremstyle{break}
+{\topsep}
+{\topsep}%
+{\normalfont}
+{}%
+{\bfseries}
+{}%
+{\newline}
+{}%
+\theoremstyle{break}
+\newtheorem{exercise}{Exercise}
+\newtheorem*{information}{Information}
+\newtheorem{solution}{Solution}
+\newtheorem*{solutioninformation}{Solution Information}
 
-
-\input ../auxFiles/mac.tex
-
-
-
-
-
-%========================================================================
 \begin{document}
 
+\title{Incremental form and Harten's lemma}
+\date{}
+
+\maketitle
 
 
-\Head{8}{Incremental form and Harten's lemma (Solution)}
+
+
+\begin{information}
+        Consider the conservation law
+        \begin{gather} \label{conlaw}
+                u_t+f(u)_x=0,
+        \end{gather}%
+        and the numerical scheme
+        \begin{gather} \label{genscheme}
+                u^{n+1}_i = G(u^n_{i-k},...,u^n_{i+k}).
+        \end{gather}%
+        We say that the scheme \eqref{genscheme} can be put in \textit{incremental form} if there exists two incremental coefficients $C_\iph = C(u_{i-k+1}^n,...,u_{i+k}^n)$ and $D_\iph = D(u_{i-k+1}^n,...,u_{i+k}^n)$, which can be used to re-write the scheme as
+        \begin{gather} \label{incform}
+                u^{n+1}_i = u_i^n - C_\imh \Delta^-u^n_i + D_\iph \Delta^+u^n_i,
+        \end{gather}%
+        where $\Delta^+u_i = u_{i+1} - u_i$ and $\Delta^-u_i = u_i- u_{i-1}$. Harten's lemma states that a scheme written in incremental form is TVD if i) $C_\iph \geq 0$, ii) $D_\iph \geq 0$ and iii) $C_\iph + D_\iph \leq 1$.
+\end{information}
 
 
 
 
 
-\begin{exerciseList}
 
 
-\item
-Consider the scheme
-\begin{gather} \label{3pt_scheme}
-u_i^{n+1} = u^n_i - \frac{k}{h} \left[ F_\iph - F_\imh\right].
-\end{gather}
-The RHS of \eqref{3pt_scheme} can be re-written as
 
-\begin{align*}
-RHS &= u^n_i - \frac{k}{h} \left[ F_\iph - F_\imh\right]\\
-        &= u^n_i - \frac{k}{h} \left[ F_\iph  - f(u_i) + f(u_i) - F_\imh\right]\\
-        &= u^n_i - \frac{k}{h} \left[ \frac{F_\iph  - f(u_i)}{\Delta ^+u_i^n} \right] \Delta ^+u_i^n - \frac{k}{h}\left[\frac{f(u_i) - F_\imh}{\Delta ^-u_i^n}\right]\Delta ^-u_i^n\\
-        &= u^n_i +  D_\iph \Delta ^+u_i^n - C_\imh \Delta ^-u_i^n
-\end{align*}
-since $\Delta ^-u_i^n = \Delta ^+u_{i-1}^n$. Thus, the scheme \eqref{3pt_scheme} can be written in incremental form.
 
-\item 
+\begin{exercise}
+        Prove that any 3-point consistent, conservative scheme with numerical flux $F_\iph$ admits an incremental form with coefficients
+        \[
+        C_\iph = \frac{k}{h} \left(\frac{f(u_{i+1}) - F_\iph}{\Delta^+u_i} \right), \qquad D_\iph = \frac{k}{h} \left(\frac{f(u_{i}) - F_\iph}{\Delta^+u_i}\right).
+        \]
+\end{exercise}
 
-\begin{enumerate}
-\item
-Note that all four fluxes can be written in the form
-\[
-F(u,v) = \frac{1}{2} \left( f(u) + f(v) - Q(u,v) (v-u)\right)
-\]
-where
-\begin{align*}
-Q^{LF}(u,v) &= \frac{h}{k}\ ,\\
-Q^{LLF}(u,v) &= \alpha = \max_u |f^\prime(u)|\ ,\\
-Q^{LW}(u,v) &= \frac{k}{h} f^\prime\left( \frac{u+v}{2}\right)\left(\frac{f(v) - f(u)}{v-u}\right)\ ,\\
-Q^{Roe}(u,v) &= \left|\frac{f(v) - f(u)}{v-u}\right|\ .
-\end{align*}
-Thus, the incremental coefficients are given by
-\begin{align*}
-C_\iph &= \frac{k}{2h} \left [Q(u_i,u_{i+1})+\left(\frac{f(u_{i+1}) - f(u_i)}{u_{i+1} - u_i}\right) \right]\ ,\\
-D_\iph &= \frac{k}{2h} \left [Q(u_i,u_{i+1})-\left(\frac{f(u_{i+1}) - f(u_i)}{u_{i+1} - u_i}\right) \right] \ .
-\end{align*}
-Note that the three conditions of Harten's lemma translates to 
-\begin{align}
-\label{1n2n3}
-\frac{h}{k} \geq Q(u_i,u_{i+1}) \geq \left|\frac{f(u_{i+1}) - f(u_i)}{u_{i+1} - u_i}\right| .
-\end{align}
-Thus, a three-point conservative flux satisfying \eqref{1n2n3} will lead to a TVD scheme. Note that the condition \eqref{1n2n3} also implies that $Q(u_i,u_{i+1})$ is strictly positive.
-%Furthermore, we assume that the usual CFL condition holds
-%\[
-%\frac{k}{h} \max_u |f^\prime(u)| \leq 1.
-%\]
+\begin{solution}
+        Consider the scheme
+        \begin{gather} \label{3pt_scheme}
+        u_i^{n+1} = u^n_i - \frac{k}{h} \left[ F_\iph - F_\imh\right].
+        \end{gather}
+        The RHS of \eqref{3pt_scheme} can be re-written as
 
-\item
-For all schemes, we assume that the usual CFL condition holds
-\begin{gather} \label{cfl}
-\frac{k}{h} \max_u |f^\prime(u)| \leq 1.
-\end{gather}
-Also note that using mean value theorem, we can find a $\xi_\iph$ such that
-\begin{gather} \label{mvt}
-\frac{f(u_{i+1}) - f(u_i)}{u_{i+1} - u_i} = f^\prime(\xi_\iph).
-\end{gather}
-\begin{itemize}
+        \begin{align*}
+        RHS &= u^n_i - \frac{k}{h} \left[ F_\iph - F_\imh\right]\\
+                &= u^n_i - \frac{k}{h} \left[ F_\iph  - f(u_i) + f(u_i) - F_\imh\right]\\
+                &= u^n_i - \frac{k}{h} \left[ \frac{F_\iph  - f(u_i)}{\Delta ^+u_i^n} \right] \Delta ^+u_i^n - \frac{k}{h}\left[\frac{f(u_i) - F_\imh}{\Delta ^-u_i^n}\right]\Delta ^-u_i^n\\
+                &= u^n_i +  D_\iph \Delta ^+u_i^n - C_\imh \Delta ^-u_i^n
+        \end{align*}
+        since $\Delta ^-u_i^n = \Delta ^+u_{i-1}^n$. Thus, the scheme \eqref{3pt_scheme} can be written in incremental form.
+\end{solution}
 
-\item For the Lax-Friedrichs flux, the left inequality of \eqref{1n2n3} clearly holds. Using \eqref{cfl} and \eqref{mvt}, the right inequality of \eqref{1n2n3} is also satisfied. 
 
-\item For the local Lax-Friedrichs flux, using \eqref{cfl} and \eqref{mvt}, both inequalities of \eqref{1n2n3} is also satisfied. 
 
-\item For the Lax-Wendroff scheme, we can use \eqref{mvt} to get
-\[
-Q^{LW}(u_i, u_{i+1} ) = \frac{k}{h} f^\prime\left( \frac{u_i+u_\ipo}{2}\right)f^\prime(\xi_\iph) \ ,
-\]
-which may fail to be positive. Thus, the \eqref{1n2n3} need not be satisfied.
 
-\textit{
-Remark: At times, the following alternate expression for the Lax-Wendroff flux is also used
-\[
-\widetilde{F}^{LW} = \frac{1}{2} \left( f(u) + f(v) - \frac{k}{h} \left(\frac{f(v) - f(u)}{v-u}\right)(f(v) - f(u))\right) \ ,
-\]
-which leads to
-\[
-\widetilde{Q}^{LW}(u,v) = \frac{k}{h} \left(\frac{f(v) - f(u)}{v-u}\right)^2 \ ,
-\]
-which is clearly positive. Using \eqref{mvt}, we have
-\[
-\widetilde{Q}^{LW}(u_i, u_{i+1}) = \frac{k}{h} \left(f^\prime(\xi_\iph)\right)^2.
-\]
-In order to satisfy the right condition of \eqref{1n2n3}, we need
-\[
-\frac{k}{h}| f^\prime(\xi_\iph)| \geq 1
-\]
-which violates the CFL condition \eqref{cfl}.
-}
 
-\item For the Roe flux, we can once again show that \eqref{1n2n3} is satisfied by using \eqref{mvt} and \eqref{cfl}.
-\end{itemize}
 
-\item Note that the Roe flux satisfies the condition of Harten's lemma, and thus leads to a TVD scheme. But we know that the Roe scheme may give entropy violating solutions. This implies that the TVD property alone does not ensure convergence to entropy solutions.
 
-\end{enumerate}
 
-\item Let us consider the hybrid flux 
-\[
-F^\theta(u,v) = \theta F^{LW} + (1-\theta) F^{LF}, \quad 0 \leq \theta \leq 1,
-\]
-which can also be written as
-\[
-F^\theta(u,v) = \frac{1}{2} \left( f(u) + f(v) - Q^\theta(u,v) (v-u)\right) \ , 
-\]
-where
-\[
-Q^\theta(u,v) = \theta Q^{LW}(u,v) + (1-\theta) Q^{LF}(u,v)\ .
-\]
-Assuming the flux to be linear, i.e., $f(u) = cu$, we get the simplified expression
-\begin{gather} \label{hybQ}
-Q^\theta(u,v) = \theta \frac{k}{h} c^2 + (1-\theta) \frac{h}{k} = \theta\left[ \left(\frac{k}{h} c\right)^2 - 1\right]\frac{h}{k} + \frac{h}{k}\ ,
-\end{gather}
-while the condition \eqref{1n2n3} reduces to 
-\begin{gather} \label{1n2n3_lin}
-\frac{h}{k} \geq Q \geq |c|\ .
-\end{gather}
-If the left inequality of \eqref{1n2n3_lin} need to hold, we must have
-\[
-\theta\left[ \left(\frac{k}{h} c\right)^2 - 1\right]\frac{h}{k} + \frac{h}{k} \leq \frac{h}{k} \quad \iff \quad \left(\frac{k}{h} c\right)^2 \leq 1 \quad \iff \quad \frac{k}{h} |c| \leq 1\ ,
-\]
-which is always true due to the CFL condition \eqref{cfl}. The right inequality of \eqref{1n2n3_lin} requires
-\begin{align*}
-\theta\left[ \left(\frac{k}{h} c\right)^2 - 1\right]\frac{h}{k} + \frac{h}{k} \geq |c| &\quad \iff \quad \theta\left[ \left(\frac{k}{h} c\right)^2 - 1\right]\geq \frac{k}{h} |c| -1 \\
-&\quad \iff \quad \theta \leq \frac{1}{\frac{k}{h} |c| + 1} = \theta^* \quad \text{(using CFL condition)}.
-\end{align*}
-Thus, by choosing $\theta \in [0,\theta^*]$, we can recover a TVD scheme.
 
-\end{exerciseList}
+
+
+
+
+
+
+
+
+
+
+
+
+
+\begin{exercise}
+        Consider a conservative scheme with
+        \begin{itemize}
+        \item Lax-Friedrich flux:
+        \[
+        F^{LF}(u,v)= \frac{1}{2} \left( f(u) + f(v) - \frac{h}{k} (v-u)\right),
+        \]
+        \item Local Lax-Friedrich/ Rusanov flux:
+        \[
+        F^{LLF}(u,v)= \frac{1}{2} \left( f(u) + f(v) - \alpha (v-u)\right), \quad \alpha = \max_u|f^\prime(u)|,
+        \]
+        \item Lax-Wendroff flux:
+        \[
+        F^{LW}(u,v)= \frac{1}{2} \left( f(u) + f(v) - \frac{k}{h} f^\prime\left( \frac{u+v}{2}\right)(f(v) - f(u))\right),
+        \]
+        \item Roe flux:
+        \[
+        F^{Roe}(u,v)= \frac{1}{2} \left( f(u) + f(v) - \alpha (v-u)\right), \quad \alpha = \left|\frac{f(v) -f(u)}{v-u}\right|.
+        \]
+        \end{itemize}
+        \begin{enumerate}
+        \item Find the incremental coefficients for each flux. 
+        \item Check whether all three conditions of Harten's lemma are satisfied with each flux.
+        \item Based on your conclusions from 7.2(b), can you say whether the numerical solution obtained with a TVD scheme is guaranteed to converge to an entropy solution?
+        \end{enumerate}
+\end{exercise}
+
+
+\begin{solution}
+        \begin{enumerate}
+                \item
+                Note that all four fluxes can be written in the form
+                \[
+                F(u,v) = \frac{1}{2} \left( f(u) + f(v) - Q(u,v) (v-u)\right)
+                \]
+                where
+                \begin{align*}
+                Q^{LF}(u,v) &= \frac{h}{k}\ ,\\
+                Q^{LLF}(u,v) &= \alpha = \max_u |f^\prime(u)|\ ,\\
+                Q^{LW}(u,v) &= \frac{k}{h} f^\prime\left( \frac{u+v}{2}\right)\left(\frac{f(v) - f(u)}{v-u}\right)\ ,\\
+                Q^{Roe}(u,v) &= \left|\frac{f(v) - f(u)}{v-u}\right|\ .
+                \end{align*}
+                Thus, the incremental coefficients are given by
+                \begin{align*}
+                C_\iph &= \frac{k}{2h} \left [Q(u_i,u_{i+1})+\left(\frac{f(u_{i+1}) - f(u_i)}{u_{i+1} - u_i}\right) \right]\ ,\\
+                D_\iph &= \frac{k}{2h} \left [Q(u_i,u_{i+1})-\left(\frac{f(u_{i+1}) - f(u_i)}{u_{i+1} - u_i}\right) \right] \ .
+                \end{align*}
+                Note that the three conditions of Harten's lemma translates to 
+                \begin{align}
+                \label{1n2n3}
+                \frac{h}{k} \geq Q(u_i,u_{i+1}) \geq \left|\frac{f(u_{i+1}) - f(u_i)}{u_{i+1} - u_i}\right| .
+                \end{align}
+                Thus, a three-point conservative flux satisfying \eqref{1n2n3} will lead to a TVD scheme.
+                Note that the condition \eqref{1n2n3} also implies that $Q(u_i,u_{i+1})$ is strictly positive.
+                %Furthermore, we assume that the usual CFL condition holds
+                %\[
+                %\frac{k}{h} \max_u |f^\prime(u)| \leq 1.
+                %\]
+                
+                \item
+                For all schemes, we assume that the usual CFL condition holds
+                \begin{gather} \label{cfl}
+                \frac{k}{h} \max_u |f^\prime(u)| \leq 1.
+                \end{gather}
+                Also note that using mean value theorem, we can find a $\xi_\iph$ such that
+                \begin{gather} \label{mvt}
+                \frac{f(u_{i+1}) - f(u_i)}{u_{i+1} - u_i} = f^\prime(\xi_\iph).
+                \end{gather}
+                \begin{itemize}
+                
+                \item
+                For the Lax-Friedrichs flux, the left inequality of \eqref{1n2n3} clearly holds.
+                Using \eqref{cfl} and \eqref{mvt}, the right inequality of \eqref{1n2n3} is also satisfied. 
+                
+                \item For the local Lax-Friedrichs flux, using \eqref{cfl} and \eqref{mvt}, both inequalities of \eqref{1n2n3} is also satisfied. 
+                
+                \item For the Lax-Wendroff scheme, we can use \eqref{mvt} to get
+                \[
+                Q^{LW}(u_i, u_{i+1} ) = \frac{k}{h} f^\prime\left( \frac{u_i+u_\ipo}{2}\right)f^\prime(\xi_\iph) \ ,
+                \]
+                which may fail to be positive. Thus, the \eqref{1n2n3} need not be satisfied.
+                
+                \textit{
+                Remark: At times, the following alternate expression for the Lax-Wendroff flux is also used
+                \[
+                \widetilde{F}^{LW} = \frac{1}{2} \left( f(u) + f(v) - \frac{k}{h} \left(\frac{f(v) - f(u)}{v-u}\right)(f(v) - f(u))\right) \ ,
+                \]
+                which leads to
+                \[
+                \widetilde{Q}^{LW}(u,v) = \frac{k}{h} \left(\frac{f(v) - f(u)}{v-u}\right)^2 \ ,
+                \]
+                which is clearly positive. Using \eqref{mvt}, we have
+                \[
+                \widetilde{Q}^{LW}(u_i, u_{i+1}) = \frac{k}{h} \left(f^\prime(\xi_\iph)\right)^2.
+                \]
+                In order to satisfy the right condition of \eqref{1n2n3}, we need
+                \[
+                \frac{k}{h}| f^\prime(\xi_\iph)| \geq 1
+                \]
+                which violates the CFL condition \eqref{cfl}.
+                }
+                
+                \item For the Roe flux, we can once again show that \eqref{1n2n3} is satisfied by using \eqref{mvt} and \eqref{cfl}.
+                \end{itemize}
+                
+                \item Note that the Roe flux satisfies the condition of Harten's lemma, and thus leads to a TVD scheme. But we know that the Roe scheme may give entropy violating solutions. This implies that the TVD property alone does not ensure convergence to entropy solutions.
+                
+        \end{enumerate}
+\end{solution}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+\begin{exercise}
+        Let $f(u) = c u$. Consider a scheme with the hybrid flux,
+        \[
+        F(u,v) = \theta F^{LW} + (1-\theta) F^{LF}, \quad 0 \leq \theta \leq 1,
+        \]
+        which is nothing but a convex combination of the Lax-Friedrich and Lax-Wendroff fluxes.
+        Assuming the usual CFL condition, can you find a $\theta$ that will lead to a TVD scheme?
+\end{exercise}
+
+
+\begin{solution}
+        Let us consider the hybrid flux 
+        \[
+        F^\theta(u,v) = \theta F^{LW} + (1-\theta) F^{LF}, \quad 0 \leq \theta \leq 1,
+        \]
+        which can also be written as
+        \[
+        F^\theta(u,v) = \frac{1}{2} \left( f(u) + f(v) - Q^\theta(u,v) (v-u)\right) \ , 
+        \]
+        where
+        \[
+        Q^\theta(u,v) = \theta Q^{LW}(u,v) + (1-\theta) Q^{LF}(u,v)\ .
+        \]
+        Assuming the flux to be linear, i.e., $f(u) = cu$, we get the simplified expression
+        \begin{gather} \label{hybQ}
+        Q^\theta(u,v) = \theta \frac{k}{h} c^2 + (1-\theta) \frac{h}{k} = \theta\left[ \left(\frac{k}{h} c\right)^2 - 1\right]\frac{h}{k} + \frac{h}{k}\ ,
+        \end{gather}
+        while the condition \eqref{1n2n3} reduces to 
+        \begin{gather} \label{1n2n3_lin}
+        \frac{h}{k} \geq Q \geq |c|\ .
+        \end{gather}
+        If the left inequality of \eqref{1n2n3_lin} need to hold, we must have
+        \[
+        \theta\left[ \left(\frac{k}{h} c\right)^2 - 1\right]\frac{h}{k} + \frac{h}{k} \leq \frac{h}{k} \quad \iff \quad \left(\frac{k}{h} c\right)^2 \leq 1 \quad \iff \quad \frac{k}{h} |c| \leq 1\ ,
+        \]
+        which is always true due to the CFL condition \eqref{cfl}. The right inequality of \eqref{1n2n3_lin} requires
+        \begin{align*}
+        \theta\left[ \left(\frac{k}{h} c\right)^2 - 1\right]\frac{h}{k} + \frac{h}{k} \geq |c| &\quad \iff \quad \theta\left[ \left(\frac{k}{h} c\right)^2 - 1\right]\geq \frac{k}{h} |c| -1 \\
+        &\quad \iff \quad \theta \leq \frac{1}{\frac{k}{h} |c| + 1} = \theta^* \quad \text{(using CFL condition)}.
+        \end{align*}
+        Thus, by choosing $\theta \in [0,\theta^*]$, we can recover a TVD scheme.        
+\end{solution}
+
 
 
 
