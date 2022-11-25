@@ -1,0 +1,382 @@
+%Typeset with LaTeX
+%\documentclass{owrart}
+\documentclass[10pt,reqno]{amsart}
+\usepackage[a4paper,margin=1.0in]{geometry}
+\UseRawInputEncoding
+%% -------------------------------------------------------------------------------
+%% Enter additionally required packages below this comment.
+\usepackage{algorithm}
+\usepackage{algpseudocode}
+
+\makeatletter
+% Reinsert missing \algbackskip
+\def\algbackskip{\hskip-\ALG@thistlm}
+\makeatother
+
+\usepackage{amsmath}
+\usepackage{mathtools}
+%\usepackage[a4paper]{geometry}
+%\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{mathrsfs}
+\usepackage{bm}
+\usepackage{algpseudocode}
+\usepackage{upgreek}
+\usepackage{subcaption}
+% \usepackage{showkeys} %%%%%%%%%
+% \usepackage{amscd}
+% \usepackage{latexsym}
+% \usepackage{nicefrac} 3
+% \usepackage{cite}
+ %\usepackage{epic}
+% \usepackage{eepic}
+% \usepackage{fancybox}
+\newcommand{\bsnul}{{\boldsymbol 0}}
+\newcommand{\cNN}{{\mathcal {NN}}}
+
+\usepackage{graphicx}
+\usepackage{epstopdf}
+
+\mathtoolsset{showonlyrefs}
+
+%\usepackage{epstopdf}
+%\usepackage{graphicx} 
+
+%\usepackage[pdf]{pstricks}
+
+\usepackage[shortlabels]{enumitem}
+%Standard operator
+\newcommand{\abs}[1]{\lvert #1\rvert}
+\newcommand{\supp}{Peratorname{supp}}
+\newcommand{\grad}{{\mathbf{grad}}}
+\newcommand{\curl}{\normalfont{\text{curl}}}
+\newcommand{\Log}{\text{Log}}
+\newcommand{\cc}{{\normalfont{\text{c}}}}
+\newcommand{\loc}{{\normalfont{\text{loc}}}}
+
+\DeclareMathOperator*{\argmax}{arg\,max}
+\DeclareMathOperator*{\argmin}{arg\,min}
+
+% Package for colors
+\usepackage{xcolor}
+\definecolor{ao}{rgb}{0.0, 0.5, 0.0}
+
+%Edit colors
+\newcommand{\CS}[1]{{\color{magenta}{#1}}}
+\newcommand{\ra}[1]{{\color{blue}{#1}}}
+\newcommand{\fh}[1]{{\color{cyan}{#1}}}
+\newcommand{\todo}[1]{{\color{red}[#1]}}
+
+\newcommand{\com}[1]{{\color{red} [#1]}}
+
+%\usepackage{fancyhdr}
+%\usepackage{datetime}
+%
+%\fancyhf{}
+%\fancyfoot[L]{\fontsize{10}{12} \today \ \currenttime}
+%\pagestyle{fancy} \usepackage{tikz}
+
+\DeclareSymbolFont{extraup}{U}{zavm}{m}{n}
+\DeclareMathSymbol{\varheart}{\mathalpha}{extraup}{86}
+\DeclareMathSymbol{\vardiamond}{\mathalpha}{extraup}{87}
+
+\usepackage{chngcntr}
+\counterwithout{equation}{subsection}
+\counterwithout{equation}{section} 
+
+\usepackage{tikz}
+
+\newcommand\encircle[1]{%
+  \tikz[baseline=(X.base)] 
+    \node (X) [draw, shape=circle, inner sep=0] {\strut #1};}
+
+\usepackage{pifont}
+
+\usepackage{fancyhdr}
+\usepackage[us,12hr]{datetime} % `us' makes \today behave as usual in TeX/LaTeX
+\fancypagestyle{plain}{
+\fancyhf{}
+\rhead{\footnotesize Version of \today}
+\lhead{\thepage}
+\renewcommand{\headrulewidth}{0pt}}
+\pagestyle{plain}
+
+\usepackage{color}
+\newcommand{\half}{\frac{1}{2}}
+
+\newcommand{\norm}[1]{\left \lVert #1 \right \rVert}
+\newcommand{\snorm}[1]{\left \lvert #1 \right \rvert}
+
+%fields, mathbb operators
+\newcommand{\IR}{\mathbb{R}}
+\newcommand{\IC}{\mathbb{C}}
+\newcommand{\IZ}{\mathbb{Z}}
+\newcommand{\IQ}{\mathbb{Q}}
+\newcommand{\IN}{\mathbb{N}}
+\newcommand{\IT}{\mathbb{T}}
+
+% Boundary Integral Operators
+\newcommand{\OV}{\mathsf{V}}
+\newcommand{\OK}{\mathsf{K}}
+\newcommand{\OW}{\mathsf{W}}
+% 
+
+%
+%\DeclareMathOperator*{\argmax}{arg\,max}
+%\DeclareMathOperator*{\argmin}{arg\,min}
+
+\newcommand{\OA}{\mathsf{A}}
+\newcommand{\Id}{\mathsf{Id}}
+\newcommand{{\D}}{\normalfont{\text{D}}}
+\newcommand{{\G}}{\normalfont{\text{G}}}
+\newcommand{{\U}}{\normalfont{\text{U}}}
+\newcommand{{\I}}{\normalfont{\text{I}}}
+\newcommand{{\per}}{\normalfont{\text{per}}}
+\newcommand{{\y}}{{\boldsymbol{{y}}}}
+\newcommand{\Of}{\mathsf{f}}
+
+\newcommand{{\bc}}{{\bf c}}
+\newcommand{{\bx}}{{\bf x}}
+\newcommand{{\by}}{{\bf y}}
+\newcommand{{\bz}}{{\bf z}}
+\newcommand{{\bd}}{{\bf d}}
+\renewcommand{\d}{\!\!\operatorname{d}}
+
+% Traces
+\newcommand{\traced}{\gamma_{\text{D}}}
+\newcommand{\tracen}{\gamma_{\text{N}}}
+\newcommand{\dual}[2]{\left \langle #1,#2 \right \rangle}
+\newcommand{\dotp}[2]{\left ( #1,#2 \right )}
+
+% Matrix trace
+\newcommand{\tr}[1]{\text{tr}\left ( #1 \right )}
+
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{prob}[theorem]{Problem}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{assumption}[theorem]{Assumption}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{example}[theorem]{Example}
+\newtheorem{problem}[theorem]{Problem}
+
+\theoremstyle{remark}
+\newtheorem{remark}{Remark}
+%\newtheorem{assumption}[remark]{Assumption}
+%\newtheorem{example}[remark]{Example}
+%\newtheorem{problem}[thm]{Problem}
+
+
+%\numberwithin{equation}{section}
+
+\begin{document}
+%\begin{talk}
+%
+%---------
+% TITLE
+%---------
+%
+
+\title{Exercise Set 3\\ 
+MATH-459--Numerical Methods for Conservation Laws \\  
+Autumn Semester 2021
+}
+
+\author{Professor: Martin W. Licht \\ Assistant: Fernando Henriquez B. \\ Published on 6.10.21} 
+
+\maketitle
+
+\subsection*{Problem 1. Liu's Entropy Condition}
+Consider the conservation law 
+\begin{align}
+	\frac{\partial u}{\partial t}
+	+
+	\frac{\partial f(u)}{\partial x}
+	= 0 
+\end{align}
+where $f(u) = e^u$. We discuss the Riemann problem
+\begin{align}
+	u_0(x) = 
+	\left\{
+	\begin{array}{cl}
+	u_l, & \text{for} \quad x<0,\\
+	u_r, &\text{for} \quad x > 0
+	\end{array}
+	\right.
+\end{align}
+\begin{enumerate}
+\item Show that when $u(x,t)$ is a weak solution and $\lambda > 0$, then $u(\lambda x, \lambda t)$ is a weak solution too.
+\item Suppose that the solution has a shock wave with values $u_l$ and $u_r$ to the left and to the right, respectively.
+Which values $u_l$ and $u_r$ are admissible on the basis of Liu's entropy condition?
+\end{enumerate}
+\textit{Remark: the scale invariance above suggests that "physical" solutions to the Riemann problem should be scale-invariant themselves.}
+
+
+\subsection*{Problem 2. Entropy Solutions}
+Consider the conservation law 
+\begin{align}
+	\frac{\partial u}{\partial t}
+	+
+	\frac{\partial f(u)}{\partial x}
+	= 0,
+	\quad
+	u(x,0)=u_0(x),
+\end{align}
+and $f(u) = u^2$.
+Consider the following initial conditions
+\begin{align}
+	\text{(a)}
+	\,\,\;\;
+	u_0(x) = 
+	\left\{
+	\begin{array}{cl}
+	1, & \text{for} \quad x<-1,\\
+	0, &\text{for} \quad -1<x< 1,\\
+	-1, &\text{for} \quad x > 1
+	\end{array}
+	\right.
+	\quad
+	\text{and}
+	\quad
+	\text{(b)}
+	\,\,\;\;
+	u_0(x) = 
+	\left\{
+	\begin{array}{cl}
+	-1, & \text{for} \quad x<-1,\\
+	0, &\text{for} \quad -1<x < 1, \\
+	1, &\text{for} \quad x > 1.
+	\end{array}
+	\right.
+\end{align}
+Draw the profile of $u_0(x)$ and sketch the characteristics
+of the entropy solution $u(x,t)$ in the $x-t$ plane, and
+determine $u(x,t)$ for all $t > 0$.
+
+\subsection*{Problem 3. Weak and Entropy Solutions}
+Show that for every $\alpha>1$ the function
+\begin{align}
+	u_\alpha(x,t)
+	=
+	\left\{
+	\begin{array}{cl}
+	-1, & 2x<(1-\alpha) t, \\
+	-\alpha,& (1-\alpha)t<2x<0, \\
+	\alpha, & 0<2x<(\alpha-1)t, \\
+	1, & (\alpha-1) t< 2x,
+	\end{array}
+	\right.
+\end{align}
+is a weak solution of the problem
+\begin{align}\label{eq:burgers_conservation_law}
+	\frac{\partial u}{\partial t}
+	+
+	\frac{\partial f(u) }{\partial x}
+	= 0,
+	\quad
+	u(x,0)
+	=
+	\left\{
+	\begin{array}{cl}
+	-1, & \text{for} \quad x<0,\\
+	1, &\text{for} \quad x>0
+	\end{array}
+	\right.
+\end{align}
+with $f(u) = u^2/2$.
+Are there any values of $\alpha$
+for which $u_\alpha(x,t)$ is an entropy solution
+of \eqref{eq:burgers_conservation_law}?
+
+\subsection*{Problem 4. Traffic Flow Equation}
+Consider the traffic flow equation
+\begin{align}
+	\frac{\partial q}{\partial t}
+	+
+	\frac{\partial}{\partial x}
+	f(q)
+	=
+	0,
+\end{align}
+where $q(x,t)$ is the car density, $U(q)$ is the traffic speed
+as a function of the car density
+and $f(q) = q U(q)$.
+A simple model for traffic flow is obtained by taking
+\begin{align}
+	U(q)
+	=
+	u_m
+	\left(
+		1-\frac{q}{q_m}
+	\right),
+\end{align}
+with $u_m>0$ and $q_m$ being the maximum speed
+and maximum car density, respectively.
+If the car density is maximal, we say that the traffic is ``bumper-to-bumper''.
+At zero density (empty road), the traffic speed is $u_m$.
+As $q$ approaches $q_m$, the speed decreases to zero. The model then reads
+\begin{align}\label{eq:traffic}
+	\frac{\partial q}{\partial t}
+	+
+	\frac{\partial}{\partial x}
+	u_m
+	\left(
+		q-\frac{q^2}{q_m}
+	\right)
+	=
+	0.
+\end{align}
+We equip \eqref{eq:traffic} with the initial condition
+\begin{align}\label{eq:init_cond}
+	q(x,0)
+	=
+	\left\{
+	\begin{array}{cl}
+	q_l, & \text{for} \quad x<0,\\
+	q_r, &\text{for} \quad x>0.
+	\end{array}
+	\right.
+\end{align}
+\begin{itemize}
+\item[(a)] {\bf The green light problem.}
+Assume that the traffic is standing at a red light, placed at $x = 0$, while the road ahead is empty.
+At time $t = 0$, the traffic light turns green and we want to describe the car flow
+evolution for $t>0$. To represent this situation, we set $q_l = q_m$ and $q_r =0$ in
+\eqref{eq:init_cond}.
+Draw the profile of $u_0(x)$ and sketch the characteristics
+of the entropy solution $u(x,t)$ in the $x-t$ plane, and
+determine $u(x,t)$ for all $t > 0$.
+\item[(b)] {\bf Traffic jam ahead.}
+We now consider the initial density profile 
+with $q_l = \frac{1}{8}q_m$ and $q_r =q_m$.
+For $x > 0$, the density is maximal and therefore the traffic is ``bumper-to-bumper''.
+The cars on the left move with speed $U = \frac{7}{8}u_m$, so that we expect congestion.
+Draw the profile of $u_0(x)$ and sketch the characteristics
+of the entropy solution $u(x,t)$ in the $x-t$ plane, and
+determine $u(x,t)$ for all $t > 0$.
+\item[(c)] {\bf Entropy Solutions.}
+Show that for the traffic flow equation \eqref{eq:traffic}, 
+the condition $q_l <q_r$ is required for a shock to be admissible. 
+Do this by verifying each of the following conditions:
+\begin{itemize}
+	\item[(i)]
+	The entropy condition $f'(q_l) >s > f'(q_r)$.
+	\item[(ii)]
+	There exists an entropy function $\eta(q)$
+	and a corresponding entropy flux 
+	$\psi(q)$ such that
+	\begin{align}
+		s(\eta(q_r)-\eta(q_l))
+		\geq
+		\psi(q_r)
+		-
+		\psi(q_l)
+	\end{align}
+	holds if and only if $q_l<q_r$.
+\end{itemize}
+\end{itemize}
+\bibliography{ref}{}
+\bibliographystyle{plain}
+\end{document}

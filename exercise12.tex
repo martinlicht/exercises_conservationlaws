@@ -1,0 +1,102 @@
+\documentclass{article}
+
+
+
+\usepackage{../auxFiles/ExStyPac}
+
+
+
+\input ../auxFiles/mac.tex
+\graphicspath{{./figures/}}
+
+
+
+
+
+%========================================================================
+\begin{document}
+
+
+
+\Head{12}{WENO Reconstruction}
+
+
+
+
+
+
+
+
+\begin{exerciseList}
+
+
+\item
+The WENO reconstruction is based on a convex combination, with coefficients $\om_r$, of approximations $v_{i+1/2}\hpar{r}$ calculated on $k$ different stencils.
+The coefficients $\om_r$ depend on another set of coefficients $d_r$ and some smoothness indicators $\beta_r$.
+
+\begin{enumerate}
+
+
+
+\item
+The Smoothness indicators $\beta_r$ are defined by
+\begin{gather} \label{smWts}
+	\beta_r=\sum_{l=1}^{k-1}\Delta x^{2l-1}
+		\int_{x_i-1/2}^{x_{i+1/2} }\rb{\frac{\dif^lp_r}{\dif x^l}\rb{x}}^2\dif x
+	\qquad\qquad r=0,\ldots,k-1\ .
+\end{gather}%
+For $k=2$ (3rd-order reconstruction), this yields the following expressions:
+\begin{gather} \label{eqSW21}
+	\beta_0 =\rb{\ol U_{i+1}-\ol U_{i}}^2\ ,
+	\qquad\qquad
+	\beta_1 =\rb{\ol U_{i}-\ol U_{i-1}}^2\ .
+\end{gather}%
+Verify \eqref{eqSW21}.
+
+
+\item
+The coefficients $d_r$ are chosen so that
+\begin{gather}%
+	\sum_{r=0}^{k-1} d_rv_{i+1/2}\hpar{r}=v\frb{x_{i+1/2}}+O\frb{\Del x^{2k-1}}\ .
+\end{gather}%
+For $k=2,3$,
+\begin{align}
+\label{dk2}
+	k=2: \quad & d_{0}=\frac{2}{3}\ ,\quad d_{1}=\frac{1}{3}\\
+	k=3: \quad & d_{0}=\frac{3}{10}\ ,\quad d_{1}=\frac{3}{5}\ ,\quad d_{2}=\frac{1}{10}\ .
+\end{align}
+Explain how these values are obtained and verify \eqref{dk2}.
+
+\end{enumerate}
+
+\item
+Write a program that implements WENO reconstruction for both $k=2,3$. The indicators $\beta_r$ for $k=3$ are in the lecture notes.
+
+\item Write a finite volume code for
+\[
+u_t + au_x = 0
+\]
+where the interface values are obtained by using the WENO reconstruction. Plug these values in the Godunov flux, and integrate the semi-discrete scheme using SSP-RK3. Implement the following initial conditions on the domain $[-1,1]$ with periodic BC
+\begin{gather} \label{inData1}
+	v_0(x)=\sin(\pi x)\ ,  
+	\quad
+	T_f = 5
+\end{gather}%
+\begin{gather} \label{inData2}
+	v_0(x)=\begin{cases}
+		1 & |x|<0.5\\
+		-1 & |x|>0.5
+	\end{cases}\ ,
+	\quad
+	T_f = 0.5.
+\end{gather}%
+Use a CFL of 0.5 to evaluate the time-step. 
+
+\item
+Run the code for $k=2,3$ and $a=1$. Do you recover the expected order of convergence for \eqref{inData1}? Is the solution oscillatory for \eqref{inData2}?
+
+
+
+\end{exerciseList}
+
+\end{document}

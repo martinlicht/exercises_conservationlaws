@@ -1,0 +1,69 @@
+\documentclass{article}
+
+
+
+\usepackage{../auxFiles/ExStyPac}
+
+\newcommand{\iph}{{i + \frac{1}{2}}}
+\newcommand{\imh}{{i - \frac{1}{2}}}
+
+\input ../auxFiles/mac.tex
+\graphicspath{{./figures/}}
+
+
+
+
+
+%========================================================================
+\begin{document}
+
+
+
+\Head{10}{High-order schemes and stencil selection}
+
+
+
+Consider the linear advection equation
+\begin{gather} \label{linadv}
+	u_t + a u_x = 0\ .
+\end{gather}%
+We can construct a high-order scheme for \eqref{linadv} by suitably reconstructing the interface values (which is used to evaluate the numerical flux), followed by a Runge-Kutta integration in time. In each cell $i$, a quadratic polynomial can be obtained using the cell-average values, by choosing one of the following stencils
+\[
+S_r = \{x_{i-r}\ , \ x_{i+1-r}\ , \ x_{i+2-r} \}, \quad r = 0,1,2
+\]
+where $r$ represents the number of cells to the left of cell $i$ in the stencil $S_r$. For a fixed $r$, the left and right interface values can be expressed as
+\begin{gather} \label{rec}
+u_\iph^- = \sum \limits_{j=0}^2 c_{rj} \overline{u}_{i-r+j}\ , \qquad  u_\imh^+ = \sum \limits_{j=0}^2 \tilde{c}_{rj} \overline{u}_{i-r+j}
+\end{gather}%
+each of which are third-order accurate approximations. 
+
+
+\begin{exerciseList}
+
+\item 
+Find the coefficients ${c}_{rj}$ and $\tilde{c}_{rj}$ for $r,j = 0,1,2$. (You could use two methods to obtain these: i) differentiating the interpolating polynomial for the primitive of $u$, or ii) directly using Taylor series expansions and trying to satisfy order constraints.)
+
+\item Write a finite volume code for \eqref{linadv}, where the interface values can be obtained by using either of the three stencils. Plug these values in the Godunov flux, and integrate the semi-discrete scheme using SSP-RK3. Implement the following initial conditions on the domain $[-1,1]$
+\begin{gather} \label{inData1}
+	u_0(x)=\sin(\pi x)\ ,  
+	\quad
+	T_f = 5, \quad \text{with periodic BC}
+\end{gather}%
+\begin{gather} \label{inData2}
+	u_0(x)=\begin{cases}
+		1 & x<0\\
+		-1 & x>0
+	\end{cases}\ ,
+	\quad
+	T_f = 0.5, \quad \text{with open BC}.
+\end{gather}%
+Use a CFL of 0.2 to evaluate the time-step. 
+
+\item
+Run the code for $r=0,1,2$ and $a=1$. What do you observe with each type of stencil? Do you recover 3rd-order convergence for \eqref{inData1}? How do the results change if you choose $a=-1$ instead?
+
+
+
+\end{exerciseList}
+
+\end{document}

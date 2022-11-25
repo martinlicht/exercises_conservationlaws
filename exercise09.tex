@@ -1,0 +1,74 @@
+\documentclass{article}
+
+
+
+\usepackage{../auxFiles/ExStyPac}
+
+
+
+\input ../auxFiles/mac.tex
+\graphicspath{{./figures/}}
+
+
+
+
+
+%========================================================================
+\begin{document}
+
+
+
+\Head{9}{High-order schemes and MUSCL reconstruction}
+
+
+
+Consider the one dimensional acoustics equation
+\begin{gather} \label{AcEq}
+	\sqb{\mat{ p \\ v }}_{t} +\sqb{\mat{ u_{0} & K_{0} \\ 1/\rho_{0} & u_{0}}} \sqb{\mat{ p \\ v }}_{x}=0\ .
+\end{gather}%
+This is the same linear system considered in Exercise Set 7. You can re-use and extend the codes written earlier.
+
+
+
+
+\begin{exerciseList}
+
+
+\item
+Consider the code you have written for \eqref{AcEq} using the Godunov flux, with the following three sets of initial conditions on the domain $[-1,1]$.
+\begin{gather} \label{inData1}
+	p(x,0)=\sin\frb{6\pi x}\ ,
+	\quad
+	v(x,0)=0, \quad \text{with periodic BC}
+\end{gather}%
+\begin{gather} \label{inData2}
+	p(x,0)=\begin{cases}
+		0 & x<0\\
+		1 & x>0
+	\end{cases}\ ,
+	\quad
+	v(x,0)=0, \quad \text{with open BC}.
+\end{gather}%
+\begin{gather} \label{inData3}
+	p(x,0)=\begin{cases}
+		1 & x<=0.5\\
+		\sin\frb{2\pi x} & -0.5<x<0.1\\
+		0 & x > 0.1
+	\end{cases}\ ,
+	\quad
+	v(x,0)=0, \quad \text{with open BC}.
+\end{gather}%
+Use $u_{0}=1/2$, $K_{0}=1$, $\rho_{0}=1$. Extend the code by implementing the second-order MUSCL scheme. Remember that you need to to evaluate intermediate solutions at times $t_{n+1/2}$ to ensure second-order temporal accuracy. To evaluate the slopes for the MUSCL scheme use
+\begin{itemize}
+\item Zero slope (this will reduce the scheme to first-order)
+\item The minmod limiter
+\item The MUSCL limiter
+\end{itemize} 
+
+\item Solve the problem on a mesh with $h=0.02$ until time $T=0.4$, and compare the solutions with each approach and the exact solution. The time step must be appropriately chosen to satisfy the CFL condition. What can you conclude about the various methods used?
+
+
+
+\end{exerciseList}
+
+\end{document}

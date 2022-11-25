@@ -1,0 +1,421 @@
+\documentclass{article}
+
+\usepackage{../auxFiles/ExStyPac}
+
+
+\usepackage[framed]{../auxFiles/mcode}
+
+
+
+
+
+\input ../auxFiles/mac.tex
+
+
+
+
+
+
+
+%========================================================================
+\begin{document}
+
+\Head{4}{Finite Difference Schemes (Solution)}
+
+
+
+
+
+
+\begin{exerciseList}
+
+
+
+\item
+\begin{enumerate}
+\item
+{\textit{Consistency.}}\quad 
+A method is consistent if its local truncation error $T_k$ satisfies 
+\begin{gather} 	
+\tau_k(x,t)=O\frb{k^p}+O\frb{h^q}
+\qquad
+\text{where}\qquad p,q>0\ . 
+\end{gather} 
+Essentially, consistency tells us that we are approximating the solution of the correct PDE. 
+
+\item
+{\textit{Stability.}}\quad 
+A method $v^{n+1}=\cH_kv^n$ is stable if for each $T>0$ there exist constants $C$ and $k_0$, such that 
+\begin{gather} 	
+	\|\cH_k^n\|\le C \qquad\qquad 0\le 
+nk\le T\ , \quad 0<k<k_0\ . 
+\end{gather}
+
+\item
+{\textit{Convergence.}}\quad
+A method is convergent if the error $E_k$ satisfies 
+\begin{gather} 	
+	\lim_{k\to0} \max_{0\le kn\le T}\|E_k\frb{\cdot,kn}\| = 0 \ . 
+\end{gather} 
+\end{enumerate}
+
+The importance of stability is made clear by the Lax equivalence theorem. In class you have seen a proof of one direction of this equivalence: if a method $v^{n+1}=\cH_kv^n$ is consistent and stable, then it is convergent. 
+
+
+
+\item
+\begin{enumerate}\setcounter{enumii}{1}
+\item
+Let $u$ be a smooth solution of $u_t+au_x=0$. The local truncation error for the Leapfrog scheme is given by 
+\begin{gather} \label{LeapfTrunc}
+	k\tau_k(x,t)=u\frb{x,t+k}-u\frb{x,t-k}+\frac{ak}{h}\rb{u\frb{x+h,t}-u\frb{x-h,t}}\ . 
+\end{gather}
+Next, we expand all the terms on the right hand side of \deq{LeapfTrunc} about $(x,t)$. For example, we have $u\frb{x,t+k}$ and $u\frb{x,t-k}$ given by 
+\begin{gather}
+	u\frb{x,t+k}=u +u_tk +\frac{1}{2}u_{tt}k^2+O\frb{k^3} 
+\end{gather}
+and
+\begin{gather}
+	u\frb{x,t-k}=u -u_tk +\frac{1}{2}u_{tt}k^2+O\frb{k^3}\ , 
+\end{gather}
+where, for simplicity of notation, $u$, $u_t$ and $u_{tt}$ stands for $u(x,t)$, $u_t(x,t)$ and $u_{tt}(x,t)$, respectively. It is, thus, clear that 
+\begin{gather}
+	u\frb{x,t+k}-u\frb{x,t-k}=2ku_t+O\frb{k^3}\ .
+\end{gather}
+By repeating the calculation also for the translations in space $u(x\pm h,t)$, we get 
+\begin{gather}
+	k\tau_k(x,t)=2ku_t+O\frb{k^3} +\frac{ak}{h}\rb{2hu_x+O\frb{h^3}}\ , 
+\end{gather}
+which implies 
+\begin{gather}
+	\tau_k(x,t)=2\rb{u_t+au_x}+O\frb{k^2}+O\frb{h^2}\ . 
+\end{gather}
+Since $u$ satisfies $u_t+au_x=0$, the local truncation error is simply $\tau_k(x,t)=O\frb{k^2}+O\frb{h^2}$. 
+
+\item
+Notice that at the $n$-th time step, to calculate $v^{n+1}$, the Leapfrog scheme requires the values, not only $v^n$, but also of $v^{n-1}$.
+Compared to the LF and LW schemes which use only $v^n$ to calculate $v^{n+1}$, this is a clear disadvantage. In computations, keeping the numerical solution at more than one time level multiplies the size of memory required for the program.
+
+Another issue is obtaining the first values. In our example, the values of $v^0$ are obtained directly from the initial data, however the Leapfrog scheme requires another time level to work.
+So we must use other means to get $v^1$, and only then can we use the Leapfrog method to advance.
+\end{enumerate}
+
+
+
+
+
+
+\item
+To show that the Lax-Friedrichs (LF) scheme is stable provided 
+\begin{gather} \label{LF_stab_cond}
+	\frac{|a|k}{h}\le 1\ , 
+\end{gather} 
+we show that $\|\cH^n\|_\infty$ is bounded for all $n$, where $\cH$ is the operator defined by
+\begin{gather}
+	\cH v_j=\frac{1}{2}\rb{v_{j+1}+v_{j-1}} -\frac{ak}{2h}\rb{v_{j+1}-v_{j-1}}\ .
+\end{gather}
+(That is, the LF scheme is given by $v^{n+1}=\cH v^n$.)
+To do so, we suppose $v$ is some grid function, and calculate the norm of $\cH v$.
+We have
+\begin{gather}a	
+	\norm{\cH v^n}_\infty &=\norm{ \frac{1}{2}\rb{v_{j+1} +v_{j-1}} 
+			-\frac{ak}{2h}\rb{v_{j+1} -v_{j-1}}}_\infty, \\
+		&\le \frac{1}{2} \rb{\abs{1-\frac{ak}{h}}
+			+\abs{1+\frac{ak}{h}}}\ \norm{v^n}_\infty, \\
+		&\le	\norm{v^n}_\infty,	 
+\end{gather}a
+whenever (\ref{LF_stab_cond}) holds. Thus, 
+\begin{gather} 	
+	\|\cH^n\|_\infty \le \|\cH\|_\infty^n \le1
+	\qquad\qquad \forall n\in\N\ . 
+\end{gather}
+
+%Another approach uses the Fourier transform.
+%The following is a formal presentation of the method, however the arguments can be made rigorous.
+%By formally substituting
+%\begin{gather}
+%	v_j^n=e^{ij\tta}\hat v^n
+%\end{gather}
+%into the scheme, we find that $\hat v^n$ satisfies
+%\begin{gather}
+%	\hat v^{n+1}=\sqb{\frac{1}{2}\rb{e^{i\tta}+e^{-i\tta}} -\frac{ak}{2h}\rb{e^{i\tta}-e^{-i\tta}}}\hat v^n=:g\frb{\tta}\hat v^n\ .
+%\end{gather}
+%Since the Fourier transform preserves the 2-norm, the 2-norms of $v^n$ and $\hat v^n$ are equal.
+%Thus, to prove stability it suffices to show $|g\frb{\tta}|\le 1$, for all $\tta$.
+%Observing that
+%\begin{gather}
+%	g\frb{\tta}=\cos\tta-i\frac{ak}{2h}\, \sin\tta\ ,
+%\end{gather}
+%we have
+%\begin{gather}
+%	|g\frb{\tta}|^2=\cos^2\tta+\rb{\frac{ak}{2h}}\, \sin^2\tta=1-\rb{1-\rb{\frac{ak}{2h}}^2}\sin^2\tta\ ,
+%\end{gather}
+%which is less than or equal to one, for all $\tta$, if and only if \deq{LF_stab_cond} holds.
+
+
+
+\item
+
+Let us consider the scheme
+\begin{gather} \label{implicit} 	
+	v_j^{n+1}=v_j^n -\lambda \rb{v_{j}^{n+1} -v_{j-1}^{n+1}}, \quad \lambda = \frac{ak}{h}. 
+\end{gather} 
+Before trying to show stability, we first re-write the scheme (assuming periodic boundaries) as 
+\begin{gather} \label{implicit_1} 	
+	\rb{1 + \lambda} v_{j}^{n+1} -\lambda v_{j-1}^{n+1} =v_j^n \quad \implies \quad A v^{n+1} = v_n,
+\end{gather} 
+where 
+\begin{gather}
+A = \begin{bmatrix}
+1+\lambda & 0 & \dots & 0 & -\lambda \\
+-\lambda & 1+\lambda & 0 & \dots & 0 \\
+\ddots & \ddots & \ddots & 0 & 0\\
+0 & \ddots & \ddots & \ddots & 0 \\
+0 & \dots & 0 & -\lambda & 1 + \lambda
+\end{bmatrix}
+\end{gather}
+Note that we can now write the scheme in the form $v^{n+1} = \cH v^n$, where $\cH = A^{-1}$, provided $A$ is non-singular. Since $A$ is strictly diagonally dominant, its eigenvalues are non-zero by Gershgorin's theorem. This proves that $A$ is invertible. Furthermore, there is a nice theorem \cite{Varah} about a diagonally dominant matrix A , which says 
+\begin{gather}
+\|A^{-1}\|_\infty \leq \frac{1}{\alpha}, \quad \alpha = \min_k\left(|A_{kk}| - \sum_{j\neq k} |A_{kj}| \right).
+\end{gather}
+In our case, $\alpha = 1$. Thus, $\norm{\cH}_\infty = \norm{A^{-1}}_\infty \leq 1$. Since this condition holds independent of any CFL restrictions on $h$ and $k$, the scheme is unconditionally stable.
+
+
+
+\item
+\begin{enumerate}
+\item
+Matlab code for implementing the schemes to solve the advection equation can be found on the last two pages of this solution manual.
+
+\item
+In Figure 1, $u\frb{x,0.5}$ is plotted as solved by the Upwind, Lax-Friedrichs, Lax-Wendroff and Beam-Warming methods.
+
+\item
+Both the upwind and Lax-Friedrichs schemes capture the discontinuity.
+The upwind scheme, however, seems to produce less numerical dissipation.
+This is because the upwind scheme exploits that fact that information travels only in one direction.
+The higher order methods Lax-Wendroff and Beam-Warming both introduce oscillations around the discontinuities.
+
+\item[(d),(e)]
+\addtocounter{enumii}{2}
+See Figure 2.
+
+
+\item
+Notice how, on this problem with non-smooth solutions, the rate of convergence of the first order methods is now $O\frb{h^{1/2}}$, while the rate of convergence of the second order methods seem to be $O\frb{h^{0.6}}$ at best.
+\end{enumerate}
+
+
+
+
+
+\newpage
+\begin{figure}[H] 
+\begin{center}
+\subfigure[]{\includegraphics[width=8cm, height=6cm]{Upwind_Profile}}
+\subfigure[]{\includegraphics[width=8cm, height=6cm]{Lax-Friedrichs_Profile}}
+\subfigure[]{\includegraphics[width=8cm, height=6cm]{Lax-Wendroff_Profile}}
+\subfigure[]{\includegraphics[width=8cm, height=6cm]{Beam-Warming_Profile}}
+\caption{ The analytical solution and the numerical solution $u(x,t=0.5)$ for the advection equation on Riemann initial data with $a=1$, $h=0.005$, $\frac{k}{h}=0.5$.} 
+\end{center}
+\end{figure}
+
+
+
+\begin{figure}[H] 
+\begin{center}
+\subfigure[]{\includegraphics[width=8cm, height=6cm]{Upwind_Accuracy}}
+\subfigure[]{\includegraphics[width=8cm, height=6cm]{Lax-Friedrichs_Accuracy}}
+\subfigure[]{\includegraphics[width=8cm, height=6cm]{Lax-Wendroff_Accuracy}}
+\subfigure[]{\includegraphics[width=8cm, height=6cm]{Beam-Warming_Accuracy}}
+\caption{ The error as a function of resolution. The error is measured in 1-norm, the resolution is measured as the number of discretization points in the x dimension. }
+\end{center}
+\end{figure}
+
+
+
+
+\newpage
+
+
+
+\begin{lstlisting}
+% Solution03: Problem 5
+% This script was written for EPFL MATH459, Numerical Methods for
+% Conservation Laws. The scalar advection equation du/dx + du/dt = 0
+% with riemann initial data: u = 1 if x<0,  0 if x>0.
+% The problem is solved using the following schemes:
+%       1. Upwind
+%       2. Lax-Friedrichs
+%       3. Lax-Wendroff
+%       4. Beam-Warming
+% The solution is visualized and the accuracy of the scheme tested.
+
+clc
+clear all
+close all
+
+% Scheme Options: UW --> Upwind
+%                 LF --> Lax-Friedrichs
+%                 LW --> Lax-Wendroff
+%                 BW --> Beam-Warming
+% Task Options  : Solve --> To simply run the scheme with h=0.0025 and k/h = 0.5
+%                 Acc   --> Test accuracy of the scheme by generating Log-Log
+%                           plots
+Scheme 	= 'BW';
+Task 	= 'Acc';
+
+% Advection speed and final time
+a  = 1;
+Tf = 0.5;
+
+% Initial condition
+U0 =@(x,t) 1*(x-a*t < 0);
+
+% Set the function H for the scheme
+%   u^{n+1} = H(u^n)
+% as well as the number of ghost cells Ng needed at each end of the mesh (for
+% boundary conditions) and the scheme name for saving solutions.
+% Here lam = a*k/h and U is the extended solution vector
+if(strcmp(Scheme,'UW'))
+    Ng    = 1;
+    Hfunc =@(U,lam) (1 - lam)*U(2:end-1) + lam*U(1:end-2);
+    name  = 'Upwind';
+elseif(strcmp(Scheme,'LF'))
+    Ng    = 1;
+    Hfunc =@(U,lam) (1 - lam)/2*U(3:end) + (1 + lam)/2*U(1:end-2);
+    name  = 'Lax-Friedrichs';
+elseif(strcmp(Scheme,'LW'))
+    Ng    = 1;
+    Hfunc =@(U,lam) (1 - lam^2)*U(2:end-1) + (lam^2-lam)/2*U(3:end)...
+                     + (lam^2+lam)/2*U(1:end-2);
+    name  = 'Lax-Wendroff';
+elseif(strcmp(Scheme,'BW'))
+    Ng    = 2;
+    Hfunc =@(U,lam) (1 - 3*lam/2 + lam^2/2)*U(3:end-2) ...
+                    + (2*lam - lam^2)*U(2:end-3)...
+                    + (-lam + lam^2)/2*U(1:end-4);
+    name  = 'Beam-Warming';
+else
+    error('Unknown Scheme selected!!');
+end
+
+
+% Performing Tasks
+% Run scheme
+if strcmp(Task,'Solve')
+    fprintf('Solving problem with %s scheme\n',name)
+    
+    % Discretization
+    h  = 0.0025;
+    k  = 0.5*h;
+    x  = -1:h:1;
+    t  = 0:k:Tf;
+    N  = numel(x);
+    Nt = numel(t);
+    
+    % Set initial condition
+    U = U0(x,0);
+    
+    % Solve using the numerical scheme. We use open boundary conditions
+    lam = a*k/h;
+    plot_every = 10; % Plot after every 10 time instances
+    
+    for i = 2:Nt
+        Uext   = [ones(1,Ng)*U(1),U,ones(1,Ng)*U(N)];
+        U      = Hfunc(Uext,lam);
+        
+        if(mod(i,plot_every)==0 || i==Nt)
+            Uexact = U0(x,t(i));
+            figure(1)
+            plot(x,U,'-r','LineWidth',2)
+            hold all
+            plot(x,Uexact,'-k','LineWidth',2)
+            ylim([-0.5,1.5])
+            grid on;
+            legend('Numerical','Exact','Location','best')
+            title([name,', time = ',num2str(t(i))]);
+            hold off
+            set(gca,'XTick',-0.5:0.5:1,'FontSize',20)
+        end
+        
+    end
+    
+    % Save plot
+    FIG = figure(1);
+    fname = sprintf('%s_Profile.pdf',name);
+    set(FIG,'Units','Inches');
+    pos = get(FIG,'Position');
+    set(FIG,'PaperPositionMode','Auto','PaperUnits','Inches','PaperSize',[pos(3), pos(4)])
+    print(FIG,fname,'-dpdf','-r0')
+    
+% Accuracy test
+elseif strcmp(Task,'Acc')
+    fprintf('Finding accuracy of %s scheme\n',name)
+    H = 0.05*2.^(0:-1:-8);
+    E = zeros(numel(H),1);
+    n = zeros(numel(H),1);
+    % Find Error
+    for i = 1:numel(H)
+        
+        % Discretization
+        h  = H(i);
+        fprintf('... Solving for h = %f\n',h)
+        k  = 0.5*h;
+        x  = -1:h:1;
+        t  = 0:k:Tf;
+        N  = numel(x);
+        Nt = numel(t);
+        
+        % Set initial condition
+        U = U0(x,0);
+        
+        % Exact solution at final time
+        Uexact = U0(x,Tf);
+        
+        % Solve using the numerical scheme. We use open boundary conditions
+        lam = a*k/h;
+        
+        for j = 2:Nt
+            Uext   = [ones(1,Ng)*U(1),U,ones(1,Ng)*U(N)];
+            U      = Hfunc(Uext,lam);
+        end
+        
+        % Measure error in 1 norm
+        E(i) = sum(abs(U-Uexact))*h;
+        n(i) = N;
+    end
+    % Make loglog plot
+    p = polyfit(log(n),log(E),1);
+    FIG = figure(1);
+    loglog(n,E,'-ok');grid on;
+    xlabel('Resolution','FontSize',20);
+    ylabel('Error','FontSize',20);
+    title([name,'. Slope = ',num2str(p(1))],'FontSize',20);
+    set(gca,'FontSize',20)
+    set(FIG,'Units','Inches');
+    pos = get(FIG,'Position');
+    set(FIG,'PaperPositionMode','Auto','PaperUnits','Inches','PaperSize',[pos(3), pos(4)])
+    fname = sprintf('%s_Accuracy.pdf',name);
+    print(FIG,fname,'-dpdf','-r0')
+end
+
+
+
+
+
+
+
+\end{lstlisting}
+
+\end{exerciseList}
+\begin{thebibliography}{99}
+
+\bibitem{Varah}
+\newblock{A lower bound for the smallest singular value of a matrix}, by J. M. Varah.
+\newblock{\em Linear Algebra and its Applications, vol. 11, issue 1, pg 3-5, 1975}.
+ 
+\end{thebibliography}
+
+
+\end{document}

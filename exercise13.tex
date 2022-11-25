@@ -1,0 +1,137 @@
+\documentclass{article}
+
+
+
+\usepackage{../auxFiles/ExStyPac}
+
+
+
+\input ../auxFiles/mac.tex
+\graphicspath{{./figures/}}
+
+
+
+
+
+%========================================================================
+\begin{document}
+
+
+
+\Head{12}{Discontinuous Galerkin}
+
+
+
+
+
+
+
+
+
+
+Let $\Om=\Om_x\times\Om_t$, where $\Om_x=\rb{-1,1}$ is the spacial domain and $\Om_t=\rb{0,T}$ is the time domain.
+
+\begin{exerciseList}
+
+%\item
+%Consider the scalar problem
+%\begin{equation}
+%	u_t+au_x=bu
+%	\quad
+%	x\in\rb{-1,1}
+%\end{equation}
+%with proper initial conditions and $a$ and $b$ being real constants.
+%\textbf{(a)}
+%Propose a discontinuous Galerkin method for solving this problem.
+%\textbf{(b)}
+%Prove that the semi-discrete scheme is stable. 
+
+
+
+\item
+Consider the scalar PDE
+\begin{gather} \label{WEH}
+	u_t+au_x=g(x,t)
+\end{gather}%
+in $\Om$, with proper initial conditions and periodic boundary conditions.
+Here $a>0$ is a real constant.
+\begin{enumerate}
+
+\item
+Write the weak discontinuous Galerkin (DG) formulation for the problem.
+
+\item
+Pick an appropriate numerical flux and prove that the semi-discrete scheme is stable.
+% (Hint: To prove stability, consider the problem for the error between the computed and the exact solution - known as the error equation).
+\end{enumerate}
+
+
+
+
+\item
+Consider the system 
+\begin{gather}%a
+	u_{t}+v_{x} &=0\\
+	v_{t}+u_{x} &=0
+\end{gather}%a
+in $\Om$, subject to periodic boundary conditions.
+\begin{enumerate}
+
+\item
+Write the weak DG formulation for the problem.
+
+\item
+Show that the formulation with the upwind flux is stable.
+\end{enumerate}
+
+
+
+\item
+Consider the ODE system
+\begin{gather} \label{odeSys}
+	u'=L(u)\ .
+\end{gather}%
+Suppose there exists a positive constant $k_{FE}$ such that the forward Euler method
+$$
+	v^{n+1}=v^n+kL\frb{v^n}
+$$
+with $0< k\le k_{FE}$, applied to \eqref{odeSys} satisfies
+\begin{gather} \label{stabEst}
+	\|v^{n+1}\|\le\|v^n\|
+\end{gather}%
+in some norm $\|\cdot\|$.
+Show that the numerical approximation $U$ of \eqref{odeSys} obtained by the following 3rd-order Runga-Kutta method
+\begin{align*}
+	U^{\left(1\right)}= & U^{n}+kL\left(U^{n}\right)\\
+	U^{\left(2\right)}= & \frac{3}{4}U^{n}+\frac{1}{4}U^{\left(1\right)}+\frac{1}{4}kL\frb{U^{\left(1\right)}}\\
+	U^{n+1}= & \frac{1}{3}U^{n}+\frac{2}{3}U^{\left(2\right)}+\frac{2}{3}kL\frb{U^{\left(2\right)}}
+\end{align*}
+satisfies \eqref{stabEst}, provided $0< k\le k_{FE}$.
+
+
+%\item
+%Find the \emph{nodal} DG code on the course website.
+%\begin{enumerate}[label={\textbf{(\alph*)}}]
+%
+%\item
+%Modify the solver for the scalar advection equation to solve 
+%\begin{gather} \label{WEg}
+%	u_t+au_x=h(x,t)
+%	\quad
+%	x\in\rb{0,2}
+%\end{gather}%
+%with $a>0$ and 
+%\begin{gather}%
+%	u(0,t)=g\frb{t}\ ,\quad u(x,0)=f(x)\ .
+%\end{gather}%
+%
+%\item
+%Verify the convergence rate of the scheme for various $N$ on \eqref{WEg} with $h(x,t)=0$.
+%\end{enumerate}
+%
+
+
+
+\end{exerciseList}
+
+\end{document}

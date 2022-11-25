@@ -1,0 +1,139 @@
+\documentclass{article}
+
+
+
+\usepackage{../auxFiles/ExStyPac}
+
+
+
+\input ../auxFiles/mac.tex
+\graphicspath{{./figures/}}
+
+
+
+
+
+%========================================================================
+\begin{document}
+
+
+
+\Head{5}{Conservative Methods}
+
+
+
+
+
+\begin{exerciseList}
+
+
+\item
+Answer the following questions:
+\begin{enumerate}
+\item
+When is a numerical method said to be conservative?
+
+\item
+What is the benefit of using a conservative numerical method? (Hint: Take a look at the Lax-Wendroff Theorem)
+
+\item
+For a given conservation law and a conservative scheme, are we guaranteed that the weak solution obtained satisfies the entropy condition?
+\end{enumerate}
+
+\item
+Consider the conservative scheme with the \textit{Engquist-Osher} flux
+\begin{gather}
+F^{EO}(u,v) = \frac{1}{2} \rb{ f(u) + f(v) - \int \limits_u^v |f^\prime(\xi)|  d\xi}.
+\end{gather}
+\begin{enumerate}
+\item Show that the numerical flux leads to a monotone scheme under suitable CFL conditions.
+
+\item Assuming $f$ is convex with a single minima at $\omega$, show that the Engquist-Osher flux reduces to
+\begin{gather}
+F^{EO}(u,v) = f(\max(u,\omega)) + f(\min(v,\omega)) - f(\omega).
+\end{gather}
+\end{enumerate}
+
+
+\item
+In the previous exercises, we have seen that difficulties can arise when trying to approximate solution for linear problem. Additional issues can arise when dealing with non-linear problems. Consider the Burgers equation in the quasilinear form
+\begin{gather} \label{quasiLinBurg}
+	u_{t}+uu_{x}=0\ .
+\end{gather}
+A ``natural'' finite difference method can be obtained with a minor modification of the upwind method applied to the advection equation, assuming $v_{j}^{n}\geq0$ for all $j,n$:
+\begin{gather} \label{quasiLinUpWind}
+	v_{j}^{n+1}=v_{j}^{n}-\frac{k}{h}v_{j}^{n}\left(v_{j}^{n} -v_{j-1}^{n}\right).
+\end{gather}
+This method converges on smooth solutions.
+\begin{enumerate}
+\item
+Compute the numerical solution obtained by \deq{quasiLinUpWind}, driven by the initial condition
+\begin{gather} \label{inCond1}
+	u(x,0)=\begin{cases}
+			1\; & x<0\\
+			0\; & x\geq0
+		\end{cases}\ .
+\end{gather}
+Implement the method in Matlab and solve \deq{quasiLinBurg} up to $T=0.5$ in the interval $(-1,1)$ with initial condition \deq{inCond1}. In your computations use $k=0.5h$, $h=0.01$.
+
+
+\item
+Is the solution obtained a weak solution? Is it the entropy
+solution?
+
+\item
+Now use the following initial condition in your code 
+\begin{gather} \label{inCond2}
+	u\left(x,0\right)=\begin{cases}
+			1.2\; & x<0\\
+			0.4\; & x\geq0
+		\end{cases}\ .
+\end{gather}
+
+\item
+Compare the solution to the known entropy solution for Burgers, which can be constructed by considering the characteristics and shocks.
+\end{enumerate}
+
+
+\item
+\begin{enumerate}
+\item
+Apply the generalization of the Lax-Friedrichs method
+\begin{gather}
+	v_{j}^{n+1}=\frac{1}{2}\rb{v_{j+1}^{n}+v_{j-1}^{n}}
+		-\frac{k}{2h}\rb{f\frb{v_{j+1}^{n}}-f\frb{v_{j-1}^{n}}}
+\end{gather}
+to Burgers equation in conservation form,
+\begin{gather}
+	u_t+\rb{\frac{1}{2}\, u^2}_x=0\ ,
+\end{gather}
+with the initial conditions \deq{inCond1} and \deq{inCond2}.
+
+\item
+Does the numerical solutions converge to a weak solution?
+
+\item
+Is this the entropy solution?
+
+\item
+Show that the generalization of the Lax-Friedrichs method to nonlinear conservation laws can be written in conservative form.
+\end{enumerate}
+
+\item
+\begin{enumerate}
+\item
+Solve the Burgers equation with the Engquist-Osher flux and the initial conditions \deq{inCond1} and \deq{inCond2}.
+
+\item
+Does the solution converge to the entropy solution?
+
+\item
+How does the solution compare to that obtained with the Lax-Friedrichs scheme?
+
+\end{enumerate}
+
+
+
+\end{exerciseList}
+
+\end{document}

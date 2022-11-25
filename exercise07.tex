@@ -1,0 +1,134 @@
+\documentclass{article}
+
+
+
+\usepackage{../auxFiles/ExStyPac}
+
+
+
+\input ../auxFiles/mac.tex
+\graphicspath{{./figures/}}
+
+
+
+
+
+%========================================================================
+\begin{document}
+
+
+
+\Head{7}{Linear Systems}
+
+
+
+
+This exercise pertains to \emph{Godunov's method} for linear systems with constant coefficients,
+\begin{gather} \label{linSys}
+	q_{t}+Aq_{x}=0\ .
+\end{gather}%
+On linear systems, Godunov's method reduces to a generalization of the upwind method where the numerical flux is given by the following equivalent expressions 
+\begin{gather}%al{GudFlx}
+	F\frb{Q_l,Q_r} &=AQ_l+A^{-}\rb{Q_r-Q_l}\\
+		& =AQ_r-A^{+}\rb{Q_r-Q_l}
+		=\frac{1}{2}A\rb{Q_r+Q_l}-\frac{1}{2}|A|\rb{Q_r-Q_l}\ .
+\end{gather}%a
+Where $|A|=A^+-A^-$ and $A^{\pm}=S\Lambda^{\pm}S^{-1}$. Here $\Lam^+$ and $\Lam^-$ are diagonal matrices with non-negative and non-positive entries, respectively, such that $S^{-1}AS=\Lam$ is the spectral decomposition of $A$,  with $\Lam=\Lam^+ +\Lam^-$.
+Especially, notice that
+$$
+	A=A^{+}+A^{-}\ .
+$$
+Consider the one dimensional acoustics equation
+\begin{gather} \label{AcEq}
+	\sqb{\mat{ p \\ v }}_{t} +\sqb{\mat{ u_{0} & K_{0} \\ 1/\rho_{0} & u_{0}}} \sqb{\mat{ p \\ v }}_{x}=0\ .
+\end{gather}%
+This system is derived from the nonlinear Euler equation by linearizing around some fixed state, as sound waves are small perturbation in a background media.
+Here, $K_{0}$ is the compressibility modulus, and $u_{0}$ and $\rho_{0}$ are the the velocity and pressure, respectively.
+The speed of sound in the medium is given by
+$$
+	c_{0}=\sqrt{K_{0}/\rho_{0}}\ .
+$$
+
+
+
+
+\begin{exerciseList}
+
+
+%\item
+%Write Gudonov's scheme for \eqref{linSys} with flux \eqref{GudFlx}.
+
+
+\item
+For \eqref{AcEq}, calculate $A^{+}$ and $A^{-}$. 
+
+
+\item
+What is the CFL condition of Godunov's method for \eqref{AcEq}?
+
+
+\item
+Implement Godunov's method for \eqref{AcEq} the following two sets of initial data
+\begin{gather} \label{inData1}
+	p(x,0)=\sin\frb{2\pi x}\ ,
+	\quad
+	v(x,0)=0, \quad \text{with periodic BC}
+\end{gather}%
+\begin{gather} \label{inData2}
+	p(x,0)=\begin{cases}
+		0 & x<0\\
+		1 & x>0
+	\end{cases}\ ,
+	\quad
+	v(x,0)=0, , \quad \text{with open BC}.
+\end{gather}%
+Use $u_{0}=1/2$, $K_{0}=1$, $p_{0}=1$ and solve on the interval
+$x\in\left[-1,1\right]$ with $h=0.01$ to $T=0.4$ and an appropriate
+time-step satisfying the CFL condition.
+
+\item
+In the solution driven by \eqref{inData2}, are the discontinuities visible in the numerical solution at $T=0.4$? Plot and compare with the exact solution at the final time.
+
+\item
+Now, run your code with the initial data
+\begin{gather} \label{inData3}
+	p(x,0)=\begin{cases}
+		1 & x<0\\
+		\sin\frb{2\pi x} & x>0
+	\end{cases}\ ,
+	\quad
+	v(x,0)=0\ .
+\end{gather}%
+Does the exact solution preserve the discontinuities present in the initial condition? Are you able to observe the discontinuities in the numerical solution at $T=0.4$?
+
+
+
+
+%\item
+%The Godunov's method requires the solution of
+%Riemann problems at every cell boundary in each timestep. In practice,
+%solving all these Riemann problems is expensive, particularly for
+%nonlinear equation. In the Godunov method, outlined in solution set
+%4 to exercise set 4, we discard most information in the solved Riemann
+%problem by taking the average of the solution over the grid cell.
+%In this process large numerical errors are introduced. This suggest
+%that we may be able to obtain equally good numerical results with
+%an \textbf{approximate Riemann} solution obtained by less expensive
+%means. There are many ways to go about constructing an approximate
+%Riemann solver, one of the most popular Riemann solvers currently
+%in use is the Roe's approximate Riemann solver. This method was presented
+%during the lecture. The idea is to solve a constant coeffiicient linear
+%system of conservation laws instead of the original nonlinear system,
+%i.e., solve a modified conservation law with flux $\hat{f}\left(u\right)=\hat{A}\left(u_{l},u_{r}\right)u$
+%for each cell boundary. \textbf{(a)} State the conditions that should
+%be imposed on the coefficient matrix $\hat{A}\left(u_{l},u_{r}\right)$.
+%\textbf{(b)} What does each statement imply? \textbf{(c)} Determine
+%$\hat{A}\left(u_{l},u_{r}\right)$ for a general scalar conservation
+%law. \textbf{(d)} Determine a numerical flux function when using Roe's
+%approximate Riemann solver.
+
+
+
+\end{exerciseList}
+
+\end{document}

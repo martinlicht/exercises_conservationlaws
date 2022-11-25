@@ -1,0 +1,476 @@
+%Typeset with LaTeX
+%\documentclass{owrart}
+\documentclass[10pt,reqno]{amsart}
+\usepackage[a4paper,margin=1.0in]{geometry}
+\UseRawInputEncoding
+%% -------------------------------------------------------------------------------
+%% Enter additionally required packages below this comment.
+\usepackage{algorithm}
+\usepackage{algpseudocode}
+
+\makeatletter
+% Reinsert missing \algbackskip
+\def\algbackskip{\hskip-\ALG@thistlm}
+\makeatother
+
+\usepackage{amsmath}
+\usepackage{mathtools}
+%\usepackage[a4paper]{geometry}
+%\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{mathrsfs}
+\usepackage{bm}
+\usepackage{algpseudocode}
+\usepackage{upgreek}
+\usepackage{subcaption}
+% \usepackage{showkeys} %%%%%%%%%
+% \usepackage{amscd}
+% \usepackage{latexsym}
+% \usepackage{nicefrac} 3
+% \usepackage{cite}
+ %\usepackage{epic}
+% \usepackage{eepic}
+% \usepackage{fancybox}
+\newcommand{\bsnul}{{\boldsymbol 0}}
+\newcommand{\cNN}{{\mathcal {NN}}}
+
+\usepackage{graphicx}
+\usepackage{epstopdf}
+
+\mathtoolsset{showonlyrefs}
+
+%\usepackage{epstopdf}
+%\usepackage{graphicx} 
+
+%\usepackage[pdf]{pstricks}
+
+\usepackage[shortlabels]{enumitem}
+%Standard operator
+\newcommand{\abs}[1]{\lvert #1\rvert}
+\newcommand{\supp}{Peratorname{supp}}
+\newcommand{\grad}{{\mathbf{grad}}}
+\newcommand{\curl}{\normalfont{\text{curl}}}
+\newcommand{\Log}{\text{Log}}
+\newcommand{\cc}{{\normalfont{\text{c}}}}
+\newcommand{\loc}{{\normalfont{\text{loc}}}}
+
+\DeclareMathOperator*{\argmax}{arg\,max}
+\DeclareMathOperator*{\argmin}{arg\,min}
+
+% Package for colors
+\usepackage{xcolor}
+\definecolor{ao}{rgb}{0.0, 0.5, 0.0}
+
+%Edit colors
+\newcommand{\CS}[1]{{\color{magenta}{#1}}}
+\newcommand{\ra}[1]{{\color{blue}{#1}}}
+\newcommand{\fh}[1]{{\color{cyan}{#1}}}
+\newcommand{\todo}[1]{{\color{red}[#1]}}
+
+\newcommand{\com}[1]{{\color{red} [#1]}}
+
+%\usepackage{fancyhdr}
+%\usepackage{datetime}
+%
+%\fancyhf{}
+%\fancyfoot[L]{\fontsize{10}{12} \today \ \currenttime}
+%\pagestyle{fancy} \usepackage{tikz}
+
+\DeclareSymbolFont{extraup}{U}{zavm}{m}{n}
+\DeclareMathSymbol{\varheart}{\mathalpha}{extraup}{86}
+\DeclareMathSymbol{\vardiamond}{\mathalpha}{extraup}{87}
+
+\usepackage{chngcntr}
+\counterwithout{equation}{subsection}
+\counterwithout{equation}{section} 
+
+\usepackage{tikz}
+
+\newcommand\encircle[1]{%
+  \tikz[baseline=(X.base)] 
+    \node (X) [draw, shape=circle, inner sep=0] {\strut #1};}
+
+\usepackage{pifont}
+
+\usepackage{fancyhdr}
+\usepackage[us,12hr]{datetime} % `us' makes \today behave as usual in TeX/LaTeX
+\fancypagestyle{plain}{
+\fancyhf{}
+\rhead{\footnotesize Version of \today}
+\lhead{\thepage}
+\renewcommand{\headrulewidth}{0pt}}
+\pagestyle{plain}
+
+\usepackage{color}
+\newcommand{\half}{\frac{1}{2}}
+
+\newcommand{\norm}[1]{\left \lVert #1 \right \rVert}
+\newcommand{\snorm}[1]{\left \lvert #1 \right \rvert}
+
+%fields, mathbb operators
+\newcommand{\IR}{\mathbb{R}}
+\newcommand{\IC}{\mathbb{C}}
+\newcommand{\IZ}{\mathbb{Z}}
+\newcommand{\IQ}{\mathbb{Q}}
+\newcommand{\IN}{\mathbb{N}}
+\newcommand{\IT}{\mathbb{T}}
+
+% Boundary Integral Operators
+\newcommand{\OV}{\mathsf{V}}
+\newcommand{\OK}{\mathsf{K}}
+\newcommand{\OW}{\mathsf{W}}
+% 
+
+%
+%\DeclareMathOperator*{\argmax}{arg\,max}
+%\DeclareMathOperator*{\argmin}{arg\,min}
+
+\newcommand{\OA}{\mathsf{A}}
+\newcommand{\Id}{\mathsf{Id}}
+\newcommand{{\D}}{\normalfont{\text{D}}}
+\newcommand{{\G}}{\normalfont{\text{G}}}
+\newcommand{{\U}}{\normalfont{\text{U}}}
+\newcommand{{\I}}{\normalfont{\text{I}}}
+\newcommand{{\per}}{\normalfont{\text{per}}}
+\newcommand{{\y}}{{\boldsymbol{{y}}}}
+\newcommand{\Of}{\mathsf{f}}
+
+\newcommand{{\bc}}{{\bf c}}
+\newcommand{{\bx}}{{\bf x}}
+\newcommand{{\by}}{{\bf y}}
+\newcommand{{\bz}}{{\bf z}}
+\newcommand{{\bd}}{{\bf d}}
+\renewcommand{\d}{\!\!\operatorname{d}}
+
+% Traces
+\newcommand{\traced}{\gamma_{\text{D}}}
+\newcommand{\tracen}{\gamma_{\text{N}}}
+\newcommand{\dual}[2]{\left \langle #1,#2 \right \rangle}
+\newcommand{\dotp}[2]{\left ( #1,#2 \right )}
+
+% Matrix trace
+\newcommand{\tr}[1]{\text{tr}\left ( #1 \right )}
+
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{prob}[theorem]{Problem}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{assumption}[theorem]{Assumption}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{example}[theorem]{Example}
+\newtheorem{problem}[theorem]{Problem}
+
+\theoremstyle{remark}
+\newtheorem{remark}{Remark}
+%\newtheorem{assumption}[remark]{Assumption}
+%\newtheorem{example}[remark]{Example}
+%\newtheorem{problem}[thm]{Problem}
+
+
+%\numberwithin{equation}{section}
+
+\begin{document}
+%\begin{talk}
+%
+%---------
+% TITLE
+%---------
+%
+
+\title{Exercise Set 3\\ 
+MATH-459--Numerical Methods for Conservation Laws \\  
+Autumn Semester 2021
+}
+
+\author{Professor: Martin W. Licht \\ Assistant: Fernando Henriquez B. \\ Published on 14.10.21} 
+
+\maketitle
+
+\subsection*{Problem 1. Total Variation of Rarefaction wave}
+
+Consider the rarefaction wave 
+\begin{align}
+ u(x,t)
+ = 
+ \left\{
+ \begin{array}{ll}
+    u_l & x < f'(u_l) t,
+    \\
+    \frac 1 2 \frac x t & f'(u_l)t < x < f'(u_r)t,
+    \\
+    u_r & f'(u_r)t < x.
+ \end{array}
+ \right.
+\end{align}
+This solves Burgers' equation ($f(u)=u^2$) with initial data 
+\begin{align}
+ u_{0}(x)
+ = 
+ \left\{
+ \begin{array}{cc}
+    u_l & x < 0,
+    \\
+    u_r & x > 0,
+ \end{array}
+ \right.
+\end{align}
+where $u_l < u_r$. 
+\begin{enumerate}
+ \item Compute the total variation of $u(\cdot,t)$ for all times $t \geq 0$.
+ \item Show that
+ \begin{align}
+  TV(u_{0}) = \sup\left\{ \int u_0(x) \phi'(x) dx \;\middle|\; \phi \in C^{1}(\mathbb R) \text{ with compact support}, \; \max |\phi| \leq 1 \right\}
+ \end{align}
+
+\end{enumerate}
+
+
+\textbf{Solution:}
+\begin{enumerate}
+ \item 
+ For $t = 0$, the total variation is just the jump of $u_0$, that is, $TV(u(\cdot,0)) = |u_l - u_r|$.
+ Therefore we now assume that $t > 0$.
+ 
+ The function $u$ is continuous, and it is constant outside of the interval $[ f'(u_l)t, f'(u_r)t ]$.
+ Using the formulation of total variation for piecewise smooth functions, we see that 
+ \begin{align}
+  TV(u(\cdot,t))
+  =
+  \int_{-\infty}^{\infty} | \partial_x u(\cdot,t) | dx
+  =
+  \int_{f'(u_l)t}^{f'(u_r)t} | \partial_x u(\cdot,t) | dx
+ \end{align}
+ We can substitute the definition of $u$ and the flux. Then we use the fundamental theorem of calculus:
+ \begin{align}
+  TV(u(\cdot,t))
+  =
+  \int_{2 u_l t}^{2 u_r t} \frac 1 {2t} dx
+  =
+  \frac 1 2 ( 2 u_l t - 2 u_r t ) \frac 1 {2t}
+  =
+  u_r - u_l.
+ \end{align}
+ Note that the total variation stays constant. 
+
+ 
+ \item Recall that $TV(u_{0}) = u_r - u_l$. Now pick any test function $\phi \in C^{1}(\mathbb R)$ with compact support, satisfying $\max |\phi| \leq 1$.
+ We compute 
+ \begin{align}
+  \int u_0(x) \phi'(x) dx
+  &
+  =
+  \int_{-\infty}^{0} u_0(x) \phi'(x) dx
+  +
+  \int_{0}^{-\infty} u_0(x) \phi'(x) dx
+  \\&
+  =
+  -
+  u_0(0-) \phi(x)
+  +
+  u_0(0+) \phi(x)
+  =
+  -
+  u_l \phi(x)
+  +
+  u_r \phi(x)
+  .
+ \end{align}
+ On the one hand, since $|\phi|$ is bounded from above by $1$, the integral is bounded from above by $u_r - u_l$.
+ This implies that the total variation is upper bound for the supremum.
+ On the other hand, the supremum attains the value $u_r - u_l$ when we pick any test function satisfying the above constraints 
+ such that $\phi(0) = 1$. 
+\end{enumerate}
+
+
+
+
+\subsection*{Problem 2. Rarefaction Wave}
+
+Find the rarefaction wave for the following conservation law and initial data:
+\begin{align}
+ \partial_t u + \partial_x \left( \exp(u) \right) = 0,
+ \quad 
+ u_{0}(x)
+ = 
+ \left\{
+ \begin{array}{cc}
+    1 & x < 0,
+    \\
+    2 & x > 0.
+ \end{array}
+ \right.
+\end{align}
+
+\textbf{Solution:}
+From the formulation 
+\begin{align}
+ \partial_t u + \exp(u) \partial_x u = 0
+\end{align}
+the direction of the characteristics are apparent. 
+In particular, they move to the right regardless of the value of $u$. 
+Drawing a picture immediately shows that we need to fill the area 
+\begin{align}
+ f'(1) < x/t < f'(2)
+\end{align}
+with values to define the solution. 
+We pick characteristics emerging from the origin (otherwise, they would emerge from a shock).
+
+Along each characteristics along which the value $u^{\ast}$ is transported, we have 
+\begin{align}
+ x = f'(u^{\ast}) t
+ \quad\Longleftrightarrow\quad
+ x = \exp(u^{\ast}) t
+ \quad\Longleftrightarrow\quad
+ \ln(x/t) = u^{\ast}
+ .
+\end{align}
+Consequently, the rarefaction wave is given by 
+\begin{align}
+ u(x,t)
+ = 
+ \left\{
+ \begin{array}{ll}
+    u_l & x < \exp(u_l) t,
+    \\
+    \ln(x/t) & \exp(u_l)t < x < \exp(u_r)t,
+    \\
+    u_r & \exp(u_r)t < x.
+ \end{array}
+ \right.
+\end{align}
+
+
+
+
+
+
+\subsection*{Problem 3. Another Shock wave}
+
+Solve Burgers' equation ($f(u)=u^2$) with initial data 
+\begin{align}
+ u_{0}(x)
+ = 
+ \left\{
+ \begin{array}{cc}
+    1 & x < 0,
+    \\
+    (1-x)/2 & 0 < x < 1,
+    \\
+    0 & x > 1.
+ \end{array}
+ \right.
+\end{align}
+Find the solution with the method of characteristics and tools you already know.
+At what time does the solution change its structure? 
+
+\textbf{Solution:}
+The characteristics over the interval $[0,1]$ travel with speed $2u^{\ast}$, where $u^{\ast}$ is the value along the characteristic.
+We see that they merge at time $t=1/2$ and position $x=1$. At that point, the solution will be discontinuity,
+\begin{align}
+ u(x,1)
+ = 
+ \left\{
+ \begin{array}{cc}
+    1 & x < 1,
+    \\
+    0 & x > 1,
+ \end{array}
+ \right.
+\end{align}
+and from there on, the solutions will be a traveling discontinuity. The speed of the discontinuity is $1$, as can be checked by the Rankine-Hugoniot condition.
+
+
+
+\subsection*{Problem 4. Flux discontinuous in $x$}
+
+\textit{Conservation laws where the flux is discontinuous in $x$ have attracted some attention over the past years. The following example models, e.g., traffic flow with varying speed limits.}
+\\
+
+\noindent 
+Consider the conservation law 
+\begin{align}
+ \partial_t u + \partial_x\left( a(x) u \right) = 0
+\end{align}
+with speed variable 
+\begin{align}
+ a(x)
+ = 
+ \left\{
+ \begin{array}{cc}
+    1 & x < 0,
+    \\
+    2 & x > 0.
+ \end{array}
+ \right.
+\end{align}
+\begin{enumerate}
+    \item
+    Sketch a solution with the method of characteristics.
+    For which $(x,t)$ is it a strong solution?
+    \item
+    Show that it is a weak solution under the simplifying assumption that the initial data $u_0 \in C^{1}(\mathbb R)$ are differentiable. 
+    \textit{You can use an argument similar to the RH condition. You do not need an explicit formula for $u$.}
+\end{enumerate}
+
+\textbf{Solution:}
+\begin{enumerate}
+    \item
+    To the left of the line $x=0$, the characteristics emerge with speed $1$, whereas to the right of $x=0$, they emerge with speed $2$.
+    All the characteristics on the left eventually reach the line $x=0$, from whereon they proceed with speed $2$.
+    The solution is continuous but not necessarily differentiable at $x=0$.
+    If the initial data $u_{0}$ are differentiable at $x_0 \in \mathbb R$, then it is differentiable at the characteristic emerging at $x_0$, except for the crossover at $x=0$.
+    Wherever the solution is differentiable, it is also a strong solution. 
+    \item
+    Suppose that the function $u_0 \in C^{1}(\mathbb R)$ is differentiable. 
+    The solution constructed above is differentiable to the left of $x=0$ and to the right of $x=0$, but not across that line.
+    Consequently, it is a strong solution there.
+    
+    Suppose that $\phi$ is a compactly supported smooth function. 
+    \begin{align}
+     &
+     \int_{\mathbb R} \int_{0}^{\infty} u \partial_t \phi + a u \partial_x \phi \;dxdt
+     \\&\qquad
+     =
+     \int_{x < 0} \int_{0}^{\infty} u \partial_t \phi + a u \partial_x \phi \;dxdt
+     + 
+     \int_{x > 0} \int_{0}^{\infty} u \partial_t \phi + a u \partial_x \phi \;dxdt
+     \\
+     &\qquad
+     =
+     -
+     \int_{x < 0} \int_{0}^{\infty} \partial_t u \phi + a \partial_x u \phi \;dxdt
+     - 
+     \int_{x > 0} \int_{0}^{\infty} \partial_t u \phi + a \partial_x u \phi \;dxdt
+     \\&\qquad \qquad 
+     +
+     \int_{0}^{\infty} u(-0,t) \phi \;dt
+     - 
+     \int_{0}^{\infty} 2u(+0,t) \phi \;dt
+     \\&\qquad \qquad 
+     +
+     \int_{x < 0} u(x,0) \phi \;dx
+     + 
+     \int_{x > 0} u(x,0) \phi \;dx
+     \\&\qquad 
+     =
+     \int_{0}^{\infty} u(-0,t) \phi \;dt
+     - 
+     \int_{0}^{\infty} 2u(+0,t) \phi \;dt
+     +
+     \int_{\mathbb R} u_{0}(x) \phi \;dx
+     .
+    \end{align}
+    The two integrals over the time axis cancel out.
+    The proof is complete.
+\end{enumerate}
+
+
+
+
+
+
+%\bibliography{ref}{}
+%\bibliographystyle{plain}
+\end{document}

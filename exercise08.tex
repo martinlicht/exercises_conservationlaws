@@ -1,0 +1,87 @@
+\documentclass{article}
+
+
+
+\usepackage{../auxFiles/ExStyPac}
+
+
+
+\input ../auxFiles/mac.tex
+\graphicspath{{./figures/}}
+\newcommand{\iph}{{i + \frac{1}{2}}}
+\newcommand{\imh}{{i - \frac{1}{2}}}
+
+
+
+
+%========================================================================
+\begin{document}
+
+
+
+\Head{8}{Incremental form and Harten's lemma}
+
+
+
+Consider the conservation law
+\begin{gather} \label{conlaw}
+	u_t+f(u)_x=0,
+\end{gather}%
+and the numerical scheme
+\begin{gather} \label{genscheme}
+	u^{n+1}_i = G(u^n_{i-k},...,u^n_{i+k}).
+\end{gather}%
+We say that the scheme \eqref{genscheme} can be put in \textit{incremental form} if there exists two incremental coefficients $C_\iph = C(u_{i-k+1}^n,...,u_{i+k}^n)$ and $D_\iph = D(u_{i-k+1}^n,...,u_{i+k}^n)$, which can be used to re-write the scheme as
+\begin{gather} \label{incform}
+	u^{n+1}_i = u_i^n - C_\imh \Delta^-u^n_i + D_\iph \Delta^+u^n_i,
+\end{gather}%
+where $\Delta^+u_i = u_{i+1} - u_i$ and $\Delta^-u_i = u_i- u_{i-1}$. Harten's lemma states that a scheme written in incremental form is TVD if i) $C_\iph \geq 0$, ii) $D_\iph \geq 0$ and iii) $C_\iph + D_\iph \leq 1$.
+
+\begin{exerciseList}
+
+\item Prove that any 3-point consistent, conservative scheme with numerical flux $F_\iph$ admits an incremental form with coefficients
+\[
+C_\iph = \frac{k}{h} \left(\frac{f(u_{i+1}) - F_\iph}{\Delta^+u_i} \right), \qquad D_\iph = \frac{k}{h} \left(\frac{f(u_{i}) - F_\iph}{\Delta^+u_i}\right).
+\]
+
+
+\item
+Consider a conservative scheme with
+\begin{itemize}
+\item Lax-Friedrich flux:
+\[
+F^{LF}(u,v)= \frac{1}{2} \left( f(u) + f(v) - \frac{h}{k} (v-u)\right),
+\]
+\item Local Lax-Friedrich/ Rusanov flux:
+\[
+F^{LLF}(u,v)= \frac{1}{2} \left( f(u) + f(v) - \alpha (v-u)\right), \quad \alpha = \max_u|f^\prime(u)|,
+\]
+\item Lax-Wendroff flux:
+\[
+F^{LW}(u,v)= \frac{1}{2} \left( f(u) + f(v) - \frac{k}{h} f^\prime\left( \frac{u+v}{2}\right)(f(v) - f(u))\right),
+\]
+\item Roe flux:
+\[
+F^{Roe}(u,v)= \frac{1}{2} \left( f(u) + f(v) - \alpha (v-u)\right), \quad \alpha = \left|\frac{f(v) -f(u)}{v-u}\right|.
+\]
+\end{itemize}
+\begin{enumerate}
+\item Find the incremental coefficients for each flux. 
+\item Check whether all three conditions of Harten's lemma are satisfied with each flux.
+\item Based on your conclusions from 7.2(b), can you say whether the numerical solution obtained with a TVD scheme is guaranteed to converge to an entropy solution?
+\end{enumerate}
+
+\item
+Let $f(u) = c u$. Consider a scheme with the hybrid flux,
+\[
+F(u,v) = \theta F^{LW} + (1-\theta) F^{LF}, \quad 0 \leq \theta \leq 1,
+\]
+which is nothing but a convex combination of the Lax-Friedrich and Lax-Wendroff fluxes. Assuming the usual CFL condition, can you find a $\theta$ that will lead to a TVD scheme?
+
+
+
+
+\end{exerciseList}
+
+
+\end{document}

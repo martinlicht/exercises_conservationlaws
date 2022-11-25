@@ -1,0 +1,325 @@
+%Typeset with LaTeX
+%\documentclass{owrart}
+\documentclass[10pt,reqno]{amsart}
+\usepackage[a4paper,margin=1.0in]{geometry}
+\UseRawInputEncoding
+%% -------------------------------------------------------------------------------
+%% Enter additionally required packages below this comment.
+\usepackage{algorithm}
+\usepackage{algpseudocode}
+
+\makeatletter
+% Reinsert missing \algbackskip
+\def\algbackskip{\hskip-\ALG@thistlm}
+\makeatother
+
+\usepackage{amsmath}
+\usepackage{mathtools}
+%\usepackage[a4paper]{geometry}
+%\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{mathrsfs}
+\usepackage{bm}
+\usepackage{algpseudocode}
+\usepackage{upgreek}
+\usepackage{subcaption}
+% \usepackage{showkeys} %%%%%%%%%
+% \usepackage{amscd}
+% \usepackage{latexsym}
+% \usepackage{nicefrac} 3
+% \usepackage{cite}
+ %\usepackage{epic}
+% \usepackage{eepic}
+% \usepackage{fancybox}
+\newcommand{\bsnul}{{\boldsymbol 0}}
+\newcommand{\cNN}{{\mathcal {NN}}}
+
+\usepackage{graphicx}
+\usepackage{epstopdf}
+
+\mathtoolsset{showonlyrefs}
+
+%\usepackage{epstopdf}
+%\usepackage{graphicx} 
+
+%\usepackage[pdf]{pstricks}
+
+\usepackage[shortlabels]{enumitem}
+%Standard operator
+\newcommand{\abs}[1]{\lvert #1\rvert}
+\newcommand{\supp}{Peratorname{supp}}
+\newcommand{\grad}{{\mathbf{grad}}}
+\newcommand{\curl}{\normalfont{\text{curl}}}
+\newcommand{\Log}{\text{Log}}
+\newcommand{\cc}{{\normalfont{\text{c}}}}
+\newcommand{\loc}{{\normalfont{\text{loc}}}}
+
+\DeclareMathOperator*{\argmax}{arg\,max}
+\DeclareMathOperator*{\argmin}{arg\,min}
+
+% Package for colors
+\usepackage{xcolor}
+\definecolor{ao}{rgb}{0.0, 0.5, 0.0}
+
+%Edit colors
+\newcommand{\CS}[1]{{\color{magenta}{#1}}}
+\newcommand{\ra}[1]{{\color{blue}{#1}}}
+\newcommand{\fh}[1]{{\color{cyan}{#1}}}
+\newcommand{\todo}[1]{{\color{red}[#1]}}
+
+\newcommand{\com}[1]{{\color{red} [#1]}}
+
+%\usepackage{fancyhdr}
+%\usepackage{datetime}
+%
+%\fancyhf{}
+%\fancyfoot[L]{\fontsize{10}{12} \today \ \currenttime}
+%\pagestyle{fancy} \usepackage{tikz}
+
+\DeclareSymbolFont{extraup}{U}{zavm}{m}{n}
+\DeclareMathSymbol{\varheart}{\mathalpha}{extraup}{86}
+\DeclareMathSymbol{\vardiamond}{\mathalpha}{extraup}{87}
+
+\usepackage{chngcntr}
+\counterwithout{equation}{subsection}
+\counterwithout{equation}{section} 
+
+\usepackage{tikz}
+
+\newcommand\encircle[1]{%
+  \tikz[baseline=(X.base)] 
+    \node (X) [draw, shape=circle, inner sep=0] {\strut #1};}
+
+\usepackage{pifont}
+
+\usepackage{fancyhdr}
+\usepackage[us,12hr]{datetime} % `us' makes \today behave as usual in TeX/LaTeX
+\fancypagestyle{plain}{
+\fancyhf{}
+\rhead{\footnotesize Version of \today}
+\lhead{\thepage}
+\renewcommand{\headrulewidth}{0pt}}
+\pagestyle{plain}
+
+\usepackage{color}
+\newcommand{\half}{\frac{1}{2}}
+
+\newcommand{\norm}[1]{\left \lVert #1 \right \rVert}
+\newcommand{\snorm}[1]{\left \lvert #1 \right \rvert}
+
+%fields, mathbb operators
+\newcommand{\IR}{\mathbb{R}}
+\newcommand{\IC}{\mathbb{C}}
+\newcommand{\IZ}{\mathbb{Z}}
+\newcommand{\IQ}{\mathbb{Q}}
+\newcommand{\IN}{\mathbb{N}}
+\newcommand{\IT}{\mathbb{T}}
+
+% Boundary Integral Operators
+\newcommand{\OV}{\mathsf{V}}
+\newcommand{\OK}{\mathsf{K}}
+\newcommand{\OW}{\mathsf{W}}
+% 
+
+%
+%\DeclareMathOperator*{\argmax}{arg\,max}
+%\DeclareMathOperator*{\argmin}{arg\,min}
+
+\newcommand{\OA}{\mathsf{A}}
+\newcommand{\Id}{\mathsf{Id}}
+\newcommand{{\D}}{\normalfont{\text{D}}}
+\newcommand{{\G}}{\normalfont{\text{G}}}
+\newcommand{{\U}}{\normalfont{\text{U}}}
+\newcommand{{\I}}{\normalfont{\text{I}}}
+\newcommand{{\per}}{\normalfont{\text{per}}}
+\newcommand{{\y}}{{\boldsymbol{{y}}}}
+\newcommand{\Of}{\mathsf{f}}
+
+\newcommand{{\bc}}{{\bf c}}
+\newcommand{{\bx}}{{\bf x}}
+\newcommand{{\by}}{{\bf y}}
+\newcommand{{\bz}}{{\bf z}}
+\newcommand{{\bd}}{{\bf d}}
+\renewcommand{\d}{\!\!\operatorname{d}}
+
+% Traces
+\newcommand{\traced}{\gamma_{\text{D}}}
+\newcommand{\tracen}{\gamma_{\text{N}}}
+\newcommand{\dual}[2]{\left \langle #1,#2 \right \rangle}
+\newcommand{\dotp}[2]{\left ( #1,#2 \right )}
+
+% Matrix trace
+\newcommand{\tr}[1]{\text{tr}\left ( #1 \right )}
+
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{prob}[theorem]{Problem}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{assumption}[theorem]{Assumption}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{example}[theorem]{Example}
+\newtheorem{problem}[theorem]{Problem}
+
+\theoremstyle{remark}
+\newtheorem{remark}{Remark}
+%\newtheorem{assumption}[remark]{Assumption}
+%\newtheorem{example}[remark]{Example}
+%\newtheorem{problem}[thm]{Problem}
+
+
+%\numberwithin{equation}{section}
+
+\begin{document}
+%\begin{talk}
+%
+%---------
+% TITLE
+%---------
+%
+
+\title{Exercise Set 4\\ 
+MATH-459--Numerical Methods for Conservation Laws \\  
+Autumn Semester 2021
+}
+
+\author{Professor: Martin W. Licht \\ Assistant: Fernando Henriquez B. \\ Published on 14.10.21} 
+
+\maketitle
+
+Throughout this Exercise Set, consider the linear PDE
+\begin{equation}\label{eq:advection_eq}
+	u_t+au_x=0
+\end{equation}
+
+\subsection*{Problem 1. Finite Differences Method}
+Define the following concepts:
+\begin{itemize}
+\item[(a)] Consistency;
+\item[(b)] Stability; and,
+\item[(c)] Convergence.
+\end{itemize}
+Discuss the importance of these concepts, how they relate to each other, and how in general they can be established.
+
+\subsection*{Problem 2. Leapfrog Method}
+The forward time, center space finite difference
+approximation to the advection equation \eqref{eq:advection_eq}
+leads to a method which is \emph{unstable}.
+So let us try something different.
+By approximating the time derivative by a centered difference,
+instead of the forward Euler discretization, we get the Leapfrog method,
+\begin{equation}\label{eq:LFrog}
+	v_{j}^{n+1}=v_{j}^{n-1}-\frac{ak}{h}(v_{j+1}^{n}-v_{j-1}^{n})\ .
+\end{equation}
+\begin{itemize}
+\item[(i)]
+Draw the stencil of \eqref{eq:LFrog}.
+
+\item[(ii)]
+Show that \eqref{eq:LFrog} is second order accurate in both space and time.
+
+\item[(iii)]
+What is an obvious disadvantage of the Leapfrog method compared to the Lax-Friedrichs or Lax-Wendroff methods?
+\end{itemize}
+
+
+\subsection*{Problem 3. Stability of the Lax-Friedrichs Method}
+Consider the Lax-Friedrichs method
+$$
+	v_{j}^{n+1}=\frac{1}{2}(v_{j+1}^{n}+v_{j-1}^{n})-\frac{ak}{2h}(v_{j+1}^{n}-v_{j-1}^{n})
+$$
+Show that this method is stable in the $l^\infty$ norm, provided that $k$ and $h$ satisfy the \textit{CFL condition}
+$$
+	\frac{|a|k}{h}\leq1.
+$$
+%
+\subsection*{Problem 4. Unconditionally Stable Method}
+We have seen in the previous exercise that the Lax-Friedrichs
+method is stable provided $k$ and $h$ satisfy a CFL condition.
+A method which is stable for any $k$ and $h$ is said to be
+\textit{unconditionally stable}.
+For $a>0$, prove that the following backward-time backward-space method
+$$
+	v_{j}^{n+1}=v_j^n-\frac{ak}{h}(v_{j}^{n+1}-v_{j-1}^{n+1})
+$$
+is unconditionally stable in the $l^\infty$ norm.
+
+%\item
+%\begin{enumerate}
+%\item
+%Explain qualitatively what the CFL condition is.
+%
+%\item
+%Is the CFL condition sufficient for stability?
+%If not, can you think of a counter example?
+%\end{enumerate}
+
+\subsection*{Problem 5. Matlab Implementation}
+This exercise involves some programming.
+Consider the scalar advection equation \eqref{eq:advection_eq}
+with $a=1$.
+Let $u$ be the solution of \eqref{eq:advection_eq}
+in $(-1,1)$ that satisfies initial condition
+$$
+	u(x,0)=u_{0}(x)\ ,
+$$
+where
+\begin{equation}\label{eq:init_cond}
+	u_{0}(x)
+	=
+	\begin{cases}
+			1 & x<0\\
+			0 & x>0
+	\end{cases}\ ,
+\end{equation}
+and boundary conditions
+\begin{equation}\label{eq:bc_cond}
+	u(-1,t)=1
+	\quad\quad
+	u(1,t)=0
+\end{equation}
+We already know that the exact solution for $0<t<1$ is given by $u_{0}(x-at)$,
+but how well do numerical methods approximate such a problem?
+In the following consider the schemes
+\begin{align*}
+	\textrm{Upwind:}\quad
+		v_{j}^{n+1} & =v_{j}^{n}-\frac{ak}{h}(v_{j}^{n}-v_{j-1}^{n})\\
+	\textrm{Lax-Friedrichs:}\quad
+		v_{j}^{n+1} & =\frac{1}{2}(v_{j+1}^{n}+v_{j-1}^{n})
+			-\frac{ak}{2h} (v_{j+1}^{n}-v_{j-1}^{n})\\
+	\textrm{Lax-Wendroff:}\quad
+		v_{j}^{n+1} & =v_{j}^{n}-\frac{ak}{2h}(v_{j+1}^{n}-v_{j-1}^{n})
+			+\frac{(ak)^2}{2h^2}(v_{j+1}^{n}-2v_{j}^{n}+v_{j-1}^{n})\\
+	\textrm{Beam-Warming:}\quad
+		v_{j}^{n+1} & =v_{j}^{n}-\frac{ak}{2h}(3v_{j}^{n} -4v_{j-1}^{n}+v_{j-2}^{n})
+			+\frac{(ak)^{2}}{2h^{2}} (v_{j}^{n}-2v_{j-1}^{n}+v_{j-2}^{n})\ .
+\end{align*}
+
+For each of the schemes above:
+\begin{enumerate}
+\item
+Implement the scheme in Matlab to solve \eqref{eq:advection_eq}, 
+in $(-1,1)$, with \eqref{eq:init_cond}, and \eqref{eq:bc_cond} in the time interval $t\in[0,0.5]$. 
+For your computations use $h=0.0025$ and $k/h=0.5$.
+
+\item
+Visualize the numerical solution and the exact solution.
+
+\item
+Comment qualitatively on the solutions' behavior.
+
+\item
+Write a script to generate a log-log plot of the error as a function of the resolution 
+(either $h$, or the number of points in the spatial grid), 
+while keeping the ratio $k/h=0.5$ fixed (why is this important?).
+
+\item
+Use the plot to deduce the accuracy of the method.
+
+\item
+Compare your results with the accuracy you would expect on a smooth solution.
+\end{enumerate}
+%\bibliography{ref}{}
+%\bibliographystyle{plain}
+\end{document}
