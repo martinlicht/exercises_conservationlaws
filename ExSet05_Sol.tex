@@ -57,17 +57,17 @@ No, not in general. Roe's approximate Riemann solver is an example of a conserva
 \begin{enumerate}
 \item
 To show that the Engquist-Osher flux (EO flux) leads to a monotone scheme, we need to show that
-\begin{gather}a \label{eqn:m_flux}
+\begin{gather} \label{eqn:m_flux}
 \lambda \partial_1F(U^n_{j-1},U^n_j) &\geq 0\\
 -\lambda \partial_2F(U^n_{j},U^n_{j+1}) &\geq 0\\
 1 - \lambda ( \partial_1F(U^n_{j},U^n_{j+1}) - \partial_2F(U^n_{j-1},U^n_j) ) &\geq 0
-\end{gather}a
+\end{gather}
 where $\lambda = k/h$. Now for the EO flux, we have
 \begin{gather}
 \partial_1 F(a,b) = \frac{1}{2} \left( f^\prime(u) + |f^\prime(u)| \right) \geq 0, \qquad 
 \partial_2 F(a,b) = \frac{1}{2} \left( f^\prime(v) - |f^\prime(v)| \right) \leq 0.
 \end{gather}
-Thus, the first two conditions of \deq{eqn:m_flux} are clearly satisfied. For the last condition of \deq{eqn:m_flux} to hold, we want
+Thus, the first two conditions of \eqref{eqn:m_flux} are clearly satisfied. For the last condition of \eqref{eqn:m_flux} to hold, we want
 \begin{gather}
 1 - \lambda ( \partial_1F(U^n_{j},U^n_{j+1}) - \partial_2F(U^n_{j-1},U^n_j) ) = 1 - \lambda |f^\prime(u)| \geq 0 
 \end{gather}
@@ -83,7 +83,7 @@ f(u) + f(v) - 2f(\omega), & \quad \text{if } u < \omega < v \\
 \end{cases}.
 \end{gather}
 Thus, the numerical flux becomes 
-\begin{gather}a
+\begin{gather}
 F^{EO}(u,v) =& \begin{cases}
 f(u), & \quad \text{if } u,v > \omega\\
 f(v), & \quad \text{if } u,v < \omega\\
@@ -91,7 +91,7 @@ f(\omega), & \quad \text{if } u < \omega < v \\
 f(u) + f(v) - f(\omega), & \quad \text{if } v < \omega < u
 \end{cases}\\
 =& f(\max(u,\omega)) + f(\min(v,\omega)) - f(\omega).
-\end{gather}a
+\end{gather}
 
 \end{enumerate}
 
@@ -149,21 +149,21 @@ Yes, the numerical solutions converge to the entropy solution. This is because t
 
 
 \item
-A scheme is conservative if it can be written as \deq{consForm}.
+A scheme is conservative if it can be written as \eqref{consForm}.
 The Lax-Friedrichs scheme is usually written as 
 \begin{gather}
 	v_{j}^{n+1}=\frac{1}{2}\left(v_{j+1}^{n}+v_{j-1}^{n}\right)
 		-\frac{k}{2h}\left(f\frb{v_{j+1}^{n}}-f\frb{v_{j-1}^{n}}\right)\ .
 \end{gather}
 We can rewrite it as 
-\begin{gather}a
+\begin{gather}
 	v_{j}^{n+1}-v_{j}^{n}= & \frac{1}{2}\left[\left(v_{j+1}^{n}-v_{j}^{n}-\frac{k}{h}f\frb{v_{j+1}^{n}}\right)
 			-\left(v_{j}^{n}-v_{j-1}^{n}-\frac{k}{h}f\frb{v_{j-1}^{n}}\right)\right]\\[0.5em]
 		= & -\frac{k}{h}\left[ \left( -\frac{h}{2k}\left(v_{j+1}^{n}-v_{j}^{n}\right)
 				+\frac{1}{2}f\frb{v_{j+1}^{n}}\right)
 			-\left(-\frac{h}{2k}\left(v_{j}^{n}-v_{j-1}^{n}\right)
 				+\frac{1}{2}f\frb{v_{j-1}^{n}}\right)\right]\ .
-\end{gather}a
+\end{gather}
 Thus, to obtain conservation we take
 \begin{gather}
 	F\frb{u,v}= \frac{1}{2}\left(f(v)+f(u)\right) -\frac{h}{2k}\left(v-u\right)\ .

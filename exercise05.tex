@@ -67,14 +67,14 @@ A ``natural'' finite difference method can be obtained with a minor modification
 This method converges on smooth solutions.
 \begin{enumerate}
 \item
-Compute the numerical solution obtained by \deq{quasiLinUpWind}, driven by the initial condition
+Compute the numerical solution obtained by \eqref{quasiLinUpWind}, driven by the initial condition
 \begin{gather} \label{inCond1}
 	u(x,0)=\begin{cases}
 			1\; & x<0\\
 			0\; & x\geq0
 		\end{cases}\ .
 \end{gather}
-Implement the method in Matlab and solve \deq{quasiLinBurg} up to $T=0.5$ in the interval $(-1,1)$ with initial condition \deq{inCond1}. In your computations use $k=0.5h$, $h=0.01$.
+Implement the method in Matlab and solve \eqref{quasiLinBurg} up to $T=0.5$ in the interval $(-1,1)$ with initial condition \eqref{inCond1}. In your computations use $k=0.5h$, $h=0.01$.
 
 
 \item
@@ -107,7 +107,7 @@ to Burgers equation in conservation form,
 \begin{gather}
 	u_t+\rb{\frac{1}{2}\, u^2}_x=0\ ,
 \end{gather}
-with the initial conditions \deq{inCond1} and \deq{inCond2}.
+with the initial conditions \eqref{inCond1} and \eqref{inCond2}.
 
 \item
 Does the numerical solutions converge to a weak solution?
@@ -122,7 +122,7 @@ Show that the generalization of the Lax-Friedrichs method to nonlinear conservat
 \item
 \begin{enumerate}
 \item
-Solve the Burgers equation with the Engquist-Osher flux and the initial conditions \deq{inCond1} and \deq{inCond2}.
+Solve the Burgers equation with the Engquist-Osher flux and the initial conditions \eqref{inCond1} and \eqref{inCond2}.
 
 \item
 Does the solution converge to the entropy solution?

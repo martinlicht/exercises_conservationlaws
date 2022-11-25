@@ -135,3 +135,268 @@ satisfies \eqref{stabEst}, provided $0< k\le k_{FE}$.
 \end{exerciseList}
 
 \end{document}
+
+
+
+\documentclass{article}
+
+
+
+\usepackage{../auxFiles/ExStyPac}
+
+\usepackage[framed]{../auxFiles/mcode}
+
+
+
+
+\input ../auxFiles/mac.tex
+\graphicspath{{./figures/}}
+
+
+
+
+
+\def\hbu{\boldsymbol{\hat u}}
+\def\bpsi{\boldsymbol{\psi}}
+%\def\hbf{\boldsymbol{\hat f}}
+
+
+\def\bu{\boldsymbol{u}}
+\def\bv{\boldsymbol{v}}
+
+\def\bpsi{\boldsymbol{\psi}}
+\def\hbForce{\boldsymbol{\hat g}}
+%\def\bl{\boldsymbol{\ell}}
+
+
+
+
+%========================================================================
+\begin{document}
+
+
+
+\Head{13}{Discontinuous Galerkin (Solution)}
+
+
+
+
+\begin{exerciseList}
+
+
+
+%\item
+%{\bf (a)}\quad To develop a DG method for the PDE \begin{gather} 	u_t+au_x=bu \end{gather} we suppose the approximation $u_h$ is given in the $k$th element $D^k=\sqb{x_l^k,x_r^k}$ by \begin{gather} 	u_h^k(x,t)=\sum_{n=1}^{N_p} \hat u_n^k(t)\ \psi_n^k(x)\ , \end{gather} where $\psi_n^k$ is some basis of the space of polynomials of degree no grater than $N=N_p-1$. We require that for each $k=1,\ldots,K$, the residual $\cR_h=\rb{\partial_t+a\partial_x-b}u_h$ satisfies
+%\begin{gather}
+%	0=\rb{\cR_h\ , \psi_j^k}_{D^k}=\int_{D^k} \cR_h\psi_j^k\dif x
+%	\qquad\qquad j=1,\ldots,N_p\ .
+%\end{gather}
+%We use the divergence theorem and substitute the boundary terms by the numerical flux $f^*$ to get \begin{gather} \label{dg} 	\sum_{n=1}^{N_p} \dtdo{\hat u_n^k}{t} \int_{D^k} \psi_n^k\psi_j^k\dif x 		-\sum_{n=1}^{N_p}a\hat u_n^k \int_{D^k} \psi_n^k \dtdo{\psi_j^k}{x}\dif x 		-\sum_{n=1}^{N_p}b\hat u_n^k \int_{D^k} \psi_n^k\psi_j^k\dif x 	=-\sqb{\psi_j^kf^*}_{x_l^k}^{x_r^k}\ . \end{gather} Equations \eqref{dg} with $j=1,\ldots,N_p$, can also be written as a linear system \begin{gather} \label{dgSys} 	\hat\cM^k\dtdo{}{t}\hbu_h^k -a\rb{\hat \cS^k}^T \hbu_h^k-b\hat\cM^k\hbu_h^k 	=-\sqb{\bpsi^kf^*}_{x_l^k}^{x_r^k} \end{gather} where $\hbu_h^k=\rb{\hat u_1^k,\ldots,\hat u_{N_p}^k}^T$, and $\bpsi^k=\rb{\psi_1^k,\ldots,\psi_{N_p}^k}^T$. \\ {\bf (b)}\quad In this exercise, we suppose that $a>0$ and use the upwind flux \begin{gather} 	f_{k,k+1}^*=au_r^k\ . 	\qquad\qquad 	u_r^k=u_h^k\rb{x_r^k,\cdot}\ . \end{gather} We also write  $u_h^k\rb{x_l^k,\cdot}=u_l^k$. Multiplying \eqref{dgSys} by $\hbu_h^k$, and summing over the elements provides \begin{gather} 	\dtdo{}{t}\norm{u_h}^2-b\norm{u_h}^2 	=\sum_{k=1}^K 	\bigg[ 		a\rb{u_r^k}^2 		-a\rb{u_l^k}^2 		-2u_r^k f_{k,k+1}^* 		+2u_l^k f_{k-1,k}^* 	\bigg]\ . \end{gather} Thus, we have \begin{align} 	\dtdo{}{t}\norm{u_h}^2-b\norm{u_h}^2 	&=-\sum_{k=1}^{K-1} 	\bigg[ 		-a\rb{u_r^k}^2 		+2u_r^k f_{k,k+1}^* 		+a\rb{u_l^{k+1}}^2 		-2u_l^{k+1} f_{k,k+1}^* 	\bigg]\notag\\ 	&\quad 		+a\rb{u_r^K}^2 		-2u_r^K f_{K,K+1}^* 		-a\rb{u_l^{1}}^2 		+2u_l^{1} f_{0,1}^*\ . \end{align} Since the terms \[ 	+a\rb{u_r^K}^2 		-2u_r^K f_{K,K+1}^* 		-a\rb{u_l^{1}}^2 		+2u_l^{1} f_{0,1}^* \] correspond to the boundary conditions, we will not address them here. Therefore, it is left to show that for each $k=1,\ldots,K-1$, the term \begin{gather} 	\delta^k=-a\rb{u_r^k}^2 			+2u_r^k f_{k,k+1}^* 			+a\rb{u_l^{k+1}}^2 			-2u_l^{k+1} f_{k,k+1}^* \end{gather} is nonnegative. Since clearly, \begin{gather} 	\delta^k=-a\rb{u_r^k}^2 			+2a\ u_r^k u_r^k 			+a\rb{u_l^{k+1}}^2 			-2a u_r^{k} u_l^{k+1} 		=a\rb{u_r^k-u_l^{k+1}}^2\ge0 \end{gather} the scheme is stable.
+
+
+
+
+\item
+Consider the scalar PDE
+\begin{equation}
+	u_t+au_x=g(x,t)
+\end{equation}
+in $\Om$ with proper initial conditions and periodic boundary conditions.
+\begin{enumerate}
+
+\item
+Suppose the approximation $u_h$ is given in the $k$th element $D^k=\rb{x_l^k,x_r^k}$ by
+\begin{gather} \label{uh_def}
+	u_h^k(x,t)=\sum_{n=1}^{N_p} \hat u_n^k(t)\ \psi_n^k(x)\ ,
+\end{gather}
+where $\psi_n^k$ is some basis of the space of polynomials of degree no grater than $N=N_p-1$.
+We require that for each $k=1,\ldots,K$,
+\begin{gather}
+	\rb{\cR_h\, ,\, \psi_j^k}_{D^k}=\hat g_j^k
+	\qquad\qquad j=1,\ldots,N_p\ ,
+\end{gather}
+where $\cR_h=\rb{\p_t+a\p_x}u_h$, $\hat g_j^k=\rb{g,\psi_j^k}_{D^k}$, and
+\begin{gather}
+	\rb{\eta,\psi}_{D^k}=\int_{D^k} \eta\psi\dif x\ .
+\end{gather}
+We use the divergence theorem and substitute the boundary terms by the numerical flux $f^*$, to get
+\begin{gather}
+	\rb{\p_t u_h^k\, ,\, \psi_j^k}_{D^k} -a\rb{\, u_h^k\, ,\rb{\psi_j^{k}}'}_{D^k}
+		=-\sqb{f^*\psi_j^k}_{x_l^k}^{x_r^k}+\hat g_j^k
+	\qquad
+	j=1,\ldots,N_p\ .
+\end{gather}
+Substituting \eqref{uh_def} into the last equation, provides
+\begin{gather}
+	\sum_{n=1}^{N_p} \rb{\psi_n^k, \psi_j^k}_{D^k} \rb{\hat u_n^k}'
+		-a \sum_{n=1}^{N_p} \rb{\psi_n^k\, , \rb{\psi_j^k}'}_{D^k}\hat u_n^k
+	=-\sqb{f^*\psi_j^k}_{x_l^k}^{x_r^k}+\hat g_j^k\ ,
+\end{gather}
+for $j=1,\ldots,N_p$.
+This can be also written as a system,
+\begin{gather} \label{dg2}
+	\hat\cM^k \rb{\hbu_h^k}'-a\rb{\hat\cS^k}^T\hbu_h^k
+		=-\sqb{f^*\bpsi^k}_{x_l^k}^{x_r^k}+\hbForce^k\ ,
+\end{gather}
+where
+\begin{gather}
+	\hat\cM^k_{jn}=\rb{\psi_n^k,\psi_j^k}_{D^k}
+	\qquad
+	\hat\cS^k_{nj}=\rb{\psi_n^k\, , \rb{\psi_j^k}'}_{D^k}\ .
+\end{gather}
+The periodic boundary conditions are enforced by requiring $f^*\big|_{x_l^1}=f^*\big|_{x_r^K}$.
+This is can be obtained by formally defining $u_h^0=u_h^K$, $u_h^{K+1}=u_h^1$ and then using the same numerical flux at the entire domain (including the boundaries $x=\pm1$).
+
+\item
+We take the dot product of \eqref{dg2} and $\hbu_h^k$, and sum over $k=1,\ldots,K$ to get
+\begin{gather}
+	\dtdo{}{t}\norm{u_h}^2
+		=\sum_{k=1}^K
+			\bigg[
+				a\rb{u_r^k}^2 -a\rb{u_l^k}^2 -2u_r^k f_{k+1/2}^* +2u_l^k f_{k-1/2}^*
+			\bigg]
+			+2\rb{g,u_h}\ ,
+\end{gather}
+where, for $k=1,\ldots,K$, $u_l^k=u_h^k\frb{x_l^k,\cdot}$, $u_r^k=u_h^k\frb{x_r^k,\cdot}$, $u_r^0=u_r^K$, $u_l^{K+1}=u_l^1$, and
+\begin{gather}
+	f^*_{k+1/2} =f^*\frb{u_r^k,u_l^{k+1}}
+		\quad
+		k=0,\ldots,K\ .
+\end{gather}
+By rearranging the sum we get
+\begin{gather}
+	\dtdo{}{t}\norm{u_h}^2
+		=-\sum_{k=0}^K \rb{u_r^k-u_l^{k+1}}\Big( 2f^*_{k+1/2}-a\rb{u_r^k+u_l^{k+1}} \Big)
+			+2\rb{g,u_h}\ .
+\end{gather}
+Substituting the upwind flux $f^*(u_l,u_r)=au_l$ provides
+\begin{gather}
+	\dtdo{}{t}\norm{u_h}^2
+		=-\sum_{k=0}^K a\rb{u_r^k-u_l^{k+1}}^2
+			+2\rb{g,u_h}
+	 \le 2\rb{g,u_h}\ .
+\end{gather}
+Finally, by the Cauchy-Schwarz inequality we get
+\begin{gather}
+	\frac{1}{2}\dtdo{}{t}\norm{u_h}^2\le\rb{g,u_h}
+		\le\norm{g}\norm{u_h}\ ,
+\end{gather}
+which leads to the desired bound on the norm of $u_h$.
+\end{enumerate}
+
+
+
+\item
+\begin{enumerate}
+
+\item
+The system
+\begin{gather}
+	u_t+v_x&=0\\
+	v_t+u_x&=0\ ,
+\end{gather}
+has the form
+\begin{gather}
+	w_t+Aw_x=0
+\end{gather}
+where $A$ is a symmetric matrix.
+In the $k$th element $D^k$ the approximation $w_h$ is given by
+\begin{gather}
+	w_h^k(x,t)=\sum_{n=1}^{N_p} \psi_n^k(x)\hat w_n^k(t)\ .
+\end{gather}
+We require
+\begin{gather}
+	\int_{D^k} \psi_j^k\rb{\p_t w_h^k+A\p_x w_h^k}\dif x =0
+	\qquad\qquad k=1,\ldots,K\ .
+\end{gather}
+We integrate by parts, and replace $Aw_h^k$ in the boundary terms by a numerical flux $f^*$ to get
+\begin{gather} \label{DGel}
+	\sum_{n=1}^{N_p} \rb{\psi_j^k,\psi_n^k}_{D^k}\rb{\hat w_n^k}'\
+			-\sum_{n=1}^{N_p} \rb{\rb{\psi_j^k}',\, \psi_n^k}_{D^k} A\hat  w_n^k
+		=-\sqb{\psi_j^kf^*}_{x_l^k}^{x_r^k}\ .
+\end{gather}
+That is
+\begin{align}
+	&\hat\cM^k \rb{\hat\bu_n^k}'-\rb{\hat\cS^k}^T\hat\bv_h^k
+		=\sqb{\bpsi g^*}_{x_l^k}^{x_r^k}\\
+	&\hat\cM^k \rb{\hat\bv_n^k}'-\rb{\hat\cS^k}^T\hat\bu_h^k
+		=\sqb{\bpsi h^*}_{x_l^k}^{x_r^k}\ ,
+\end{align}
+where $f^*=\rb{g^*,h^*}^T$.
+
+\item
+By taking the dot product of \eqref{DGel} and $\hat w_j^k$, and summing over $j=1,\ldots,N_p$, we get
+\begin{gather}
+	\frac{1}{2}\dtdo{}{t}\norm{w_h^k}_{D^k}^2-\int_{D^k}\dtdo{w_h^k}{x}\cdot A w_h^k\ \dif x
+		=-\sqb{w_h^k\cdot f^*}_{x_l^k}^{x_r^k}\ .
+\end{gather}
+Since $A$ is symmetric, this implies
+\begin{gather}
+	\dtdo{}{t}\norm{w_h^k}_{D^k}^2=\sqb{w_h^k\cdot \rb{Aw_h^k- 2 f^*}}_{x_l^k}^{x_r^k}
+		=w_r^k\cdot \rb{Aw_r^k- 2 f_{k,k+1}^*}-w_l^k\cdot \rb{Aw_l^k- 2 f_{k-1,k}^*}\ .
+\end{gather}
+Here $w_r^k=w_h^k\frb{x_r^k,\cdot}$, and $w_l^k=w_h^k\frb{x_l^k,\cdot}$.
+Summing over $k=1,\ldots,K$ provides
+\begin{gather} \label{tDer}
+	\dtdo{}{t}\norm{w_h}^2 &=\sum_{k=1}^K w_r^k\cdot \rb{Aw_r^k- 2 f_{k+1/2}^*}
+			-\sum_{k=0}^{K-1} w_l^{k+1}\cdot \rb{Aw_l^{k+1}- 2 f_{k+1/2}^*}\\
+		&=-\sum_{k=0}^{K}\bigg[w_l^{k+1}\cdot Aw_l^{k+1} -w_r^k\cdot Aw_r^k
+			-2\rb{w_l^{k+1}-w_r^k}\cdot f_{k+1/2}^*\bigg]\ .
+\end{gather}
+Now we substitute the upwind flux
+\begin{gather}
+	f_{k+1/2}^*=\frac{1}{2}\ A\rb{w_l^{k+1}+w_r^k} -\frac{1}{2}\ |A|\rb{w_l^{k+1}-w_r^k}
+\end{gather}
+into \eqref{tDer} to get
+\begin{gather}
+	\dtdo{}{t}\norm{w_h}^2
+		=-\sum_{k=1}^{K}\rb{w_l^{k+1}-w_r^k}\cdot|A|\rb{w_l^{k+1}-w_r^k}\le 0\ .
+\end{gather}
+\end{enumerate}
+
+
+
+
+
+\item
+Consider the ODE system
+\begin{gather} \label{odeSys}
+	u'=L(u)\ .
+\end{gather}
+Suppose there exists a positive constant $k_{FE}$ such that the forward Euler method
+$$
+	v^{n+1}=v^n+kL\frb{v^n}
+$$
+with $0< k\le k_{FE}$, applied to \eqref{odeSys} satisfies
+\begin{gather} \label{stabEst}
+	\|v^{n+1}\|\le\|v^n\|
+\end{gather}
+in some norm $\|\cdot\|$.
+Suppose $U$ is the numerical approximation of \eqref{odeSys} obtained by the following 3rd-order Runga-Kutta method
+\begin{align*}
+	U^{\left(1\right)}= & U^{n}+kL\left(U^{n}\right)\\
+	U^{\left(2\right)}= & \frac{3}{4}U^{n}+\frac{1}{4}U^{\left(1\right)}+\frac{1}{4}kL\frb{U^{\left(1\right)}}\\
+	U^{n+1}= & \frac{1}{3}U^{n}+\frac{2}{3}U^{\left(2\right)}+\frac{2}{3}kL\frb{U^{\left(2\right)}}\ ,
+\end{align*}
+and $0< k\le k_{FE}$. Next we show that
+\begin{gather} \label{estUi}
+	\|U\hpar{i}\|\le\|U^n\|
+\end{gather}
+holds for $i=1,2$.
+As $0<k\le k_{FE}$, it is clear that $U\hpar{1}$ satisfies \eqref{estUi}.
+This implies
+\begin{gather}
+	\|U\hpar{2}\|\le \frac{3}{4}\|U^n\| +\frac{1}{4}\norm{U\hpar{1} +kL\frb{U\hpar{1}}}
+		\le \frac{3}{4}\|U^n\| +\frac{1}{4}\|U\hpar{1}\|
+\end{gather}
+which by \eqref{estUi} with $i=1$, implies \eqref{estUi} also for $i=2$.
+Finally, we have
+\begin{gather}
+	\|U^{n+1}\|\le \frac{1}{3}\|U^n\| +\frac{2}{3}\norm{U\hpar{2} +kL\frb{U\hpar{2}}}
+		\le \frac{1}{3}\|U^n\| +\frac{2}{3}\|U\hpar{2}\|
+\end{gather}
+which by \eqref{estUi} with $i=2$, implies the proposition.
+
+\end{exerciseList}
+
+\end{document}

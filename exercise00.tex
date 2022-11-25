@@ -1,0 +1,223 @@
+\documentclass[10pt,letterpaper]{article}
+\usepackage[english]{babel}
+\usepackage{graphicx}
+\usepackage[margin=2cm]{geometry}
+
+\usepackage{amsfonts}
+\usepackage{amsmath}
+\usepackage{amsthm}
+\newcommand{\dif}[1][]{\mathrm{d} {#1}\,}
+\newcommand{\rb}[1]{ \left(  {#1} \right) }
+\newcommand{\frb}[1]{ \left(  {#1} \right) }
+
+\newtheoremstyle{break}
+{\topsep}
+{\topsep}%
+{\normalfont}
+{}%
+{\bfseries}
+{}%
+{\newline}
+{}%
+\theoremstyle{break}
+\newtheorem{exercise}{Exercise}
+\newtheorem*{information}{Information}
+\newtheorem{solution}{Solution}
+\newtheorem*{solutioninformation}{Solution Information}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+
+%========================================================================
+\title{Background and characteristics}
+\date{}
+
+\begin{document}
+
+\maketitle
+
+
+
+\begin{exercise}
+    Suppose that $u$ is the density of a quantity over the real line.
+    We assume that its velocity over the real line is given by
+    $$
+        v(x,t) = u(x,t)^3.
+    $$
+    Describe the change of the integral of $u$ over a subinterval $[x_1,x_2]$ in terms of the velocity $v$ and $u$ itself. Use the fundamental theorem of calculus to derive a conservation law, and find its characteristics. 
+    Discuss the similarity to Burgers' equation, and how this example can be generalized.
+\end{exercise}
+
+\begin{solution}
+    We consider the time-dependent integral 
+    $$
+        M(t) = \int_{x_1}^{x_2} u(x,t) dx.
+    $$
+    The influx/outflux of the endpoint is described by the velocity 
+    $$
+        \partial_t M(t) 
+        =
+        \partial_t \int_{x_1}^{x_2} u(x,t) dx
+        =
+        u(x_1,t)^3 u(x_1,t) - u(x_2,t)^3 u(x_2,t) 
+        =
+        u(x_1,t)^4 - u(x_2,t)^4 
+        .
+    $$
+    Via the fundamental theorem of calculus,
+    $$
+        \partial_t \int_{x_1}^{x_2} u(x,t) dx
+        =
+        - \int_{x_1}^{x_2} \partial_x u(x,t)^4 dx
+        .
+    $$
+    We take the time-derivative under the integral. 
+    If we take the intervals infinitesimally small, then we derive the conservation law
+    $$
+        \partial_t u(x,t)
+        +
+        \partial_x \left( u(x,t)^4 \right)
+        =
+        0
+        .
+    $$
+    The solution is constant along the lines in directions $(4u^3,1)$.
+    The characteristics have the form 
+    $$
+        \partial_t x(t) = 4u(x,t)^3.
+    $$
+    This has the general form of a conservation law with flux $f(u) = u^4$.
+    We get Burgers' equation if we replace the exponent by $2$,
+    and we get a transport equation if we replace the exponent by $1$.
+\end{solution}
+
+
+
+
+
+\begin{exercise}
+    An example for a nonlinear wave equation is
+    $$
+        \partial_{tt} E = \partial_{x} \left( |\partial_x E|^{p-2} \partial_x E \right)
+    $$
+    where $p \geq 1$. Reformulate this as a system of conservation laws.
+\end{exercise}
+
+\begin{solution}
+    Similar as in the lecture, we introduce the variables $v = \partial_t E$ and $s = \partial_s E$, which represent the velocity and the slope.
+    The system of conservation laws consists of 
+    $$
+        \partial_t s = \partial_s v,
+        \qquad
+        \partial_t v = \partial_s \left( s^{p-2} s \right).
+    $$
+\end{solution}
+
+
+
+
+\begin{exercise}
+    Consider the transport equation 
+    $$
+        \partial_t u(x,t) + \partial_x\left( a(t) u(x,t) \right) = 0
+    $$
+    where the velocity depends only one the time variable $t$.
+    Find the characteristics and show that the characteristics do not intersect.
+    \textit{This simple PDE is only for practice purposes.}
+\end{exercise}
+
+\begin{solution}
+    The characteristic originating at $x_0$ satisfies 
+    $$
+        \partial_t x(t) = a(t), \quad x(0) = x_0.
+    $$
+    Consequently, it is given by 
+    $$
+        x(t) = x_0 + \int_0^t a(s) ds,
+    $$
+    Suppose that $x_0(t)$ and $x_1(t)$ are two characteristics that start at $x_0$ and $x_1$, respectively, and suppose that $x_1 > x_0$.
+
+    We then have 
+    $$
+        x_1(t) - x_0(t)
+        =
+        x_1 + \int_0^t a(s) ds - x_0 + \int_0^t a(s) ds
+        =
+        x_1 - x_0
+        .
+    $$
+    So the distance between $x_1(t)$ and $x_0(t)$ remains constant over time.
+\end{solution}
+
+
+
+
+
+
+
+\begin{exercise}
+    (Hard) Consider the conservation law (transport equation)
+    $$
+        \partial_t u(x,t) + \partial_x\left( a(x) u(x,t) \right) = 0
+    $$
+    We have seen that the characteristics satisfy the following ordinary differential equation with initial values:
+    $$
+        \partial_t x(t) = a(x(t)), \quad x(0) = x_0.
+    $$
+    Show that the characteristics do not intersect if the velocity is always positive. \footnote{This is often noted casually in the literature, but can be proven rigorously.}
+\end{exercise}
+
+\begin{solution}
+    Suppose that $x_0$ and $x_1$ are two points with $x_0 < x_1$. 
+    We write $x_0(t)$ and $x_1(t)$ for the two associated characteristics. 
+    They satisfy the equations 
+    $$
+        x_0(t) = x_0 + \int_0^t a( x_0(s) ) ds,
+        \qquad
+        x_1(t) = x_1 + \int_0^t a( x_1(s) ) ds.
+    $$
+    If the two characteristics intersect, 
+    then there is some $T$ such that $x_0(T) = x_1(T)$.
+
+    Since the velocity is always positive, $x_0(t)$ must have have passed $x_1$ at some time $t_0$, where we have $x_0(t_0) = x_1$.
+    At the intersection time $T$ we then must have 
+    $$
+        x_0 + \int_0^T a( x_0(s) ) ds
+        =
+        x_1 + \int_0^T a( x_1(s) ) ds.
+    $$
+    We split the first integral
+    $$
+        x_0
+        +
+        \underbrace{ \int_0^{t_0} a( x_0(s) ) ds }_{x_1 - x_0}
+        +
+        \underbrace{ \int_{t_0}^T a( x_0(s) ) ds }_{\int_0^{T-t_0} a( x_1(s) ) ds}
+        =
+        x_1
+        +
+        \int_0^T a( x_1(s) ) ds.
+    $$
+    Here, the first underbraced integral uses $x_0(0)=x_0$ and $x_0(t_0)=x_1$.
+    The second underbraced integral uses that the characteristic of $x_0(t)$ follows the same trajectory of $x_1(t)$ (but with a time delay).
+    So this becomes 
+    $$
+        x_1
+        +
+        \int_0^{T-t_0} a( x_1(s) ) ds 
+        =
+        x_1
+        +
+        \int_0^T a( x_1(s) ) ds.
+    $$
+    But this cannot be, because $a$ is always positive. 
+\end{solution}
+    
+
+
+
+
+
+\end{document}

@@ -90,3 +90,64 @@ Run the code for $k=3$ and $a=1$. Do you recover 3rd-order convergence for \eqre
 \end{exerciseList}
 
 \end{document}
+\documentclass{article}
+
+
+
+\usepackage{../auxFiles/ExStyPac}
+
+\usepackage[framed]{../auxFiles/mcode}
+
+
+
+
+
+\input ../auxFiles/mac.tex
+\graphicspath{{./figures/}}
+
+
+
+
+
+%========================================================================
+\begin{document}
+
+
+
+\Head{11}{ENO Reconstruction (Solution)}
+
+
+
+
+
+\begin{exerciseList}
+
+
+\item
+See the Matlab code attached at the end of this solution manual. The stencil selection depends on the index shift $r$, which is evaluated by the function {\tt find\_shift(U,k)}.
+
+\item
+The coefficients $c_{rj}$ are computed once at the beginning of the solver by the function {\tt eval\_crj(k)}, assuming a uniform grid. 
+
+\item Once the shift $r$ is evaluate for each cell, the solution at the left and right interfaces of the cell are computed in the function {\tt eno\_recon}.
+
+\item Note that the code is capable of implementing both periodic and open boundary conditions, for arbitrary order ENO. The order can be set via the variable $k$.
+
+\item
+Third-order convergence is obtained for the smooth initial condition. Moreover, the oscillations observed with the discontinuous initial data for fixed central reconstruction in Exercise 9, are no longer visible.
+
+
+\end{exerciseList}
+
+
+%\newpage
+\lstinputlisting{./Code/Exercise10.m}
+\lstinputlisting{./Code/solver.m}
+\lstinputlisting{./Code/evalRHS.m}
+\lstinputlisting{./Code/apply_bc.m}
+\lstinputlisting{./Code/eval_crj.m}
+\lstinputlisting{./Code/eno_recon.m}
+\lstinputlisting{./Code/find_shift.m}
+\lstinputlisting{./Code/find_exact.m}
+\lstinputlisting{./Code/find_err.m}
+\end{document}

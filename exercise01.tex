@@ -1,6 +1,6 @@
 \documentclass[10pt,letterpaper]{article}
 \usepackage[english]{babel}
-
+\usepackage{graphicx}
 \usepackage[margin=2cm]{geometry}
 
 \usepackage{amsfonts}
@@ -20,10 +20,11 @@
 {\newline}
 {}%
 \theoremstyle{break}
-\newtheorem{information}{Information}
-\newtheorem{solutioninformation}{Solution Information}
 \newtheorem{exercise}{Exercise}
+\newtheorem*{information}{Information}
 \newtheorem{solution}{Solution}
+\newtheorem*{solutioninformation}{Solution Information}
+
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -58,7 +59,7 @@
 
 	Let us consider the following PDE
 	\begin{gather} \label{cmPDE}
-		\dif{u}{t}+b\frb{x,t,u} \dif{u}{x}=c\frb{x,t,u}, \quad x \in \mathbb{R}, t \in \mathbb{R}^+
+		\dfrac{du}{dt}+b\frb{x,t,u} \dfrac{du}{dx}=c\frb{x,t,u}, \quad x \in \mathbb{R}, t \in \mathbb{R}^+
 	\end{gather}
 	with an initial condition
 	\begin{gather} \label{cmIC}
@@ -69,27 +70,27 @@
 	For a fixed x-intercept $\xi$, consider the following ODE
 	\begin{gather} \label{charODE}
 		\dfrac{dx}{dt} =b\frb{x,t,u}
-		\dqquad
+		\quad
 		x(0) = \xi.
 	\end{gather}
-	Under sufficient regularity conditions, one can find a unique solution of \deq{charODE} as $\hat x (\xi,t) = x(t;\xi)$ (parameterized by the initial x-intercept). Thus, along the curve $\{\hat x (\xi,t), t\}$, the PDE \deq{cmPDE} reduces to the following ODE
+	Under sufficient regularity conditions, one can find a unique solution of \eqref{charODE} as $\hat x (\xi,t) = x(t;\xi)$ (parameterized by the initial x-intercept). Thus, along the curve $\{\hat x (\xi,t), t\}$, the PDE \eqref{cmPDE} reduces to the following ODE
 	\begin{gather} \label{mainODE}
-		\dd{}{t}\hat u \frb{\xi,t}=c\frb{\hat x,t,\hat u} \dqquad \hat u\frb{\xi,0}=u_0\frb{\xi},
+		\dfrac{d}{dt}\hat u \frb{\xi,t}=c\frb{\hat x,t,\hat u} \quad \hat u\frb{\xi,0}=u_0\frb{\xi},
 	\end{gather}
-	where $\hat u(\xi,t) = u( \hat x(\xi,t),t) = u( x(t;\xi),t)$. Again, under sufficient regularity conditions we can find a unique solution for \deq{mainODE}.
+	where $\hat u(\xi,t) = u( \hat x(\xi,t),t) = u( x(t;\xi),t)$. Again, under sufficient regularity conditions we can find a unique solution for \eqref{mainODE}.
 
 	Finally, we need to express the solution in terms of the $(x,t)$. In order to do this, we need to solve for $\xi$ from the equation $x = \hat x\frb{\xi,t}$, i.e., we need to find a smooth function $\hat \xi=\hat \xi(x,t)$ such that
 	\begin{gather} \label{xxi}
 		x=\hat x\frb{\hat \xi(x,t),t}.
 	\end{gather}
-	The existence of a function $\hat \xi(x,t)$ satisfying \deq{xxi} is ensured if $\hat x_\xi\ne0$, due to the inverse function theorem. Thus, the solution to \deq{cmPDE},\deq{cmIC} is given by
+	The existence of a function $\hat \xi(x,t)$ satisfying \eqref{xxi} is ensured if $\hat x_\xi\ne0$, due to the inverse function theorem. Thus, the solution to \eqref{cmPDE},\eqref{cmIC} is given by
 	\begin{gather} \label{cmSol}
 		u(x,t)=\hat u\frb{\hat \xi(x,t) ,t}.
 	\end{gather}
 
 	Let us now return to the exercise, where we work with conservation laws of the form:
 	\begin{gather} 
-		\dif{u}{t}+\dif{f(u)}{x}=0.
+		\dfrac{du}{dt}+\dfrac{d f(u)}{dx}=0.
 	\end{gather}
 \end{solutioninformation}
 
@@ -110,7 +111,7 @@
 \end{exercise}
 
 \begin{solution}
-	The integral form of the scalar conservation law \deq{conLaw} is given by 
+	The integral form of the scalar conservation law \eqref{conLaw} is given by 
 	\begin{gather} \label{weakForm}
 		\int_{x_{1}}^{x_{2}}u\frb{x,t_{2}} \dif x
 				-\int_{x_{1}}^{x_{2}}u\frb{x,t_{1}} \dif x
@@ -126,9 +127,9 @@
 			=-a \int_{t_{1}}^{t_{2}} u\frb{x_{2},t} \dif t
 				+a\int_{t_{1}}^{t_{2}} u\frb{x_{1},t} \dif t\  .
 	\end{gather}
-	On the left hand side of \deq{AdvecIntForm} is an integral in $x$, and on the right hand side is an integral in $t$.
+	On the left hand side of \eqref{AdvecIntForm} is an integral in $x$, and on the right hand side is an integral in $t$.
 	
-	Let $u_{0}(x)$ be any integrable function, i.e., $u_{0}(x)$ may include discontinuities. If $u(x,t)=u_0(x-at)$, then the left hand side and ride hand side of \deq{AdvecIntForm} take the form
+	Let $u_{0}(x)$ be any integrable function, i.e., $u_{0}(x)$ may include discontinuities. If $u(x,t)=u_0(x-at)$, then the left hand side and ride hand side of \eqref{AdvecIntForm} take the form
 	\begin{gather} \label{LHS}
 		LHS=\int_{x_{1}}^{x_{2}}u_{0}\frb{x-at_{2}}\dif x
 				-\int_{x_{1}}^{x_{2}}u_{0}\frb{x-at_{1}} \dif x,
@@ -137,17 +138,17 @@
 		RHS=-a\int_{t_{1}}^{t_{2}}u_{0}\frb{x_{2}-at}\dif t
 				+a\int_{t_{1}}^{t_{2}}u\frb{x_{1}-at}\dif t\ 
 	\end{gather}
-	respectively. By substituting the integration variable $y=x-at_{2}$ into the first integral of \deq{LHS}, and the integration variable $y=x-at_{1}$ into the second, we get
+	respectively. By substituting the integration variable $y=x-at_{2}$ into the first integral of \eqref{LHS}, and the integration variable $y=x-at_{1}$ into the second, we get
 	\begin{gather} \label{LHS2}
 		LHS=\int_{x_{1}-at_{2}}^{x_{2}-at_{2}}u_{0}\frb{y}\dif y
 			-\int_{x_{1}-at_{1}}^{x_{2}-at_{1}}u_{0}\frb{y}\dif y\ .
 	\end{gather}
-	Similarly, by substituting $y=x_{2}-at$ into the first integral of \deq{RHS}, and $y=x_{1}-at$ in the second we get 
+	Similarly, by substituting $y=x_{2}-at$ into the first integral of \eqref{RHS}, and $y=x_{1}-at$ in the second we get 
 	\begin{gather} \label{RHS2}
 		RHS=- \int_{x_{2}-at_{2}}^{x_{2}-at_{1}}u_{0}\frb{y}\dif y
 			+\int_{x_{1}-at_{2}}^{x_{1}-at_{1}}u_{0}\frb{y} \dif y\ .
 	\end{gather}
-	Subtracting \deq{RHS2} from \deq{LHS2}, we get
+	Subtracting \eqref{RHS2} from \eqref{LHS2}, we get
 	\begin{gather}
 		LHS-RHS=\int_{x_{1}-at_{2}}^{x_{2}-at_{1}}u_{0}\frb{y} \dif y
 			-\int_{x_{1}-at_{2}}^{x_{2}-at_{1}}u_{0}\frb{y} \dif y=0\ ,
@@ -174,7 +175,7 @@
 \end{exercise}
 
 \begin{solution}
-	The second exercise requires us to solve \deq{conLaw} with $f(u)=u^2/2$ and the initial condition
+	The second exercise requires us to solve \eqref{conLaw} with $f(u)=u^2/2$ and the initial condition
 	\begin{gather}
 		u_0(x)=\begin{cases}
 				0 	& 	  x<-1\\
@@ -185,19 +186,20 @@
 	\end{gather}
 	Wherever the solution is smooth, we can write
 	\begin{gather}
-		\dif{u}{t}+u\dif{u}{x}=0\ .
+		\dfrac{du}{dt}+u\dfrac{du}{dx}=0\ .
 	\end{gather}
-	This PDE has the form \deq{cmPDE}, with $b(x,t,u) = u$ and $c(x,t,u) = 0$.
+	This PDE has the form \eqref{cmPDE}, with $b(x,t,u) = u$ and $c(x,t,u) = 0$.
 	The characteristics are given as the solutions of the ODE
 	\begin{gather}
-		 =\hat u
-		\dqquad
+		% TODO
+		=\hat u
+		\quad
 		\dfrac{d\hat u}{dt} =0
 	\end{gather}
 	satisfying the initial condition
 	\begin{gather}
 		\hat x\frb{\xi,0} =\xi
-		\dqquad
+		\quad
 		\hat u\frb{\xi,0} =u_0\frb{\xi}\ .
 	\end{gather}
 	Since $\hat u$ is clearly constant along the characteristics, we have $\hat u\frb{\xi,t}=u_0\frb{\xi}$.
@@ -222,7 +224,7 @@
 	This implies that the map $\xi\mapsto \hat x\frb{\xi,t}$ is not surjective, and therefore can not be inverted.
 	\begin{figure}
 	\centering
-	\includegraphics{charac_t}
+	\includegraphics{01figures/charac_t}
 	\caption{The characteristic curves (gray lines) in the $x$-$t$ plane and the map $\xi\mapsto \hat x\frb{\xi,t}$.
 			The dashed gray lines are for illustration.}
 	\label{carXTplane}
@@ -254,7 +256,7 @@
 	Figure \ref{u01} shows the solution $u$ at $t=1$, and the initial function $u_0$.
 	\begin{figure}
 	\centering
-	\includegraphics[scale=1]{usol}
+	\includegraphics[scale=1]{01figures/usol}
 	\caption{The solution $u$ at $t=1$ (thick line), and the initial function $u_0$ (thin line).}
 	\label{u01}
 	\end{figure}
@@ -314,13 +316,13 @@
 				u_r & u_rt<x
 			\end{cases}\ ,
 	\end{gather}
-	satisfies \deq{WS}. We first define the functions
+	satisfies \eqref{WS}. We first define the functions
 	\begin{gather}
 		u_1(x,t)=\begin{cases}
 				u_l & x<s_mt\\
 				u_m & s_mt<x
 			\end{cases}\ ,
-		\dqquad
+		\quad
 		u_2(x,t)=\begin{cases}
 				u_m & x<u_mt \\
 				x/t & u_mt<x<u_rt\\
@@ -340,14 +342,15 @@
 		B\frb{\phi,u}=B\frb{\phi,u_1}+B\frb{\phi,u_2}-B\frb{\phi,u_m}\ .
 	\end{gather}
 	For $B\frb{\phi,u_1}$, consider the change of variables $y = x - s_mt$ and $\tau = t$. Note that we will also need to change the derivatives with respect to $x$ and $t$ to derivatives with respect to $y$ and $\tau$. In other words, for $\widetilde \phi(y,\tau) = \phi(x(y,\tau),t(y,\tau))$, the chain rule gives us
-	\begin{gather}a
+	\begin{align*}
 		\widetilde \phi(y,\tau)_t &=\widetilde \phi_y(y,\tau) y_t + \widetilde \phi_\tau(y,\tau) \tau_t\\
-		&= -s_m \phi_y(y,\tau) + \widetilde \phi_\tau(y,\tau),
-	\end{gather}a
-	\begin{gather}a
+		&=
+		-s_m \phi_y(y,\tau) + \widetilde \phi_\tau(y,\tau),
+	\end{align*}
+	\begin{align*}
 		\widetilde \phi(y,\tau)_x &=\widetilde \phi_y(y,\tau) y_x + \widetilde \phi_\tau(y,\tau) \tau_x\\
 		&= \widetilde \phi_y(y,\tau).
-	\end{gather}a
+	\end{align*}
 	Thus, the integral terms change to
 	\begin{gather}
 		B\frb{\phi,u_1}=\int_0^\infty \int_{-\infty}^\infty
@@ -359,7 +362,7 @@
 	J = \text{Det} \left( \frac{\partial(x,t)}{\partial(y,\tau)} \right) = 1.
 	\]
 	The integral simplifies to
-	\begin{gather}al{Bsum1}
+	\begin{align} \label{Bsum1}
 		B\frb{\phi,u_1}&=\int_0^\infty \int_{-\infty}^0
 				\Big( \left[ \widetilde \phi_\tau(y,\tau) -s_m \widetilde \phi_y(y,\tau)\right] u_l + \widetilde \phi_y(y,\tau)  \frac{u_l^2}{2} \Big)
 			 \dif y\dif \tau\  \\
@@ -368,27 +371,27 @@
 			 \dif y\dif \tau\ \\
 			 &= \int_0^\infty \widetilde \phi(0,\tau) \left[(u_m - u_l) s_m + \frac{u_l^2}{2} - \frac{u_m^2}{2} \right] \dif \tau - \int_{-\infty}^{\infty} \left[\widetilde \phi(y,\tau) u_1(y+s_m \tau,\tau) \right]\Big|_{\tau=0} \dif y\\
 			 &= - \int_{-\infty}^{\infty} \phi(x,0) u_1(x,0) \dif x.
-	\end{gather}a
+	\end{align}
 	
 	Next, let us consider $B\frb{\phi,u_2}$. Note that the $u_2$ may suffer from a singularity as $t \rightarrow 0^+$. Thus, we isolate the possible singularity using an $1>\epsilon > 0$ by splitting the integral
-	\begin{gather}a
+	\begin{align}
 	B\frb{\phi,u_2} &=  \int_0^\epsilon \int_{-\infty}^\infty \Big(\phi_t u +\phi_x f\frb{u_2}\Big)\dif x\dif t +  \int_\epsilon^\infty \int_{-\infty}^\infty \Big(\phi_t u_2 +\phi_x f\frb{u_2}\Big)\dif x\dif t \\
 	 & = I_1 + I_2 \ .
-	\end{gather}a
+	\end{align}
 	Since the integrand in $I_2$ is a continuous, we can perform an integration by parts to get
-	\begin{gather}a
+	\begin{align}
 	I_2 &= - \int_\epsilon^\infty \int_{u_m t}^{u_r t} \phi(x,t) \left( - \frac{x}{t^2} + \frac{1}{2} \frac{2 x}{t} \right) \dif x \dif t - \int_{-\infty}^\infty \phi(x,\epsilon) u_2(x,\epsilon) \dif x  \\
 		& = - \int_{-\infty}^\infty \phi(x,\epsilon) u(x,\epsilon) \dif x.
-	\end{gather}a
+	\end{align}
 	Also, choosing a finite $L>0$ such that $\phi_t$ and $\phi_x$ vanish outside $[-L,L$], we have
-	\begin{gather}a
+	\begin{align}
 	|I_1| &\leq \left| \int_0^\epsilon \int_{-L}^{u_mt} \Big(\phi_t u_m +\phi_x \frac{u_m^2}{2}\Big)\dif x\dif t \right| + \left| \int_0^\epsilon \int_{u_mt}^{u_rt} \Big(\phi_t \frac{x}{t} +\phi_x \frac{x^2}{2t^2}\Big)\dif x\dif t \right|  \\
 	&+ \left| \int_0^\epsilon \int_{u_rt}^L \Big(\phi_t u_r +\phi_x \frac{u_r^2}{2}\Big)\dif x\dif t \right| \\
 	&\leq \max{(\|\phi_t\|_\infty|u_m|,\|\phi_x\|_\infty|u_m^2|)} \left( \frac{|u_m| \epsilon^2}{2} + L \epsilon \right) \\
 	& + \max{\big(\|\phi_t\|_\infty \max(|u_m|,|u_r|),\|\phi_x\|_\infty \max(|u_m^2|,|u_r^2|)\big)} (u_m - u_r) \epsilon^2 \\
 	& + \max{(\|\phi_t\|_\infty|u_r|,\|\phi_x\|_\infty|u_r^2|)} \left( \frac{u_r \epsilon^2}{2} + L \epsilon \right) \\
 	& \leq C(u_l,u_r, u_m, \phi) \epsilon
-	\end{gather}a
+	\end{align}
 	where $C$ is independent of $\epsilon$. Thus, $I_1 \rightarrow 0$ as $\epsilon \rightarrow 0^+$ and
 	\begin{gather} \label{Bsum2}
 		B\frb{\phi,u_2}= - \lim \limits_{\epsilon \rightarrow 0^+} I_2 = \int_{-\infty}^{\infty} \phi(x,0) u_2(x,0) \dif x\ .
@@ -397,7 +400,7 @@
 	\begin{gather} \label{Bsumm}
 		B\frb{\phi,u_m}= - \int_{-\infty}^{\infty} \phi(x,0) u_m \dif x\ .
 	\end{gather}
-	Using \deq{Bsum1}, \deq{Bsum2} and \deq{Bsumm} we get the required result.
+	Using \eqref{Bsum1}, \eqref{Bsum2} and \eqref{Bsumm} we get the required result.
 \end{solution}
 
 
@@ -420,22 +423,23 @@
 \begin{solution}
 	Suppose $u$ satisfies
 	\begin{gather}
-		\dif{u}{t}+\dif{}{x}\rb{a(x)u}=0
-		\dqquad
+		\dfrac{du}{dt}+\dif{}{x}\rb{a(x)u}=0
+		\quad
 		a(x)=x
 	\end{gather}
 	and the initial condition $u(x,0)=u_0(x)$, where $u_0$ is some given smooth function.
 	In a neighborhood of the initial condition,
 	\begin{gather}
-		\dif{u}{t}+x \dif{u}{x}=-u\ ,
+		\dfrac{du}{dt}+x \dfrac{du}{dx}=-u\ ,
 	\end{gather}
 	therefore, the characteristics are given by the IVP
 	\begin{gather} \label{charSin}
+		%TODO
 		=x
-		\dqquad
+		\quad
 		\hat x\frb{\xi,0}=\xi\ .
 	\end{gather}
-	The solution $\hat x$ to the ODE in \deq{charSin} is obtained fas
+	The solution $\hat x$ to the ODE in \eqref{charSin} is obtained fas
 	\begin{gather}
 		\hat x\frb{\xi,t}=\xi e^t\ .
 	\end{gather}
@@ -443,7 +447,7 @@
 	The IVP for $u$ on the characteristics is
 	\begin{gather}
 		\dfrac{d\hat u}{dt}=-u
-		\dqquad
+		\quad
 		\hat u\frb{\xi,0}=u_0\frb{\xi}\ .
 	\end{gather}
 	which has the solution $\hat u(\xi,t) = u_0(\xi) e^{-t}$. Thus, $u$ is not constant on the characteristics, unless $u_0$ is identically zero.	

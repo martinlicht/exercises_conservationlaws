@@ -70,7 +70,7 @@ Let $u$ be a smooth solution of $u_t+au_x=0$. The local truncation error for the
 \begin{gather} \label{LeapfTrunc}
 	k\tau_k(x,t)=u\frb{x,t+k}-u\frb{x,t-k}+\frac{ak}{h}\rb{u\frb{x+h,t}-u\frb{x-h,t}}\ . 
 \end{gather}
-Next, we expand all the terms on the right hand side of \deq{LeapfTrunc} about $(x,t)$. For example, we have $u\frb{x,t+k}$ and $u\frb{x,t-k}$ given by 
+Next, we expand all the terms on the right hand side of \eqref{LeapfTrunc} about $(x,t)$. For example, we have $u\frb{x,t+k}$ and $u\frb{x,t-k}$ given by 
 \begin{gather}
 	u\frb{x,t+k}=u +u_tk +\frac{1}{2}u_{tt}k^2+O\frb{k^3} 
 \end{gather}
@@ -117,13 +117,13 @@ we show that $\|\cH^n\|_\infty$ is bounded for all $n$, where $\cH$ is the opera
 (That is, the LF scheme is given by $v^{n+1}=\cH v^n$.)
 To do so, we suppose $v$ is some grid function, and calculate the norm of $\cH v$.
 We have
-\begin{gather}a	
+\begin{gather}	
 	\norm{\cH v^n}_\infty &=\norm{ \frac{1}{2}\rb{v_{j+1} +v_{j-1}} 
 			-\frac{ak}{2h}\rb{v_{j+1} -v_{j-1}}}_\infty, \\
 		&\le \frac{1}{2} \rb{\abs{1-\frac{ak}{h}}
 			+\abs{1+\frac{ak}{h}}}\ \norm{v^n}_\infty, \\
 		&\le	\norm{v^n}_\infty,	 
-\end{gather}a
+\end{gather}
 whenever (\ref{LF_stab_cond}) holds. Thus, 
 \begin{gather} 	
 	\|\cH^n\|_\infty \le \|\cH\|_\infty^n \le1
@@ -150,7 +150,7 @@ whenever (\ref{LF_stab_cond}) holds. Thus,
 %\begin{gather}
 %	|g\frb{\tta}|^2=\cos^2\tta+\rb{\frac{ak}{2h}}\, \sin^2\tta=1-\rb{1-\rb{\frac{ak}{2h}}^2}\sin^2\tta\ ,
 %\end{gather}
-%which is less than or equal to one, for all $\tta$, if and only if \deq{LF_stab_cond} holds.
+%which is less than or equal to one, for all $\tta$, if and only if \eqref{LF_stab_cond} holds.
 
 
 
