@@ -63,7 +63,55 @@
 
 
 
-
+\begin{exercise}
+    Find the characteristics associated with the transport problem 
+    $$
+        \partial_t u(x,t) + \partial_x\left( (-x) u(x,t) \right) = 0,
+    $$
+    where the speed is $a(x) = -x$.
+    Draw a few examples for these curves. 
+    Solve the characteristic equation for some initial value $u_0$.
+\end{exercise}
+\begin{solution}
+    The characteristic curve starting at $x_0$ obeys the ordinary differential equation 
+    \begin{align*}
+        \partial_t x(t) = - x(t), \quad x(0) = x_0.
+    \end{align*}
+    We know that the solution is 
+    \begin{align*}
+        x(t) = x_0 \exp(-t).
+    \end{align*}
+    As in the lecture, we derive the following ordinary differential equation 
+    for the values of $u$ along the characteristic curve emanating at $x_0$: 
+    \begin{align*}
+        \partial_t v(t) = - \partial_x a( x(t) ) v(t), \quad v(0) = u_0( x(0) ), 
+    \end{align*}
+    that is, 
+    \begin{align*}
+        \partial_t v(t) = x(t) v(t), \quad v(0) = u_0( x(0) ), 
+    \end{align*}
+    We remember (or look up) the solution formula for this ordinary differential equation:
+    \begin{align*}
+        v(t) = u_0(x_0) \cdot e^{\int_0^t x(s) \;ds + x_0}.
+    \end{align*}
+    With our specific formula for $x(t)$, this gives 
+    \begin{align*}
+        v(t) 
+        &
+        = 
+        u_0(x_0) \cdot e^{x_0 \int_0^t \exp(-s) \;ds + x_0}
+        = 
+        u_0(x_0) \cdot e^{ - x_0 e^{-t} + x_0}
+        = 
+        u_0(x_0) \cdot e^{ x_0 ( 1 - e^{-t} ) }
+        .
+    \end{align*}
+    \textit{Remark: 
+    The interpretation of this system is that we have a transport towards the origin.
+    Each characteristic curve goes flat very quickly,
+    since the speed goes to zero as we approach the origin. 
+    }
+\end{solution}
 
 
 

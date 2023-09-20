@@ -9,6 +9,7 @@
 \usepackage{amsmath}
 \usepackage{amssymb}
 \usepackage{amsthm}
+\usepackage{comment}
 \newcommand{\dif}[1][]{\mathrm{d} {#1}\,}
 \newcommand{\rb}[1]{ \left(  {#1} \right) }
 \newcommand{\frb}[1]{ \left(  {#1} \right) }
@@ -26,8 +27,17 @@
 \theoremstyle{break}
 \newtheorem{exercise}{Exercise}
 \newtheorem*{information}{Information}
-\newtheorem{solution}{Solution}
+\newtheorem{mysolution}{Solution}
+% \newenvironment{solution}{\begin{comment}}{\end{comment}}
 \newtheorem*{solutioninformation}{Solution Information}
+
+\newenvironment{solution}{\begin{mysolution}}{\end{mysolution}}
+% \excludecomment{solution}
+
+
+
+
+
 
 \begin{document}
 
@@ -55,6 +65,45 @@
 
 
 
+
+
+
+\begin{exercise}
+    Consider the partial differential equation
+    $$
+        \partial_t u(x,t) + x \partial_x u(x,t) = 0.
+    $$
+    Find curves $x(t)$ along which any solution must be constant.
+    Show that every $(x,t) \in \mathbb R \times \mathbb R$ lies on such a curve. 
+    Find a solution for the initial values $u_0(x) = \cos(x)$.
+\end{exercise}
+\begin{solution}
+    From the equation, we can tell that 
+    \begin{align*}
+        \begin{pmatrix} \partial_x u(x,t) \\ \partial_t u(x,t) \end{pmatrix}
+        \cdot 
+        \begin{pmatrix} x \\ 1 \end{pmatrix}
+        = 
+        0
+    \end{align*}
+    At every point $(x,t)$, the solution must be constant if we move in direction $(x,1)$. 
+    A curve $x(t)$ must therefore obey the ordinary differential equation 
+    \begin{align*}
+        \partial_t x(t) = x(t), \quad x(0) = x_0.
+    \end{align*}
+    The solution is $x(t) = x_0 \exp(t)$.
+    
+    Given any $(x,t)$, we see that $(x,t)$ lies on the characteristic starting at $x_0 = x \exp(-t)$. 
+    
+    Since $u$ is constant along each characteristic, it follows that 
+    \begin{align*}
+        u(x,t) = u\left( x \cdot e^{-t} , 0 \right) = u_0\left( x \cdot e^{-t} \right)
+    \end{align*}
+    If the initial values are $u_0(x) = \sin(x)$, we thus find the solution by:
+    \begin{align*}
+        u(x,t) = \sin\left( x \cdot e^{-t} \right).
+    \end{align*}
+\end{solution}
 
 
 
@@ -138,10 +187,31 @@
     Similar as in the lecture, we introduce the variables $v = \partial_t E$ and $s = \partial_s E$, which represent the velocity and the slope.
     The system of conservation laws consists of 
     $$
-        \partial_t s = \partial_s v,
+        \partial_t s = \partial_x v,
         \qquad
-        \partial_t v = \partial_s \left( s^{p-2} s \right).
+        \partial_t v = \partial_x \left( s^{p-2} s \right).
     $$
+    In matrix form, we therefore find 
+    \begin{align*}
+        \partial_{t}
+        \begin{pmatrix}
+         s \\ v
+        \end{pmatrix}
+        =
+        \partial_{x}
+        \left( 
+        \begin{pmatrix}
+            0 & v
+            \\
+            s^{p-2} & 0
+        \end{pmatrix}
+        \begin{pmatrix}
+         s \\ v
+        \end{pmatrix}
+        \right)
+        .
+    \end{align*}
+
 \end{solution}
 
 
@@ -154,6 +224,8 @@
     $$
     where the velocity depends only one the time variable $t$.
     Find the characteristics and show that the characteristics do not intersect.
+    
+    Suppose that $u$ describes the density of cars along a one-dimensional street. What sort of traffic flow does this conservation law describe?
     \textit{This simple PDE is only for practice purposes.}
 \end{exercise}
 
@@ -178,7 +250,16 @@
         .
     $$
     So the distance between $x_1(t)$ and $x_0(t)$ remains constant over time.
+    
+    If we interpret this as a model for traffic flow, 
+    then it describes a flow of cars where everyone drives exactly the same speed at every time,
+    but the speed may change over time (and everyone will obey the speed rule).
+    Obviously, this is quite only a simplified traffic flow model. 
 \end{solution}
+
+
+
+
 
 
 
@@ -203,20 +284,23 @@
     We write $x_0(t)$ and $x_1(t)$ for the two associated characteristics. 
     They satisfy the equations 
     $$
-        x_0(t) = x_0 + \int_0^t a( x_0(s) ) ds,
+        x_0(t) = x_0 + \int_0^t x_0'(s) ds = x_0 + \int_0^t a( x_0(s) ) ds,
         \qquad
-        x_1(t) = x_1 + \int_0^t a( x_1(s) ) ds.
+        x_1(t) = x_1 + \int_0^t x_1'(s) ds = x_1 + \int_0^t a( x_1(s) ) ds.
     $$
     If the two characteristics intersect, 
     then there is some $T$ such that $x_0(T) = x_1(T)$.
-
-    Since the velocity is always positive, $x_0(t)$ must have have passed $x_1$ at some time $t_0$, where we have $x_0(t_0) = x_1$.
     At the intersection time $T$ we then must have 
     $$
         x_0 + \int_0^T a( x_0(s) ) ds
         =
+        x_0(T)
+        =
+        x_1(T)
+        =
         x_1 + \int_0^T a( x_1(s) ) ds.
     $$
+    Since the velocity is always positive, $x_0(t)$ must have have passed $x_1$ at some time $t_0 > 0$, where we have $x_0(t_0) = x_1$.
     We split the first integral
     $$
         x_0
