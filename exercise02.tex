@@ -620,14 +620,14 @@
     \begin{figure}
         \centering
         \begin{subfigure}[b]{0.5\textwidth}
-            % \includegraphics[width=\textwidth]{Figs/ex_set_2_3} TODO: Find the graphics for this or reproduce it (Octave or Matlab, ...)
+            \includegraphics[width=\textwidth]{figures02/ex_set_2_3} 
             \caption{Initial data $u_0$, given by \eqref{eq:initial_condition}.
             The rarefaction wave and the shock both move in the positive direction.}
             \label{fig:u_0}
         \end{subfigure}
         ~
         \begin{subfigure}[b]{0.5\textwidth}
-            % \includegraphics[width=\textwidth]{Figs/ex_set_2_2} TODO: Find the graphics for this or reproduce it (Octave or Matlab, ...)
+            \includegraphics[width=\textwidth]{figures02/ex_set_2_2} 
             \caption{Characteristics of the solution of the Burger's equation
             up until time $T_c$. The rarefaction wave moves faster than
             the shock and at some point in time $t = T_c > 0$ they meet,
@@ -639,87 +639,59 @@
     \end{figure}
     
     \begin{itemize}
-    \item[(a)]
-    Figure \ref{problem3_part1} contains a sketch of the initial data profile
-    $u_0$ with characteristics evolving. To determine
-    the speed of the shock originating at $x = 1$, we use the Rankine-Hugoniot jump condition
-    \begin{gather}
-    	s_{shock}=\frac{f\left(u_{l}\right)-f\left(u_{r}\right)}{u_{l}-u_{r}}=\frac{\frac{1}{2} 2^{2}-\frac{1}{2}(0)^{2}}{2-(0)}=1.
-    \end{gather}
-    At the discontinuity at $x = 0$ we expect a rarefaction wave to arise. 
-    From the general solution to the rarefaction wave, we have that the
-    right front of this wave moves with a speed of $s_{rf} = f'(u_r) = 2$.
-    The rarefaction wave thus moves to the right twice as fast as the
-    shock wave and at some point in time the waves must meet.
-    \item[(b)]
-    First we seek to determine the exact solution for $0<t<T_{c}$, where $T_{c}$ is the time when the rarefaction wave catches up with the shock. The time $T_{c}$ is trivial to find: Since the position of the rarefaction front is $x_{r f}=2 t$ and the position of the shock is $x_{\text {shock }}=t+1$, we have $T_{c}+1=2 T_{c}$, namely $T_{c}=1 .$ Thus,
-    $$
-    u(x, t)=\left\{\begin{array}{ll}
-    0 & x<0 \\
-    \frac{x}{t} & 0<x<2 t \\
-    2 & 2 t<x<t+1 \\
-    0 & t+1<x
-    \end{array}\right.
-    $$
-    $$
-    s_{s h o c k}=\frac{f\left(u_{l}\right)-f\left(u_{r}\right)}{u_{l}-u_{r}}=\frac{\frac{1}{2} 2^{2}-\frac{1}{2}(0)^{2}}{2-(0)}=1
-    $$
-    \item[(c)]
-    What happens at $t>T_{c} ?$ We again use the Rankine-Hugoniot jump condition, now to construct an $\mathrm{ODE}$ for the position of the shock $x_{s}$ after the rarefaction and shock wave have merged:
-    $$
-    \frac{d x_{s}(t)}{d t}=\frac{f\left(u_{l}\right)-f\left(u_{r}\right)}{u_{l}-u_{r}}=\frac{\frac{1}{2}\left(\frac{x_{s}(t)}{t}\right)^{2}-\frac{1}{2}(0)^{2}}{\frac{x_{s}(t)}{t}-(0)}=\frac{1}{2} \frac{x_{s}(t)}{t}
-    $$
-    This ODE has the general solution $x_{s}(t)=C \sqrt{t}$. At $t=1$ we know that $x_{s}=2$ so $C=2$. But what about the profile of $u(x, t) ?$ For times $t>T_{c}$, we expect the solution to the left of the shock-curve to be obtained from the rarefaction solution, i.e., $u=x / t$, while the solution on the right to be $u=0$. Note that this is compatible with the entropy condition for a shock. Thus, the solution can be expressed as
-    $$
-    u(x, t)=\left\{\begin{array}{ll}
-    0 & x<0 \\
-    \frac{x}{t} & 0<x<2 \sqrt{t} \\
-    0 & x>2 \sqrt{t}
-    \end{array}\right.
-    $$
-    Figure \ref{problem3_part2} shows the characteristic curves in the $x-t$ plane up to $t=T_{c}$ and beyond. One can see that the information originating from $(x, t)=(0,0)$ reaches up to the shock, even after the rarefaction front have caught up with it. This means that for $t>T_{c}$, in $0<x<x_{s}$, the solution is determined exclusively by the rarefaction wave, and is not affected by the location, or the existence of the shock.
-    
-    \begin{figure}
-        \centering
-        \begin{subfigure}[b]{0.5\textwidth}
-            % \includegraphics[width=\textwidth]{Figs/ex_set_2_4} TODO: Find the graphics for this or reproduce it (Octave or Matlab, ...)
-    %        \caption{Initial data $u_0$, given by \eqref{eq:initial_condition}.
-    %        The rarefaction wave and the shock both move in the positive direction.}
-    %        \label{fig:u_0}
-        \end{subfigure}
-        \caption{The characteristic curves (gray lines) of u in the $x-t$ plane.}
-        \label{problem3_part2}
-    \end{figure}
+        \item[(a)]
+        Figure \ref{problem3_part1} contains a sketch of the initial data profile
+        $u_0$ with characteristics evolving. To determine
+        the speed of the shock originating at $x = 1$, we use the Rankine-Hugoniot jump condition
+        \begin{gather}
+            s_{shock}=\frac{f\left(u_{l}\right)-f\left(u_{r}\right)}{u_{l}-u_{r}}=\frac{\frac{1}{2} 2^{2}-\frac{1}{2}(0)^{2}}{2-(0)}=1.
+        \end{gather}
+        At the discontinuity at $x = 0$ we expect a rarefaction wave to arise. 
+        From the general solution to the rarefaction wave, we have that the
+        right front of this wave moves with a speed of $s_{rf} = f'(u_r) = 2$.
+        The rarefaction wave thus moves to the right twice as fast as the
+        shock wave and at some point in time the waves must meet.
+        \item[(b)]
+        First we seek to determine the exact solution for $0<t<T_{c}$, where $T_{c}$ is the time when the rarefaction wave catches up with the shock. The time $T_{c}$ is trivial to find: Since the position of the rarefaction front is $x_{r f}=2 t$ and the position of the shock is $x_{\text {shock }}=t+1$, we have $T_{c}+1=2 T_{c}$, namely $T_{c}=1 .$ Thus,
+        $$
+        u(x, t)=\left\{\begin{array}{ll}
+        0 & x<0 \\
+        \frac{x}{t} & 0<x<2 t \\
+        2 & 2 t<x<t+1 \\
+        0 & t+1<x
+        \end{array}\right.
+        $$
+        $$
+        s_{s h o c k}=\frac{f\left(u_{l}\right)-f\left(u_{r}\right)}{u_{l}-u_{r}}=\frac{\frac{1}{2} 2^{2}-\frac{1}{2}(0)^{2}}{2-(0)}=1
+        $$
+        \item[(c)]
+        What happens at $t>T_{c} ?$ We again use the Rankine-Hugoniot jump condition, now to construct an $\mathrm{ODE}$ for the position of the shock $x_{s}$ after the rarefaction and shock wave have merged:
+        $$
+        \frac{d x_{s}(t)}{d t}=\frac{f\left(u_{l}\right)-f\left(u_{r}\right)}{u_{l}-u_{r}}=\frac{\frac{1}{2}\left(\frac{x_{s}(t)}{t}\right)^{2}-\frac{1}{2}(0)^{2}}{\frac{x_{s}(t)}{t}-(0)}=\frac{1}{2} \frac{x_{s}(t)}{t}
+        $$
+        This ODE has the general solution $x_{s}(t)=C \sqrt{t}$. At $t=1$ we know that $x_{s}=2$ so $C=2$. But what about the profile of $u(x, t) ?$ For times $t>T_{c}$, we expect the solution to the left of the shock-curve to be obtained from the rarefaction solution, i.e., $u=x / t$, while the solution on the right to be $u=0$. Note that this is compatible with the entropy condition for a shock. Thus, the solution can be expressed as
+        $$
+        u(x, t)=\left\{\begin{array}{ll}
+        0 & x<0 \\
+        \frac{x}{t} & 0<x<2 \sqrt{t} \\
+        0 & x>2 \sqrt{t}
+        \end{array}\right.
+        $$
+        Figure \ref{problem3_part2} shows the characteristic curves in the $x-t$ plane up to $t=T_{c}$ and beyond. One can see that the information originating from $(x, t)=(0,0)$ reaches up to the shock, even after the rarefaction front have caught up with it. This means that for $t>T_{c}$, in $0<x<x_{s}$, the solution is determined exclusively by the rarefaction wave, and is not affected by the location, or the existence of the shock.
+        
+        \begin{figure}
+            \centering
+            \begin{subfigure}[b]{0.5\textwidth}
+                \includegraphics[width=\textwidth]{figures02/ex_set_2_4} 
+                \caption{Initial data $u_0$, given by \eqref{eq:initial_condition}.
+                The rarefaction wave and the shock both move in the positive direction.}
+                \label{fig:u_0_later}
+            \end{subfigure}
+            \caption{The characteristic curves (gray lines) of u in the $x-t$ plane.}
+            \label{problem3_part2}
+        \end{figure}
     \end{itemize}
-    %\begin{figure}[t!]
-    %    \centering
-    %    \begin{subfigure}[t]{0.5\textwidth}
-    %        \centering
-    %        \includegraphics[height=2.5in]{Figs/ex_set_2_3}
-    %        \caption{a}
-    %        \label{subfig:loss_alg_2}
-    %    \end{subfigure}%
-    %    \\
-    %    \begin{subfigure}[t]{0.5\textwidth}
-    %        \centering
-    %        \includegraphics[height=2.5in]{Figs/ex_set_2_2}
-    %        \caption{a}
-    %        \label{subfig:error_alg_2}
-    %    \end{subfigure}
-    %    \caption{a}
-    %}
-    %\label{fig:alg_2}
-    %\end{figure}
     
-    %\begin{figure}[h!]
-    %\centering
-    %\begin{tikzpicture}[scale=1]
-    %\draw (0,0) -- (2, 2);
-    %\end{tikzpicture}
-    
-    %\caption{Characte}
-    %\label{fig:L_domain}
-    %\end{figure}
 \end{solution}
 
 

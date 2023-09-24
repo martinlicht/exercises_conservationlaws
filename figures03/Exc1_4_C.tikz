@@ -1,0 +1,83 @@
+\usetikzlibrary{arrows}
+\begin{tikzpicture}[scale=2.1,pile/.style={thick, ->, >=stealth', shorten <=2pt, shorten >=2pt}]
+
+	\draw [-] (-0.75,0) -- (2.75,0);
+	\draw [dashed, very thick] (1,0) -- (2,1);
+	
+
+	% Straight
+	\draw [dotted,thick] (-0.75,0) -- (-0.75,1.00);
+	\draw [dotted,thick] (-0.50,0) -- (-0.50,1.00);
+	\draw [dotted,thick] (-0.25,0) -- (-0.25,1.00);
+	\draw [dotted,thick] (-0.0,0) -- (-0.0,1.00);		
+	\draw [dotted,thick] (1.25,0) -- (1.25,0.25);
+	\draw [dotted,thick] (1.50,0) -- (1.50,0.50);
+	\draw [dotted,thick] (1.75,0) -- (1.75,0.75);
+	\draw [dotted,thick] (2.00,0) -- (2.00,1.00);	
+	\draw [dotted,thick] (2.25,0) -- (2.25,1.00);	
+	\draw [dotted,thick] (2.50,0) -- (2.50,1.00);
+	\draw [dotted,thick] (2.75,0) -- (2.75,1.00);	
+	
+	% Within Rarefaction
+	\draw [dashed,very thick] (0,0) -- (2,1.00);
+	\draw [dotted,thick] (0.25,0) -- (1.75,0.75);
+	\draw [dotted,thick] (0.5,0) -- (1.5,0.5);
+	\draw [dotted,thick] (0.75,0) -- (1.25,0.25);
+	
+	\draw [dotted,thick] (0,0) -- (0.25,1.00);
+	\draw [dotted,thick] (0,0) -- (0.50,1.00);
+	\draw [dotted,thick] (0,0) -- (0.75,1.00);
+	\draw [dotted,thick] (0,0) -- (1.00,1.00);	
+	\draw [dotted,thick] (0,0) -- (1.25,1.00);
+	\draw [dotted,thick] (0,0) -- (1.50,1.00);		
+	\draw [dotted,thick] (0,0) -- (1.75,1.00);	
+				
+	\draw[] plot coordinates{ (0,0.1) (0,-0.1) };	
+	\draw[] plot coordinates{ (1,0.1) (1,-0.1) };	
+	\draw (0,-0.3) node { $0$ };
+	\draw (1,-0.3) node { $1$ };
+	
+	\draw [->,thick] (2.5,-0.2) -- (2.7,-0.2);	
+	\draw [->,thick] (-0.5,1.5) -- (-0.5,1.7);		
+	\draw (2.6,-0.3) node { $x$ };
+	\draw (-0.6,1.6) node { $t$ };
+
+	% Question
+	\draw [dashed] (-0.85,1) -- (2.85,1);	
+	\draw (-0.5,1.1) node { $t=T_c$ };
+	\draw (2,1.2) node { $?$ };
+	\filldraw (2,1) circle (1pt);
+	
+	% Draw fourth fine propagation  
+	%\fill[gray!30] (12.5,-3) -- (14,-3) -- (14,-2) -- (12.5,-2) -- (12.5,-3);
+
+	% Draw grid
+	%\draw[] plot coordinates{ (0,0) (0,-5) (14,-5) };  
+	
+	
+	
+	%\draw [->,very thick] (0,-5.75) -- (2,-5.75);		
+	%\draw (1,-5.4) node { $Time$ };
+
+	%\draw [<->,dashed,thick ] (0,1.5) -- (3,1.5);
+	%\draw[thick] plot coordinates{ (3,1.4) (3,1.6) };
+	
+	%\draw (1.5,2) node {$Iter.\,k=0$};	
+		
+    % Labels
+	%\draw (-1.5,0.5) node {$Proc.\,1$};
+
+	% Draw first coarse propagation
+	%\fill[gray!90] (0,0) -- (0,1) -- (0.5,1) -- (0.5,0) -- (0,0);
+	%\draw[] plot coordinates{ (0,0) (0,1) (0.5,1) (0.5,0) (0,0) };  
+
+	%\draw (13.25,-4.5) node {{\scriptsize $T_{\mathcal{G}}$}};
+													
+\end{tikzpicture}
+%
+%\draw plot coordinates{point sequence};	
+%\draw plot ;	
+%	\draw[smooth] plot coordinates{(0,0),{};
+% \draw [smooth,very thick] (0,0) -- (4,-3) -- (8,-5) -- (12,-6);
+% \draw[smooth,domain=0:6.5] plot function{sin(2*x)*exp(-x/4)};
+% \draw[ycomb,color=gray,line width=0.5cm] plot coordinates{(1,1) (2,2) (3,3)};

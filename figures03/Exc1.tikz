@@ -1,0 +1,14 @@
+\usetikzlibrary{arrows}
+\begin{tikzpicture}[scale=2,pile/.style={thick, ->, >=stealth', shorten <=2pt, shorten >=2pt}]
+
+	%\draw[very thick] plot coordinates{ (-1.75,1) (-1,1) (-1,0) (1,0) (1,-1) (1.75,-1) }; 
+	\draw (1.25,0.7) node { $\,$ };
+												
+\end{tikzpicture}
+%
+%\draw plot coordinates{point sequence};	
+%\draw plot ;	
+%	\draw[smooth] plot coordinates{(0,0),{};
+% \draw [smooth,very thick] (0,0) -- (4,-3) -- (8,-5) -- (12,-6);
+% \draw[smooth,domain=0:6.5] plot function{sin(2*x)*exp(-x/4)};
+% \draw[ycomb,color=gray,line width=0.5cm] plot coordinates{(1,1) (2,2) (3,3)};

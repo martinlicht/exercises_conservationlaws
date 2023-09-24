@@ -29,12 +29,12 @@
 \newtheorem*{information}{Information}
 \newtheorem{mysolution}{Solution}
 % \newenvironment{solution}{\begin{comment}}{\end{comment}}
-\newtheorem*{solutioninformation}{Solution Information}
+\newtheorem*{mysolutioninformation}{Solution Information}
 
 \usepackage{comment}
 % Switch between showing and hiding solutions by commenting out either of the following lines
-\newenvironment{solution}{\begin{mysolution}}{\end{mysolution}}
-% \excludecomment{solution}
+\newenvironment{solution}{\begin{mysolution}}{\end{mysolution}} \newenvironment{solutioninformation}{\begin{mysolutioninformation}}{\end{mysolutioninformation}}
+% \excludecomment{solution} \excludecomment{solutioninformation}
 
 
 
@@ -124,7 +124,7 @@
 				\\
 				1+x & -1 < x<0
 				\\
-				1-x    0 < x<1
+				1-x &  0 < x<1
 				\\
 				0 	&  1 < x
 			\end{cases}\ .
@@ -149,16 +149,15 @@
 	This PDE has the form \eqref{cmPDE}, with $b(x,t,u) = u$ and $c(x,t,u) = 0$.
 	The characteristics are given as the solutions of the ODE
 	\begin{gather}
-		% TODO
-		=\hat u
+		\dfrac{dx}{dt} =\hat u, 
 		\quad
-		\dfrac{d\hat u}{dt} =0
+		\dfrac{d\hat u}{dt} = 0,
 	\end{gather}
-	satisfying the initial condition
+	satisfying the initial conditions
 	\begin{gather}
-		\hat x\frb{\xi,0} =\xi
+		\hat x\frb{\xi,0} = \xi,
 		\quad
-		\hat u\frb{\xi,0} =u_0\frb{\xi}\ .
+		\hat u\frb{\xi,0} =u_0\frb{\xi}.
 	\end{gather}
 	Since $\hat u$ is clearly constant along the characteristics, we have $\hat u\frb{\xi,t}=u_0\frb{\xi}$.
 	Substituting this into the ODE for $\hat x$, we get
@@ -182,9 +181,8 @@
 	This implies that the map $\xi\mapsto \hat x\frb{\xi,t}$ is not surjective, and therefore can not be inverted.
 	\begin{figure}
 	\centering
-	% \includegraphics{01figures/charac_t} TODO: Find the graphics for this or reproduce it (Octave or Matlab, ...)
-	\caption{The characteristic curves (gray lines) in the $x$-$t$ plane and the map $\xi\mapsto \hat x\frb{\xi,t}$.
-			The dashed gray lines are for illustration.}
+	\includegraphics{figures01/charac_t} 
+	\caption{The characteristic curves (gray lines) in the $x$-$t$ plane and the map $\xi\mapsto \hat x\frb{\xi,t}$. The dashed gray lines are for illustration.}
 	\label{carXTplane}
 	\end{figure}
 	
@@ -214,7 +212,7 @@
 	Figure \ref{u01} shows the solution $u$ at $t=1$, and the initial function $u_0$.
 	\begin{figure}
 	\centering
-	% \includegraphics[scale=1]{01figures/usol} TODO: Find the graphics for this or reproduce it (Octave or Matlab, ...)
+	\includegraphics[scale=1]{figures01/usol} 
 	\caption{The solution $u$ at $t=1$ (thick line), and the initial function $u_0$ (thin line).}
 	\label{u01}
 	\end{figure}

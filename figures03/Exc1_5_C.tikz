@@ -1,0 +1,46 @@
+\usetikzlibrary{arrows}
+\begin{tikzpicture}[scale=2.1,pile/.style={thick, ->, >=stealth', shorten <=2pt, shorten >=2pt}]
+
+	% Axes
+	\draw [-] (-1.75,0) -- (1.75,0);
+	\draw[] plot coordinates{ (0,0.1) (0,-0.1) };	
+	\draw (0,-0.3) node { $0$ };
+	\draw [->,thick] (1.5,-0.2) -- (1.7,-0.2);	
+	\draw (1.6,-0.3) node { $x$ };
+	\draw [->,thick] (-1.5,-0.3) -- (-1.5,-0.1);		
+	\draw (-1.6,-0.2) node { $t$ };
+
+	% Shocks
+	\draw [dashed,very thick] (0,0) -- (-1.5,1.5);
+	
+	% Straight
+	\draw [dotted,thick] (-1.25,1.25) -- (-1.25,1.5);
+	\draw [dotted,thick] (-1,1) -- (-1,1.5);
+	\draw [dotted,thick] (-0.75,0.75) -- (-0.75,1.5);
+	\draw [dotted,thick] (-0.5,0.5) -- (-0.5,1.5);
+	\draw [dotted,thick] (-0.25,0.25) -- (-0.25,1.5);
+	\draw [dotted,thick] (0,0) -- (0,1.5);
+	\draw [dotted,thick] (0.25,0) -- (0.25,1.5);
+	\draw [dotted,thick] (0.5,0) -- (0.5,1.5);
+	\draw [dotted,thick] (0.75,0) -- (0.75,1.5);
+	\draw [dotted,thick] (1,0) -- (1,1.5);
+	\draw [dotted,thick] (1.25,0) -- (1.25,1.5);
+	\draw [dotted,thick] (1.5,0) -- (1.5,1.5);
+	\draw [dotted,thick] (1.75,0) -- (1.75,1.5);
+		
+	% Slopes left
+	\draw [dotted,thick] (0,0) -- (-1.75,0.875);
+	\draw [dotted,thick] (-0.25,0) -- (-1.75,0.750);
+	\draw [dotted,thick] (-0.5,0) -- (-1.75,0.625);
+	\draw [dotted,thick] (-0.75,0) -- (-1.75,0.500);
+	\draw [dotted,thick] (-1,0) -- (-1.75,0.375);
+	\draw [dotted,thick] (-1.25,0) -- (-1.75,0.250);
+	\draw [dotted,thick] (-1.5,0) -- (-1.75,0.125);	
+
+	\draw [dotted,thick] (-0.25,0.25) -- (-1.75,1);	
+	\draw [dotted,thick] (-0.5,0.5) -- (-1.75,1.125);	
+	\draw [dotted,thick] (-0.75,0.75) -- (-1.75,1.25);	
+	\draw [dotted,thick] (-1,1) -- (-1.75,1.375);	
+	\draw [dotted,thick] (-1.25,1.25) -- (-1.75,1.5);	
+															
+\end{tikzpicture}

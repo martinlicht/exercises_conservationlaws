@@ -1,0 +1,68 @@
+\documentclass{article}
+
+\usepackage[paperwidth=90mm, paperheight=50mm]{geometry}
+%\usepackage{geometry}
+\usepackage{tikz}
+\pagestyle{empty}
+
+
+
+\def\nod{circle (0.4mm)}
+
+
+\begin{document}
+
+
+\begin{tikzpicture}[remember picture, overlay]
+\node at (current page.center){
+\begin{tikzpicture}[remember picture,x=20mm,y=20mm]
+
+
+\foreach \x in {-2,-1.8,...,-1} {
+	\draw[gray,very thin] (\x,0)--(\x,1);
+}
+
+
+\foreach \x in {1,1.2,...,2} {
+	\draw[gray,very thin] (\x,0)--(\x,1);
+}
+
+
+\foreach \x in {0,0.2,...,1} {
+	\draw[gray,very thin] (\x,0) -- (1,1);
+}
+
+
+\foreach \x in {-1,-0.8,...,0} {
+	\draw[gray,very thin] (\x,0) -- ({1+2*\x},1);
+}
+
+
+\foreach \x in {-1,-0.8,...,0} {
+	\draw[gray,very thin,dashed] (-1,-1) -- (\x,0);
+}
+
+
+
+
+\draw[-latex] (-2.1,0) -- (2.1,0);
+\node[below] at (2,-0.05) {$x$};
+
+\draw[-latex] (0,-0.05) -- (0,1.3);
+\node[left] at (0,1.2) {$t$};
+
+\node[anchor=north] at (-1,-0.05) {$-1$};
+	\draw (-1,-0.05) -- (-1,0);
+\node[anchor=north] at (0,-0.05) {$0$};
+\node[below] at (1,-0.05) {$1$};
+	\draw (1,-0.05) -- (1,0);
+
+
+\end{tikzpicture}
+};
+
+
+\end{tikzpicture}
+
+
+\end{document}
