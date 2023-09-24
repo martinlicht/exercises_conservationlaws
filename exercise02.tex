@@ -26,8 +26,19 @@
 \theoremstyle{break}
 \newtheorem{exercise}{Exercise}
 \newtheorem*{information}{Information}
-\newtheorem{solution}{Solution}
+\newtheorem{mysolution}{Solution}
+% \newenvironment{solution}{\begin{comment}}{\end{comment}}
 \newtheorem*{solutioninformation}{Solution Information}
+
+\usepackage{comment}
+% Switch between showing and hiding solutions by commenting out either of the following lines
+\newenvironment{solution}{\begin{mysolution}}{\end{mysolution}}
+% \excludecomment{solution}
+
+
+
+
+
 
 \begin{document}
 
@@ -609,14 +620,14 @@
     \begin{figure}
         \centering
         \begin{subfigure}[b]{0.5\textwidth}
-            \includegraphics[width=\textwidth]{Figs/ex_set_2_3}
+            % \includegraphics[width=\textwidth]{Figs/ex_set_2_3} TODO: Find the graphics for this or reproduce it (Octave or Matlab, ...)
             \caption{Initial data $u_0$, given by \eqref{eq:initial_condition}.
             The rarefaction wave and the shock both move in the positive direction.}
             \label{fig:u_0}
         \end{subfigure}
         ~
         \begin{subfigure}[b]{0.5\textwidth}
-            \includegraphics[width=\textwidth]{Figs/ex_set_2_2}
+            % \includegraphics[width=\textwidth]{Figs/ex_set_2_2} TODO: Find the graphics for this or reproduce it (Octave or Matlab, ...)
             \caption{Characteristics of the solution of the Burger's equation
             up until time $T_c$. The rarefaction wave moves faster than
             the shock and at some point in time $t = T_c > 0$ they meet,
@@ -671,7 +682,7 @@
     \begin{figure}
         \centering
         \begin{subfigure}[b]{0.5\textwidth}
-            \includegraphics[width=\textwidth]{Figs/ex_set_2_4}
+            % \includegraphics[width=\textwidth]{Figs/ex_set_2_4} TODO: Find the graphics for this or reproduce it (Octave or Matlab, ...)
     %        \caption{Initial data $u_0$, given by \eqref{eq:initial_condition}.
     %        The rarefaction wave and the shock both move in the positive direction.}
     %        \label{fig:u_0}

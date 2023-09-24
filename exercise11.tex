@@ -1,13 +1,62 @@
-\documentclass{article}
+\documentclass[10pt,letterpaper]{article}
+\usepackage[english]{babel}
+\usepackage{graphicx}
+\usepackage[margin=2cm]{geometry}
 
+\usepackage{float}
+\usepackage{subfloat}
+\usepackage{caption}
+\usepackage{subcaption}
+\usepackage{listings}
 
-
-\usepackage{../auxFiles/ExStyPac}
-
+\usepackage{mathtools}
+\usepackage{amsfonts}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\newcommand{\ol}{} % TODO: What was the purpose of this macro???
+\newcommand{\dif}[1][]{\mathrm{d} {#1}\,}
+\newcommand{\rb}[1]{ \left(  {#1} \right) }
+\newcommand{\frb}[1]{ \left(  {#1} \right) }
+\newcommand{\norm}[1]{ \left\|  {#1} \right\| }
+\newcommand{\jph}{{j+\frac{1}{2}}}
+\newcommand{\jmh}{{j-\frac{1}{2}}}
+\newcommand{\sqb}[1]{ \left(  {#1} \right) }
+\newcommand{\angb}[1]{ \left\langle  {#1} \right\rangle }
+\newcommand{\mat}[1]{ \begin{array}{cc}  {#1} \end{array} }
+\newcommand{\myvector}[1]{ \begin{array}{c}  {#1} \end{array} }
 \newcommand{\iph}{{i + \frac{1}{2}}}
 \newcommand{\imh}{{i - \frac{1}{2}}}
 
-\input ../auxFiles/mac.tex
+% \usepackage[amsmath,thmmarks,standard]{ntheorem}
+\newtheoremstyle{break}
+{\topsep}
+{\topsep}%
+{\normalfont}
+{}%
+{\bfseries}
+{}%
+{\newline}
+{}%
+\theoremstyle{break}
+\newtheorem{exercise}{Exercise}
+\newtheorem*{information}{Information}
+\newtheorem{mysolution}{Solution}
+% \newenvironment{solution}{\begin{comment}}{\end{comment}}
+\newtheorem*{solutioninformation}{Solution Information}
+
+\usepackage{comment}
+% Switch between showing and hiding solutions by commenting out either of the following lines
+\newenvironment{solution}{\begin{mysolution}}{\end{mysolution}}
+% \excludecomment{solution}
+
+
+% \usepackage{../auxFiles/ExStyPac}
+
+% \newcommand{\iph}{{i + \frac{1}{2}}}
+% \newcommand{\imh}{{i - \frac{1}{2}}}
+
+% \input ../auxFiles/mac.tex
 \graphicspath{{./figures/}}
 
 
@@ -19,135 +68,114 @@
 
 
 
-\Head{11}{ENO reconstruction}
+\title{ENO reconstruction}
+\date{}
+
+\maketitle
+
+
+\begin{exercise}
+	Consider the linear advection equation
+	\begin{gather} \label{linadv}
+		v_t + a v_x = 0\ .
+	\end{gather}%
+	In previouses exercises, we had observed that a fixed stencil approach for reconstruction is not suitable for obtaining stable non-oscillatory solutions. 
+	In the following exercises you are asked to write a number of programs which calculate different parts of the ENO reconstruction. 
+	Assume the grid is uniform. 
+	\begin{enumerate}
+		\item
+		Write a program that takes as an input a stencil-size $k$, and a grid function $\ol v$, and finds for each cell an appropriate stencil of size $k$. 
+		For example, for the $i$th cell $I_i=(x_{i-1/2},  x_{i+1/2})$, the function should return the output $r_i$, 
+		if the chosen stencil is $x_{i-r_i},\ldots,x_{i-r_i+k-1}$. 
+		Here, the value $\ol v_i$ of $\ol v$ at $x_i$ is interpreted as average of the approximated function $v$ in $I_i$. 
+		Notice that since the grid is assumed to be uniform, 
+		you can make your program slightly more efficient by computing the {\it undivided differences},
+		\begin{align}
+			V\!\angb{x_{i-1/2},x_{i+1/2}}& :=V\!\sqb{x_{i-1/2},x_{i+1/2}} =\ol v_i\\[0.5em]
+			V\!\angb{x_{i-1/2},\ldots,x_{i+j+1/2}} &:=
+				V\!\angb{x_{i+1/2},\ldots,x_{i+j+1/2}}
+				-V\!\angb{x_{i-1/2},\ldots,x_{i+j-1/2}}
+		\end{align}
+		instead of the divided differences.
+		\item
+		Write a program that calculates the coefficients
+		\begin{gather}%
+			c_{rj}=\sum_{m=j+1}^k
+				\frac{1}{\prod_{\substack{l=0 \\l\ne m}}^k\rb{m-l}}\,
+					\sum_{\substack{l=0\\l\ne m}}^k\,
+					\prod_{\substack{q=0\\q\ne m,l}}^k\rb{r-q+1}
+				\qquad
+				j=0,\ldots,k-1, \qquad r=-1,0,\ldots,k-1\ .
+		\end{gather}%
+		Explain how this expression is derived. 
+		Check that this formula generates the coefficients obtained in Exercise 10 for $k=3$.
+		
+		\item
+		Write a program that implements the ENO reconstruction. 
+		The program should take a grid function $\ol v$, and a stencil-size $k$, and return the values
+		\begin{gather}%
+			v_{i+1/2}^-=\sum_{j=0}^{k-1} c_{r_i,j} \ol v_{i-r_i+j}^n\ ,
+			\qquad\qquad
+			v_{i-1/2}^+=\sum_{j=0}^{k-1} c_{r_i-1,j}\ol v_{i-r_i+j}^n\ .
+		\end{gather}%
+		You may assume the function is periodic.
+
+		\item 
+		Write a finite volume code for \eqref{linadv}, 
+		where the interface values can be obtained by using the ENO reconstruction. 
+		Plug these values in the Godunov flux, and integrate the semi-discrete scheme using SSP-RK3. 
+		Implement the following initial conditions on the domain $[-1,1]$ with periodic BC
+		\begin{gather} \label{inData1}
+			v_0(x)=\sin(\pi x)\ ,  
+			\quad
+			T_f = 5
+		\end{gather}%
+		\begin{gather} \label{inData2}
+			v_0(x)=\begin{cases}
+				1 & |x|<0.5\\
+				-1 & |x|>0.5
+			\end{cases}\ ,
+			\quad
+			T_f = 0.5.
+		\end{gather}%
+		Use a CFL of 0.5 to evaluate the time-step. 
+
+		\item
+		Run the code for $k=3$ and $a=1$. 
+		Do you recover 3rd-order convergence for \eqref{inData1}? 
+		Is the solution oscillatory for \eqref{inData2}?
+	\end{enumerate}
+\end{exercise}
+
+
+\begin{solution}
+	\begin{enumerate}
+		\item
+		See the Matlab code attached at the end of this solution manual. The stencil selection depends on the index shift $r$, which is evaluated by the function {\tt find\_shift(U,k)}.
+
+		\item
+		The coefficients $c_{rj}$ are computed once at the beginning of the solver by the function {\tt eval\_crj(k)}, assuming a uniform grid. 
+
+		\item Once the shift $r$ is evaluate for each cell, the solution at the left and right interfaces of the cell are computed in the function {\tt eno\_recon}.
+
+		\item Note that the code is capable of implementing both periodic and open boundary conditions, for arbitrary order ENO. The order can be set via the variable $k$.
+
+		\item
+		Third-order convergence is obtained for the smooth initial condition. Moreover, the oscillations observed with the discontinuous initial data for fixed central reconstruction in Exercise 9, are no longer visible.
+	\end{enumerate}
+	%\newpage
+% 	\lstinputlisting{./Code/Exercise10.m}	% TODO: include all those codes 
+% 	\lstinputlisting{./Code/solver.m}		% TODO: include all those codes 
+% 	\lstinputlisting{./Code/evalRHS.m}		% TODO: include all those codes 
+% 	\lstinputlisting{./Code/apply_bc.m}		% TODO: include all those codes 
+% 	\lstinputlisting{./Code/eval_crj.m}		% TODO: include all those codes 
+% 	\lstinputlisting{./Code/eno_recon.m}	% TODO: include all those codes 
+% 	\lstinputlisting{./Code/find_shift.m}	% TODO: include all those codes 
+% 	\lstinputlisting{./Code/find_exact.m}	% TODO: include all those codes 
+% 	\lstinputlisting{./Code/find_err.m}		% TODO: include all those codes 
+\end{solution}
 
 
 
-Consider the linear advection equation
-\begin{gather} \label{linadv}
-	v_t + a v_x = 0\ .
-\end{gather}%
-In Exercise 10, we had observed that a fixed stencil approach for reconstruction is not suitable for obtaining stable, non-oscillatory solutions. In the following exercises you are asked to write a number of programs which calculate different parts of the ENO reconstruction. Assume the grid is uniform.
 
-
-\begin{exerciseList}
-
-
-\item
-Write a program that takes as an input a stencil-size $k$, and a grid function $\ol v$, and finds for each cell an appropriate stencil of size $k$. For example, for the $i$th cell $I_i=(x_{i-1/2},  x_{i+1/2})$, the function should return the output $r_i$, if the chosen stencil is $x_{i-r_i},\ldots,x_{i-r_i+k-1}$. Here, the value $\ol v_i$ of $\ol v$ at $x_i$ is interpreted as average of the approximated function $v$ in $I_i$. Notice that since the grid is assumed to be uniform, you can make your program slightly more efficient by computing the {\it undivided differences},
-\begin{align}
-	V\!\angb{x_{i-1/2},x_{i+1/2}}& :=V\!\sqb{x_{i-1/2},x_{i+1/2}} =\ol v_i\\[0.5em]
-	V\!\angb{x_{i-1/2},\ldots,x_{i+j+1/2}} &:=
-		V\!\angb{x_{i+1/2},\ldots,x_{i+j+1/2}}
-		-V\!\angb{x_{i-1/2},\ldots,x_{i+j-1/2}}
-\end{align}
-instead of the divided differences.
-
-
-\item
-Write a program that calculates the coefficients
-\begin{gather}%
-	c_{rj}=\sum_{m=j+1}^k
-		\frac{1}{\prod_{\substack{l=0 \\l\ne m}}^k\rb{m-l}}\,
-			\sum_{\substack{l=0\\l\ne m}}^k\,
-			\prod_{\substack{q=0\\q\ne m,l}}^k\rb{r-q+1}
-		\qquad
-		j=0,\ldots,k-1, \qquad r=-1,0,\ldots,k-1\ .
-\end{gather}%
-Explain how this expression is derived. Check that this formula generates the coefficients obtained in Exercise 10 for $k=3$.
-
-
-\item
-Write a program that implements the ENO reconstruction. The program should take a grid function $\ol v$, and a stencil-size $k$, and return the values
-\begin{gather}%
-	v_{i+1/2}^-=\sum_{j=0}^{k-1} c_{r_i,j} \ol v_{i-r_i+j}^n\ ,
-	\qquad\qquad
-	v_{i-1/2}^+=\sum_{j=0}^{k-1} c_{r_i-1,j}\ol v_{i-r_i+j}^n\ .
-\end{gather}%
-You may assume the function is periodic.
-
-\item Write a finite volume code for \eqref{linadv}, where the interface values can be obtained by using the ENO reconstruction. Plug these values in the Godunov flux, and integrate the semi-discrete scheme using SSP-RK3. Implement the following initial conditions on the domain $[-1,1]$ with periodic BC
-\begin{gather} \label{inData1}
-	v_0(x)=\sin(\pi x)\ ,  
-	\quad
-	T_f = 5
-\end{gather}%
-\begin{gather} \label{inData2}
-	v_0(x)=\begin{cases}
-		1 & |x|<0.5\\
-		-1 & |x|>0.5
-	\end{cases}\ ,
-	\quad
-	T_f = 0.5.
-\end{gather}%
-Use a CFL of 0.5 to evaluate the time-step. 
-
-\item
-Run the code for $k=3$ and $a=1$. Do you recover 3rd-order convergence for \eqref{inData1}? Is the solution oscillatory for \eqref{inData2}?
-
-
-
-\end{exerciseList}
-
-\end{document}
-\documentclass{article}
-
-
-
-\usepackage{../auxFiles/ExStyPac}
-
-\usepackage[framed]{../auxFiles/mcode}
-
-
-
-
-
-\input ../auxFiles/mac.tex
-\graphicspath{{./figures/}}
-
-
-
-
-
-%========================================================================
-\begin{document}
-
-
-
-\Head{11}{ENO Reconstruction (Solution)}
-
-
-
-
-
-\begin{exerciseList}
-
-
-\item
-See the Matlab code attached at the end of this solution manual. The stencil selection depends on the index shift $r$, which is evaluated by the function {\tt find\_shift(U,k)}.
-
-\item
-The coefficients $c_{rj}$ are computed once at the beginning of the solver by the function {\tt eval\_crj(k)}, assuming a uniform grid. 
-
-\item Once the shift $r$ is evaluate for each cell, the solution at the left and right interfaces of the cell are computed in the function {\tt eno\_recon}.
-
-\item Note that the code is capable of implementing both periodic and open boundary conditions, for arbitrary order ENO. The order can be set via the variable $k$.
-
-\item
-Third-order convergence is obtained for the smooth initial condition. Moreover, the oscillations observed with the discontinuous initial data for fixed central reconstruction in Exercise 9, are no longer visible.
-
-
-\end{exerciseList}
-
-
-%\newpage
-\lstinputlisting{./Code/Exercise10.m}
-\lstinputlisting{./Code/solver.m}
-\lstinputlisting{./Code/evalRHS.m}
-\lstinputlisting{./Code/apply_bc.m}
-\lstinputlisting{./Code/eval_crj.m}
-\lstinputlisting{./Code/eno_recon.m}
-\lstinputlisting{./Code/find_shift.m}
-\lstinputlisting{./Code/find_exact.m}
-\lstinputlisting{./Code/find_err.m}
 \end{document}

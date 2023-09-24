@@ -1,13 +1,63 @@
-\documentclass{article}
+\documentclass[10pt,letterpaper]{article}
+\usepackage[english]{babel}
+\usepackage{graphicx}
+\usepackage[margin=2cm]{geometry}
+
+\usepackage{float}
+\usepackage{subfloat}
+\usepackage{caption}
+\usepackage{subcaption}
+\usepackage{listings}
+
+\usepackage{mathtools}
+\usepackage{amsfonts}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\newcommand{\wt}{} % TODO: What was the purpose of this macro???
+\newcommand{\ol}{} % TODO: What was the purpose of this macro???
+\newcommand{\om}{} % TODO: What was the purpose of this macro???
+\newcommand{\hpar}{} % TODO: What was the purpose of this macro???
+\newcommand{\Del}{} % TODO: What was the purpose of this macro???
+\newcommand{\dif}[1][]{\mathrm{d} {#1}\,}
+\newcommand{\rb}[1]{ \left(  {#1} \right) }
+\newcommand{\frb}[1]{ \left(  {#1} \right) }
+\newcommand{\norm}[1]{ \left\|  {#1} \right\| }
+\newcommand{\jph}{{j+\frac{1}{2}}}
+\newcommand{\jmh}{{j-\frac{1}{2}}}
+\newcommand{\sqb}[1]{ \left(  {#1} \right) }
+\newcommand{\mat}[1]{ \begin{array}{cc}  {#1} \end{array} }
+\newcommand{\myvector}[1]{ \begin{array}{c}  {#1} \end{array} }
+\newcommand{\iph}{{i + \frac{1}{2}}}
+\newcommand{\imh}{{i - \frac{1}{2}}}
+
+% \usepackage[amsmath,thmmarks,standard]{ntheorem}
+\newtheoremstyle{break}
+{\topsep}
+{\topsep}%
+{\normalfont}
+{}%
+{\bfseries}
+{}%
+{\newline}
+{}%
+\theoremstyle{break}
+\newtheorem{exercise}{Exercise}
+\newtheorem*{information}{Information}
+\newtheorem{mysolution}{Solution}
+% \newenvironment{solution}{\begin{comment}}{\end{comment}}
+\newtheorem*{solutioninformation}{Solution Information}
+
+\usepackage{comment}
+% Switch between showing and hiding solutions by commenting out either of the following lines
+\newenvironment{solution}{\begin{mysolution}}{\end{mysolution}}
+% \excludecomment{solution}
 
 
 
-\usepackage{../auxFiles/ExStyPac}
-
-
-
-\input ../auxFiles/mac.tex
-\graphicspath{{./figures/}}
+% \usepackage{../auxFiles/ExStyPac}
+% \input ../auxFiles/mac.tex
+% \graphicspath{{./figures/}}
 
 
 
@@ -18,7 +68,11 @@
 
 
 
-\Head{12}{WENO Reconstruction}
+\title{WENO reconstruction}
+\date{}
+\author{}
+
+\maketitle
 
 
 
@@ -26,18 +80,11 @@
 
 
 
-
-\begin{exerciseList}
-
-
-\item
+\begin{exercise}
 The WENO reconstruction is based on a convex combination, with coefficients $\om_r$, of approximations $v_{i+1/2}\hpar{r}$ calculated on $k$ different stencils.
 The coefficients $\om_r$ depend on another set of coefficients $d_r$ and some smoothness indicators $\beta_r$.
 
 \begin{enumerate}
-
-
-
 \item
 The Smoothness indicators $\beta_r$ are defined by
 \begin{gather} \label{smWts}
@@ -67,8 +114,6 @@ For $k=2,3$,
 \end{align}
 Explain how these values are obtained and verify \eqref{dk2}.
 
-\end{enumerate}
-
 \item
 Write a program that implements WENO reconstruction for both $k=2,3$.
 % The indicators $\beta_r$ for $k=3$ are in the lecture notes. %TODO
@@ -96,51 +141,15 @@ Use a CFL of 0.5 to evaluate the time-step.
 \item
 Run the code for $k=2,3$ and $a=1$. Do you recover the expected order of convergence for \eqref{inData1}? Is the solution oscillatory for \eqref{inData2}?
 
+\end{enumerate}
 
-
-\end{exerciseList}
-
-\end{document}
-
-
-
-\documentclass{article}
-
-
-
-\usepackage{../auxFiles/ExStyPac}
-
-\usepackage[framed]{../auxFiles/mcode}
+\end{exercise}
 
 
 
 
 
-\input ../auxFiles/mac.tex
-\graphicspath{{./figures/}}
-
-
-
-
-
-%========================================================================
-\begin{document}
-
-
-
-\Head{12}{WENO Reconstruction (Solution)}
-
-
-
-
-\begin{exerciseList}
-
-
-
-
-
-
-\item
+\begin{solution}
 \begin{enumerate}
 
 \item
@@ -150,22 +159,36 @@ We start the calculation by writing
 \end{gather}
 where $\ell_{j}$ are the Lagrange polynomials.
 For $k=2$, we have
-\begin{gather}
-	P_{r}(x)= & \frac{V\frb{x_{i-r-0.5}}}{2h^{2}}\left(x-x_{i-r+1/2}\right)\left(x-x_{i-r+3/2}\right)\\
-		& \quad -\frac{V\left(x_{i-r+1/2}\right)}{h^{2}}\left(x-x_{i-r-1/2}\right)\left(x-x_{i-r+3/2}\right)\\
-		& \quad +\frac{V\left(x_{i-r+3/2}\right)}{2h^{2}}\left(x-x_{i-r-1/2}\right)\left(x-x_{i-r+1/2}\right)
-\end{gather}
+\begin{align*}
+	P_{r}(x)
+	=& 
+	\frac{ V\frb{x_{i-r-0.5}}}{2h^{2}}
+	\left( x-x_{i-r+1/2} \right)
+	\left( x-x_{i-r+3/2} \right)
+	\\
+	&\quad 
+	-\frac{ V\left(x_{i-r+1/2}\right) }{ h^{2} }
+	\left(x-x_{i-r-1/2}\right)
+	\left(x-x_{i-r+3/2}\right)
+	\\
+	&\quad
+	+
+	\frac{ V\left(x_{i-r+3/2}\right) }{ 2h^{2} }
+	\left( x-x_{i-r-1/2} \right)
+	\left( x-x_{i-r+1/2} \right)
+	,
+\end{align*}
 which implies 
-\begin{gather}
+\begin{align*}
 	\frac{\dif p_{r}}{\dif x}(x) &=\frac{\dif^{2}P_{r}}{\dif x^{2}}(x)
 			=\frac{1}{h^{2}}\Big[V\frb{x_{i-r+3/2}}-2V\frb{x_{i-r+1/2}}+V\frb{x_{i-r-1/2}} \Big]\\[0.5em]
 		&=\frac{1}{h}\left(\overline{U}_{i-r+1}-\overline{U}_{i-r}\right)
-\end{gather}
+\end{align*}
 Therefore,
-\begin{gather}
+\begin{align*}
 	\beta_{r}=h\intop_{x_{i-1/2}}^{x_{i+1/2}}\frac{1}{h^{2}}\left(\overline{U}_{i-r+1}-\overline{U}_{i-r}\right)^{2}\dif x
 		=\left(\overline{U}_{i-r+1}-\overline{U}_{i-r}\right)^{2}
-\end{gather}
+\end{align*}
 which completes the proof.
 
 
@@ -215,24 +238,17 @@ and comparing coefficients, we get
 
 \item If you look at the plots generated by the code, we obtain third-order convergence for k=2,3 with a smooth initial condition. Even though we use a fifth-order discretization in space, we are limited by the fact the time integration is only third-order accurate, and $\Delta t \sim h$. Furthermore, the solutions are non-oscillatory with the discontinuous initial condition.
 
-\end{exerciseList}
+\end{solution}
 
 
-\lstinputlisting{./Code/Exercise12.m}
-
-\lstinputlisting{./Code/solver.m}
-
-\lstinputlisting{./Code/apply_bc.m}
-
-\lstinputlisting{./Code/evalRHS.m}
-
-\lstinputlisting{./Code/ReconstructWeights.m}
-
-\lstinputlisting{./Code/WENO.m}
-
-\lstinputlisting{./Code/find_exact.m}
-
-\lstinputlisting{./Code/find_err.m}
+% \lstinputlisting{./Code/Exercise12.m}			 % TODO: include all those codes 
+% \lstinputlisting{./Code/solver.m}				 % TODO: include all those codes 
+% \lstinputlisting{./Code/apply_bc.m}				 % TODO: include all those codes 
+% \lstinputlisting{./Code/evalRHS.m}				 % TODO: include all those codes 
+% \lstinputlisting{./Code/ReconstructWeights.m}	 % TODO: include all those codes 
+% \lstinputlisting{./Code/WENO.m}					 % TODO: include all those codes 
+% \lstinputlisting{./Code/find_exact.m}			 % TODO: include all those codes 
+% \lstinputlisting{./Code/find_err.m}				 % TODO: include all those codes 
 
 
 

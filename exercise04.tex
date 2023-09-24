@@ -32,8 +32,19 @@
 \theoremstyle{break}
 \newtheorem{exercise}{Exercise}
 \newtheorem*{information}{Information}
-\newtheorem{solution}{Solution}
+\newtheorem{mysolution}{Solution}
+% \newenvironment{solution}{\begin{comment}}{\end{comment}}
 \newtheorem*{solutioninformation}{Solution Information}
+
+\usepackage{comment}
+% Switch between showing and hiding solutions by commenting out either of the following lines
+\newenvironment{solution}{\begin{mysolution}}{\end{mysolution}}
+% \excludecomment{solution}
+
+
+
+
+
 
 \begin{document}
 
@@ -430,10 +441,10 @@
 %     \subfigure[]{\includegraphics[width=8cm, height=6cm]{Lax-Friedrichs_Profile}}
 %     \subfigure[]{\includegraphics[width=8cm, height=6cm]{Lax-Wendroff_Profile}}
 %     \subfigure[]{\includegraphics[width=8cm, height=6cm]{Beam-Warming_Profile}}
-    {\includegraphics[width=8cm, height=6cm]{Upwind_Profile}}
-    {\includegraphics[width=8cm, height=6cm]{Lax-Friedrichs_Profile}}
-    {\includegraphics[width=8cm, height=6cm]{Lax-Wendroff_Profile}}
-    {\includegraphics[width=8cm, height=6cm]{Beam-Warming_Profile}}
+%     {\includegraphics[width=8cm, height=6cm]{Upwind_Profile}} TODO: Find the graphics for this or reproduce it (Octave or Matlab, ...)
+%     {\includegraphics[width=8cm, height=6cm]{Lax-Friedrichs_Profile}} TODO: Find the graphics for this or reproduce it (Octave or Matlab, ...)
+%     {\includegraphics[width=8cm, height=6cm]{Lax-Wendroff_Profile}} TODO: Find the graphics for this or reproduce it (Octave or Matlab, ...)
+%     {\includegraphics[width=8cm, height=6cm]{Beam-Warming_Profile}} TODO: Find the graphics for this or reproduce it (Octave or Matlab, ...)
     \caption{ The analytical solution and the numerical solution $u(x,t=0.5)$ for the advection equation on Riemann initial data with $a=1$, $h=0.005$, $\frac{k}{h}=0.5$.} 
     \end{center}
     \end{figure}
@@ -442,10 +453,10 @@
     
     \begin{figure}[H] 
     \begin{center}
-    {\includegraphics[width=8cm, height=6cm]{Upwind_Accuracy}}
-    {\includegraphics[width=8cm, height=6cm]{Lax-Friedrichs_Accuracy}}
-    {\includegraphics[width=8cm, height=6cm]{Lax-Wendroff_Accuracy}}
-    {\includegraphics[width=8cm, height=6cm]{Beam-Warming_Accuracy}}
+%     {\includegraphics[width=8cm, height=6cm]{Upwind_Accuracy}} TODO: Find the graphics for this or reproduce it (Octave or Matlab, ...)
+%     {\includegraphics[width=8cm, height=6cm]{Lax-Friedrichs_Accuracy}} TODO: Find the graphics for this or reproduce it (Octave or Matlab, ...)
+%     {\includegraphics[width=8cm, height=6cm]{Lax-Wendroff_Accuracy}} TODO: Find the graphics for this or reproduce it (Octave or Matlab, ...)
+%     {\includegraphics[width=8cm, height=6cm]{Beam-Warming_Accuracy}} TODO: Find the graphics for this or reproduce it (Octave or Matlab, ...)
     \caption{ The error as a function of resolution. The error is measured in 1-norm, the resolution is measured as the number of discretization points in the x dimension. }
     \end{center}
     \end{figure}

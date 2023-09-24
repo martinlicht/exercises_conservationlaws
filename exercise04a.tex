@@ -12,7 +12,6 @@
 \newcommand{\dif}[1][]{\mathrm{d} {#1}\,}
 \newcommand{\rb}[1]{ \left(  {#1} \right) }
 \newcommand{\frb}[1]{ \left(  {#1} \right) }
-
 % \usepackage[amsmath,thmmarks,standard]{ntheorem}
 \newtheoremstyle{break}
 {\topsep}
@@ -26,8 +25,19 @@
 \theoremstyle{break}
 \newtheorem{exercise}{Exercise}
 \newtheorem*{information}{Information}
-\newtheorem{solution}{Solution}
+\newtheorem{mysolution}{Solution}
+% \newenvironment{solution}{\begin{comment}}{\end{comment}}
 \newtheorem*{solutioninformation}{Solution Information}
+
+\usepackage{comment}
+% Switch between showing and hiding solutions by commenting out either of the following lines
+\newenvironment{solution}{\begin{mysolution}}{\end{mysolution}}
+% \excludecomment{solution}
+
+
+
+
+
 
 \begin{document}
 

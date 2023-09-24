@@ -35,8 +35,19 @@
 \theoremstyle{break}
 \newtheorem{exercise}{Exercise}
 \newtheorem*{information}{Information}
-\newtheorem{solution}{Solution}
+\newtheorem{mysolution}{Solution}
+% \newenvironment{solution}{\begin{comment}}{\end{comment}}
 \newtheorem*{solutioninformation}{Solution Information}
+
+\usepackage{comment}
+% Switch between showing and hiding solutions by commenting out either of the following lines
+\newenvironment{solution}{\begin{mysolution}}{\end{mysolution}}
+% \excludecomment{solution}
+
+
+
+
+
 
 \begin{document}
 

@@ -39,8 +39,19 @@
 \theoremstyle{break}
 \newtheorem{exercise}{Exercise}
 \newtheorem*{information}{Information}
-\newtheorem{solution}{Solution}
+\newtheorem{mysolution}{Solution}
+% \newenvironment{solution}{\begin{comment}}{\end{comment}}
 \newtheorem*{solutioninformation}{Solution Information}
+
+\usepackage{comment}
+% Switch between showing and hiding solutions by commenting out either of the following lines
+\newenvironment{solution}{\begin{mysolution}}{\end{mysolution}}
+% \excludecomment{solution}
+
+
+
+
+
 
 \begin{document}
 
@@ -133,13 +144,13 @@
 	\end{enumerate}
 		
 		
-	\lstinputlisting{./10Code/Exercise10.m}
-	\lstinputlisting{./10Code/solver.m}
-	\lstinputlisting{./10Code/apply_bc.m}
-	\lstinputlisting{./10Code/evalRHS.m}
-	\lstinputlisting{./10Code/rec3.m}
-	\lstinputlisting{./10Code/find_exact.m}
-	\lstinputlisting{./10Code/find_err.m}
+% 	\lstinputlisting{./10Code/Exercise10.m}		TODO: Find the code 
+% 	\lstinputlisting{./10Code/solver.m}			TODO: Find the code 
+% 	\lstinputlisting{./10Code/apply_bc.m}		TODO: Find the code 
+% 	\lstinputlisting{./10Code/evalRHS.m}		TODO: Find the code 
+% 	\lstinputlisting{./10Code/rec3.m}			TODO: Find the code 
+% 	\lstinputlisting{./10Code/find_exact.m}		TODO: Find the code 
+% 	\lstinputlisting{./10Code/find_err.m}		TODO: Find the code 
 \end{solution}
 
 

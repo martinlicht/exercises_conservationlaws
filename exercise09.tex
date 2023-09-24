@@ -38,8 +38,19 @@
 \theoremstyle{break}
 \newtheorem{exercise}{Exercise}
 \newtheorem*{information}{Information}
-\newtheorem{solution}{Solution}
+\newtheorem{mysolution}{Solution}
+% \newenvironment{solution}{\begin{comment}}{\end{comment}}
 \newtheorem*{solutioninformation}{Solution Information}
+
+\usepackage{comment}
+% Switch between showing and hiding solutions by commenting out either of the following lines
+\newenvironment{solution}{\begin{mysolution}}{\end{mysolution}}
+% \excludecomment{solution}
+
+
+
+
+
 
 \begin{document}
 
@@ -123,13 +134,13 @@ This is the same linear system considered in Exercise Set 7. You can re-use and 
 	This accuracy at such points are improved by using the MUSCL limiter.
 	Overall, the MUSCL limiter gives the best results for all initial conditions considered in this exercise.
 	%\newpage
-	\lstinputlisting{./09Code/Exercise9.m}
-	\lstinputlisting{./09Code/evalRHS.m}
-	\lstinputlisting{./09Code/SlopeLimiter.m}
-	\lstinputlisting{./09Code/GodunovFlux.m}
-	\lstinputlisting{./09Code/minmod.m}
-	\lstinputlisting{./09Code/apply_bc.m}
-	\lstinputlisting{./09Code/find_exact.m}
+% 	\lstinputlisting{./09Code/Exercise9.m}		TODO: Find the code 
+% 	\lstinputlisting{./09Code/evalRHS.m}		TODO: Find the code 
+% 	\lstinputlisting{./09Code/SlopeLimiter.m}	TODO: Find the code 
+% 	\lstinputlisting{./09Code/GodunovFlux.m}	TODO: Find the code 
+% 	\lstinputlisting{./09Code/minmod.m}			TODO: Find the code 
+% 	\lstinputlisting{./09Code/apply_bc.m}		TODO: Find the code 
+% 	\lstinputlisting{./09Code/find_exact.m}		TODO: Find the code 
 \end{solution}
 	
 
