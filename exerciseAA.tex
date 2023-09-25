@@ -1,0 +1,346 @@
+\documentclass[10pt,letterpaper]{article}
+\usepackage[english]{babel}
+\usepackage{graphicx}
+\usepackage[margin=2cm]{geometry}
+
+\usepackage{float}
+\usepackage{subfloat}
+\usepackage{caption}
+\usepackage{subcaption}
+\usepackage{listings}
+
+\usepackage{mathtools}
+\usepackage{amsfonts}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\newcommand{\dif}[1][]{\mathrm{d} {#1}\,}
+\newcommand{\rb}[1]{ \left(  {#1} \right) }
+\newcommand{\frb}[1]{ \left(  {#1} \right) }
+\newcommand{\norm}[1]{ \left\|  {#1} \right\| }
+\newcommand{\jph}{{j+\frac{1}{2}}}
+\newcommand{\jmh}{{j-\frac{1}{2}}}
+\newcommand{\sqb}[1]{ \left(  {#1} \right) }
+\newcommand{\mat}[1]{ \begin{array}{cc}  {#1} \end{array} }
+\newcommand{\myvector}[1]{ \begin{array}{c}  {#1} \end{array} }
+\newcommand{\iph}{{i + \frac{1}{2}}}
+\newcommand{\imh}{{i - \frac{1}{2}}}
+\newcommand{\cR}{R}
+\newcommand{\p}{p}
+\newcommand{\minmod}{\operatorname{minmod}}
+\newcommand{\sign}{\operatorname{sign}}
+
+
+% \usepackage[amsmath,thmmarks,standard]{ntheorem}
+\newtheoremstyle{break}
+{\topsep}
+{\topsep}%
+{\normalfont}
+{}%
+{\bfseries}
+{}%
+{\newline}
+{}%
+\theoremstyle{break}
+\newtheorem{exercise}{Exercise}
+\newtheorem*{information}{Information}
+\newtheorem{solution}{Solution}
+\newtheorem*{solutioninformation}{Solution Information}
+
+\begin{document}
+
+\title{Higher-Order Schemes}
+\date{}
+
+\maketitle
+
+
+
+
+
+
+
+
+
+
+
+\begin{exercise}
+    Consider the scheme
+    \begin{align}
+     U^{n+1}_{j}
+     &
+     =
+     U^{n  }_{j}
+     -
+     \dfrac{k}{2h}
+     \left(
+        f^{n}_{j+1} + f^{n}_{j-1}
+     \right)
+     +
+     \dfrac{k^2}{2 h^2}
+     \left(
+        f'\left( \dfrac{ U^{n}_{j+1} + U^{n}_{j} }{2} \right)
+        \left(
+            f^{n}_{j+1} - f^{n}_{j}
+        \right)
+        -
+        f'\left( \dfrac{ U^{n}_{j} + U^{n}_{j-1} }{2} \right)
+        \left(
+            f^{n}_{j} - f^{n}_{j-1}
+        \right)
+     \right)     
+%      \\&
+%      =
+%      U^{n  }_{j}
+%      -
+%      \dfrac{k}{2h}
+%      \left(
+%         f^{n}_{j+1} + f^{n}_{j-1}
+%      \right)
+%      -
+%      \dfrac{k^2}{2 h^2}
+%      \left(
+%         f'\left( \dfrac{ U^{n}_{j} + U^{n}_{j-1} }{2} \right)
+%         \left(
+%             f^{n}_{j} - f^{n}_{j-1}
+%         \right)
+%         -
+%         f'\left( \dfrac{ U^{n}_{j+1} + U^{n}_{j} }{2} \right)
+%         \left(
+%             f^{n}_{j+1} - f^{n}_{j}
+%         \right)
+%      \right)     
+%      \\&
+%      =
+%      U^{n  }_{j}
+%      -
+%      \dfrac{k}{2h}
+%      \left(
+%         f^{n}_{j+1} + f^{n}_{j-1}
+%      \right)
+%      -
+%      \dfrac{k^2}{2 h^2}
+%      \left(
+%         f'\left( \dfrac{ U^{n}_{j} + U^{n}_{j-1} }{2} \right)
+%         \left(
+%             f^{n}_{j} - f^{n}_{j-1}
+%         \right)
+%         +
+%         f'\left( \dfrac{ U^{n}_{j+1} + U^{n}_{j} }{2} \right)
+%         \left(
+%             f^{n}_{j} - f^{n}_{j+1}
+%         \right)
+%      \right)     
+     ,
+    \end{align}
+    where we write $f^n_{j} := f\left( U^{n}_{j} \right)$. 
+    \begin{enumerate}
+        \item Show that this is a conservative scheme and determine its flux.
+        \item Develop this scheme from a Taylor approximation and keep track of the error terms. Use the following recipe: 
+        \begin{enumerate}
+            \item Express $u(t^{n+1},x_{j})$ by a Taylor series around $u(t^{n},x_{j})$
+            \item Replace time derivatives by derivatives of the flux
+            \item Replace $x$-derivatives by central difference quotients with half step sizes (outer derivatives first) and use 
+			\begin{align*}
+				f'(u(t^{n},x_{j+\frac 1 2}))
+				\approx 
+				f'\left( \dfrac{ U^{n}_{j} + U^{n}_{j-1} }{2} \right)
+				.
+			\end{align*}
+        \end{enumerate}
+    \end{enumerate}
+
+\end{exercise}
+
+\begin{solution}
+	\begin{enumerate}
+		We pick the flux 
+		\begin{align}
+		 F(U,V)
+		 = 
+		 \left(
+			f(V) + f(U)
+		 \right)
+		 +
+		 \dfrac{k}{2 h}
+		 f'\left( \dfrac{ V + U }{2} \right)
+		 \left(
+			 f(V) - f(U)
+		 \right)
+		 .
+		\end{align}
+		We calculate 
+		{\tiny
+		\begin{align} 
+		 U^{n+1}_{j}
+		 &
+		 =
+		 U^{n  }_{j}
+		 -
+		 \dfrac{k}{h}
+		 \left( 
+			F(U^{n}_{j},U^{n}_{j+1})
+			-
+			F(U^{n}_{j-1},U^{n}_{j})
+		 \right)
+		 \\&
+		 =
+		 U^{n  }_{j}
+		 -
+		 \dfrac{k}{h}
+		 \left( 
+			\left(
+				f(U^{n}_{j+1}) + f(U^{n}_{j})
+			\right)
+			+
+			\dfrac{k}{2 h}
+			f'\left( \dfrac{ U^{n}_{j+1} + U^{n}_{j} }{2} \right)
+			\left(
+				f(U^{n}_{j+1}) - f(U^{n}_{j})
+			\right)
+			-
+			\left(
+				f(U^{n}_{j}) + f(U^{n}_{j-1})
+			\right)
+			-
+			\dfrac{k}{2 h}
+			f'\left( \dfrac{ U^{n}_{j} + U^{n}_{j-1} }{2} \right)
+			\left(
+				f(U^{n}_{j}) - f(U^{n}_{j-1})
+			\right)
+		 \right)
+		 \end{align}
+		}
+		We simplify that to 
+		\begin{align} 
+			U^{n+1}_{j}
+			&
+			=
+			U^{n  }_{j}
+			-
+			\dfrac{k}{h}
+			\left(
+				f(U^{n}_{j+1}) + f(U^{n}_{j-1})
+			\right)
+			\\&\qquad\qquad
+			+
+			\dfrac{k^2}{2 h^2}
+			\left( 
+				f'\left( \dfrac{ U^{n}_{j+1} + U^{n}_{j} }{2} \right)
+				\left(
+					f(U^{n}_{j+1}) - f(U^{n}_{j})
+				\right)
+				-
+				f'\left( \dfrac{ U^{n}_{j} + U^{n}_{j-1} }{2} \right)
+				\left(
+					f(U^{n}_{j}) - f(U^{n}_{j-1})
+				\right)   
+			\right)
+			.
+		\end{align}
+		For the error estimate, we begin with 
+		\begin{align}
+			u(t^{n+1},x_{j})
+			= 
+			u(t^{n  },x_{j})
+			+
+			k
+			\partial_t u(t^{n},x_{j})
+			+
+			\dfrac{k^2}{2}
+			\partial^{2}_{tt} u(t^{n},x_{j})
+			+
+			O(k^3)
+			.
+		\end{align}
+		We replace 
+		\begin{align}
+			\partial_t u(t^{n},x_{j})
+			=
+			\partial_x f(u(t^{n},x_{j}))
+		\end{align}
+		and 
+		\begin{align}
+			\partial^{2}_{tt} u(t^{n},x_{j})
+			&=
+			\partial_t \partial_x f(u(t^{n},x_{j}))
+			\\&=
+			\partial_x \partial_t f(u(t^{n},x_{j}))
+			\\&=
+			\partial_x \left( f'(u(t^{n},x_{j})) \cdot \partial_t u(t^{n},x_{j}) \right)
+			\\&=
+			\partial_x \left( f'(u(t^{n},x_{j})) \cdot \partial_x f(u(t^{n},x_{j})) \right)
+			.
+		\end{align}
+		Thus 
+		\begin{align}
+			u(t^{n+1},x_{j})
+			= 
+			u(t^{n  },x_{j})
+			+
+			k
+			\partial_x f(u(t^{n},x_{j}))
+			+
+			\dfrac{k^2}{2}
+			\partial_x \left( f'(u(t^{n},x_{j})) \cdot \partial_x f(u(t^{n},x_{j})) \right)
+			+
+			O(k^3)
+			.
+		\end{align}
+		We now replace the $x$-derivatives by centralized difference quotients and use the midpoint rule for derivatives $f'$. 
+		In that manner, 
+		\begin{align}
+			\partial_x f(u(t^{n},x_{j}))
+			=
+			\dfrac{ f(u(t^{n},x_{j+1})) - f(u(t^{n},x_{j-1})) }{2h}
+			+
+			O(h^2)
+		\end{align}
+		and 
+		\begin{align}
+			&
+			\partial_x \left( f'(u(t^{n},x_{j})) \cdot \partial_x f(u(t^{n},x_{j})) \right)
+			\\&\quad 
+			=
+			\dfrac{
+				\left( f'(u(t^{n},x_{j+\frac 12})) \cdot \partial_x f(u(t^{n},x_{j+\frac 12})) \right)
+				-
+				\left( f'(u(t^{n},x_{j-\frac 12})) \cdot \partial_x f(u(t^{n},x_{j-\frac 12})) \right)
+			}{h}
+			+
+			O(h^2)
+			\\&\quad 
+			=
+			\dfrac{
+				f'(u(t^{n},x_{j+\frac 12})) 
+			}{h^2}
+			\cdot \left( f(u(t^{n},x_{j+1})) - f(u(t^{n},x_{j  })) \right)
+			-
+			\dfrac{
+				f'(u(t^{n},x_{j-\frac 12})) 
+			}{h^2}
+			\cdot \left( f(u(t^{n},x_{j  })) - f(u(t^{n},x_{j-1})) \right)
+			+
+			O(h)
+			+
+			O(h^2)
+			.
+		\end{align}
+		We use the approximation 
+		\begin{align*}
+            f'(u(t^{n},x_{j+\frac 1 2}))
+            \approx 
+            f'\left( \dfrac{ U^{n}_{j} + U^{n}_{j-1} }{2} \right)
+            .
+        \end{align*}
+	\end{enumerate}
+\end{solution}
+
+
+
+
+
+
+
+
+\end{document}
