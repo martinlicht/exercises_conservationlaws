@@ -19,6 +19,8 @@
 \newcommand{\frb}[1]{ \left(  {#1} \right) }
 \newcommand{\norm}[1]{ \left\|  {#1} \right\| }
 
+\usepackage{pdfpages}
+
 % \usepackage[amsmath,thmmarks,standard]{ntheorem}
 \newtheoremstyle{break}
 {\topsep}
@@ -437,14 +439,14 @@
     \newpage
     \begin{figure}[H] 
     \begin{center}
-    \subfigure[]{\includegraphics[width=8cm, height=6cm]{figures04/Upwind_Profile}}
-    \subfigure[]{\includegraphics[width=8cm, height=6cm]{figures04/Lax-Friedrichs_Profile}}
-    \subfigure[]{\includegraphics[width=8cm, height=6cm]{figures04/Lax-Wendroff_Profile}}
-    \subfigure[]{\includegraphics[width=8cm, height=6cm]{figures04/Beam-Warming_Profile}}
-    {\includegraphics[width=8cm, height=6cm]{figures04/Upwind_Profile}} 
-    {\includegraphics[width=8cm, height=6cm]{figures04/Lax-Friedrichs_Profile}} 
-    {\includegraphics[width=8cm, height=6cm]{figures04/Lax-Wendroff_Profile}} 
-    {\includegraphics[width=8cm, height=6cm]{figures04/Beam-Warming_Profile}} 
+    % \subfigure[]{\includepdf[scale=0.2]{figures04/Upwind_Profile}}
+    % \subfigure[]{\includepdf[scale=0.2]{figures04/Lax-Friedrichs_Profile}}
+    % \subfigure[]{\includepdf[scale=0.2]{figures04/Lax-Wendroff_Profile}}
+    % \subfigure[]{\includepdf[scale=0.2]{figures04/Beam-Warming_Profile}}
+    % {\includepdf[scale=0.2]{figures04/Upwind_Profile}} 
+    % {\includepdf[scale=0.2]{figures04/Lax-Friedrichs_Profile}} 
+    % {\includepdf[scale=0.2]{figures04/Lax-Wendroff_Profile}} 
+    % {\includepdf[scale=0.2]{figures04/Beam-Warming_Profile}} 
     \caption{ The analytical solution and the numerical solution $u(x,t=0.5)$ for the advection equation on Riemann initial data with $a=1$, $h=0.005$, $\frac{k}{h}=0.5$.} 
     \end{center}
     \end{figure}
@@ -453,10 +455,10 @@
     
     \begin{figure}[H] 
     \begin{center}
-    {\includegraphics[width=8cm, height=6cm]{figures04/Upwind_Accuracy}} 
-    {\includegraphics[width=8cm, height=6cm]{figures04/Lax-Friedrichs_Accuracy}} 
-    {\includegraphics[width=8cm, height=6cm]{figures04/Lax-Wendroff_Accuracy}} 
-    {\includegraphics[width=8cm, height=6cm]{figures04/Beam-Warming_Accuracy}} 
+    % {\includepdf[scale=0.2]{figures04/Upwind_Accuracy}} 
+    % {\includepdf[scale=0.2]{figures04/Lax-Friedrichs_Accuracy}} 
+    % {\includepdf[scale=0.2]{figures04/Lax-Wendroff_Accuracy}} 
+    % {\includepdf[scale=0.2]{figures04/Beam-Warming_Accuracy}} 
     \caption{ The error as a function of resolution. The error is measured in 1-norm, the resolution is measured as the number of discretization points in the x dimension. }
     \end{center}
     \end{figure}
