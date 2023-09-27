@@ -9,19 +9,19 @@ todolist:
 	grep --line-number --color TODO exercise*tex
 
 exercises:
-	pdflatex exercise00_background_and_characteristics.tex
-	pdflatex exercise01.tex
-	pdflatex exercise02.tex
-	pdflatex exercise03.tex
-	pdflatex exercise04.tex
-	pdflatex exercise04a.tex
-	pdflatex exercise05.tex
-	pdflatex exercise06.tex
-	pdflatex exercise06a.tex
-	pdflatex exercise07.tex
-	pdflatex exercise08.tex
-	pdflatex exercise09.tex
-	pdflatex exercise10.tex
-	pdflatex exercise11.tex
-	pdflatex exercise12.tex
-	pdflatex exercise13.tex
+	pdflatex -halt-on-error exercise00_background_and_characteristics.tex
+	pdflatex -halt-on-error exercise01.tex
+	pdflatex -halt-on-error exercise02.tex
+	pdflatex -halt-on-error exercise03.tex
+	pdflatex -halt-on-error exercise04.tex
+	pdflatex -halt-on-error exercise04a.tex
+	pdflatex -halt-on-error exercise05.tex
+	pdflatex -halt-on-error exercise06.tex
+	pdflatex -halt-on-error exercise06a.tex
+	pdflatex -halt-on-error exercise07.tex
+	pdflatex -halt-on-error exercise08.tex
+	pdflatex -halt-on-error exercise09.tex
+	pdflatex -halt-on-error exercise10.tex
+	pdflatex -halt-on-error exercise11.tex
+	pdflatex -halt-on-error exercise12.tex
+	pdflatex -halt-on-error exercise13.tex
