@@ -33,8 +33,9 @@
 
 \usepackage{comment}
 % Switch between showing and hiding solutions by commenting out either of the following lines
-% \newenvironment{solution}{\begin{mysolution}}{\end{mysolution}} \newenvironment{solutioninformation}{\begin{mysolutioninformation}}{\end{mysolutioninformation}}
-\excludecomment{solution} \excludecomment{solutioninformation}
+\newenvironment{solution}{\begin{mysolution}}{\end{mysolution}} 
+\newenvironment{solutioninformation}{\begin{mysolutioninformation}}{\end{mysolutioninformation}}
+%\excludecomment{solution}\excludecomment{solutioninformation}
 
 
 
@@ -378,7 +379,7 @@
 \begin{solution}
 	Suppose $u$ satisfies
 	\begin{gather}
-		\dfrac{du}{dt}+\dif{}{x}\rb{a(x)u}=0
+		\dfrac{du}{dt}+\dfrac{d}{dx}\rb{a(x)u}=0
 		\quad
 		a(x)=x
 	\end{gather}
@@ -389,12 +390,13 @@
 	\end{gather}
 	therefore, the characteristics are given by the IVP
 	\begin{gather} \label{charSin}
-		%TODO
-		=x
+		\frac{d\hat{x}}{dt}
+		=
+		\hat{x},
 		\quad
 		\hat x\frb{\xi,0}=\xi\ .
 	\end{gather}
-	The solution $\hat x$ to the ODE in \eqref{charSin} is obtained fas
+	The solution $\hat x$ to the ODE in \eqref{charSin} is obtained as
 	\begin{gather}
 		\hat x\frb{\xi,t}=\xi e^t\ .
 	\end{gather}
