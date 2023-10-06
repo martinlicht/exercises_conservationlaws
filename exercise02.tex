@@ -32,8 +32,8 @@
 
 \usepackage{comment}
 % Switch between showing and hiding solutions by commenting out either of the following lines
-% \newenvironment{solution}{\begin{mysolution}}{\end{mysolution}}
-\excludecomment{solution}
+\newenvironment{solution}{\begin{mysolution}}{\end{mysolution}}
+%\excludecomment{solution}
 
 
 
@@ -42,8 +42,11 @@
 
 \begin{document}
 
-\title{Characteristics and Weak solutions}
+\title{Exercise Set 2: More on Characteristics and Weak solutions}
 \date{}
+\author{}
+
+\maketitle
 
 
 
@@ -63,8 +66,7 @@
 
 
 
-
-\begin{exercise}[(Problem 1: Method of Characteristics)]
+\begin{exercise}[Method of Characteristics I]
 
 	Suppose that the flux $f(u,x,t)$ is differentiable in all variables.
 	Find curves along which the conservation law 
@@ -93,7 +95,7 @@
 
 
 
-\begin{exercise}[Problem 1: Method of Characteristics]
+\begin{exercise}[Method of Characteristics II]
 	${}$% Stupid LaTeX crap to enforce a line break
 	\begin{itemize}
 	\item[(i)] Consider the conservation law 
@@ -319,137 +321,137 @@
 
 
 
-\begin{exercise}{Weak Solutions}
-	Show that a weak solution to the linear transport equation 
-	$$
-		\frac{\partial u}{\partial t} 
-		+ 
-		a 
-		\frac{\partial u}{\partial x}  = 0, 
-	$$
-	with $a\in \mathbb{R}$ and initial data 
-	\begin{align}
-		u(x,0) = 
-		\left\{
-		\begin{array}{ll}
-		1, & \text{for} \quad x<0,\\
-		0, &\text{for} \quad x > 0,
-		\end{array}
-		\right.
-	\end{align}
-	is given by
-	\begin{align} 
-		u(x,t) = 
-		\left\{
-		\begin{array}{ll}
-		1, & \text{for} \quad x<at,\\
-		0, & \text{for} \quad x > at,
-		\end{array}
-		\right.
-	\end{align}
-\end{exercise}
-
-\begin{solution}
-    
-\end{solution}
-
-
-
-\begin{exercise}{Rarefaction Waves}
-	Consider the initial value problem 
-	\begin{align}
-		\frac{\partial u}{\partial t}
-		+
-		\frac{\partial f(u)}{\partial x}
-		=0,
-		\quad
-		u(x,0) = u_0(x),
-	\end{align}
-	with $f(u) =\frac{u^2}{2}$, and
-	\begin{align}
-		u_0(x)
-		=
-		\left \{
-		\begin{array}{ll}
-		2, \quad0<x<1, \\
-		0, \quad\text{otherwise},
-		\end{array}
-		\right.
-	\end{align}
-	Here a rarefaction wave arrises at one discontinuity and a shock at the other. 
-	The goal of this exercise is to determine the exact solution for all $t>0$. 
-	In this setup, the rarefaction wave catches up with the shock at some time $T_c>0$.
-	\begin{itemize}
-		\item[(i)]
-		Draw the profile of $u_0(x)$
-		and sketch the characteristics in the strip 
-		$0 < t < T_c$ of the $x-t$ plane.
-		\item[(ii)]
-		Determine the exact solution for $0 < t < T_c$.
-		\item[(iii)]
-		Let $x_s(t)$ be shock's location at $t > T_c$. 
-		By using the Rankine-Hugoniot jump condition construct an ODE to determine 
-		$x_s(t)$ for all $t > T_c$. 
-		In the sketch you drew in (i), extend the characteristic lines to $t > T_c$.
-	\end{itemize}
-	%\subsection*{Problem 3: Traffic Flow Equation}
-	%Consider the traffic flow equation
-	%\begin{align}
-	%	\frac{\partial u}{\partial t}
-	%	+
-	%	\frac{\partial}{\partial x}
-	%	\left(
-	%		q
-	%		U(q)
-	%	\right)
-	%	=
-	%	0,
-	%\end{align}
-	%where $q(x,t)$ is the car density, $U(q)$ is the traffic speed
-	%as a function of the car density. 
-	%Let $f(q) = q U(q)$.
-	%A simple model for traffic flow is obtained by taking
-	%\begin{align}
-	%	U(q)
-	%	=
-	%	u_m(1-q),
-	%\end{align}
-	%with $u_m>0$ and $0 \leq q \leq 1$.
-	%At zero density (empty road) and the traffic speed is $u_m$.
-	%As $q$ approaches 1, the speed decreases to zero. The model then reads
-	%\begin{align}\label{eq:traffic}
-	%	\frac{\partial u}{\partial t}
-	%	+
-	%	\frac{\partial}{\partial x}
-	%	\left(
-	%		u_m(q-q^2)
-	%	\right)
-	%	=
-	%	0,
-	%\end{align}
-	%Show that for the traffic flow equation \eqref{eq:traffic}, 
-	%the condition $q_l <q_r$ is required for a shock to be admissible. 
-	%Do this by verifying each of the following conditions:
-	%\begin{itemize}
-	%	\item[(i)]
-	%	The entropy condition $f'(q_l) >s f'(q_r)$.
-	%	\item[(ii)]
-	%	There exists an entropy function $\eta(q)$
-	%	and a corresponding entropy flux 
-	%	$\phi(q)$ such that
-	%	\begin{align}
-	%		s(\eta(q_r)-)
-	%	\end{align}
-	%\end{itemize}
-\end{exercise}
-
-\begin{solution}
-    
-\end{solution}
+%\begin{exercise}[Weak Solutions of the Linear Transport Equation]
+%	Show that a weak solution to the linear transport equation 
+%	$$
+%		\frac{\partial u}{\partial t} 
+%		+ 
+%		a 
+%		\frac{\partial u}{\partial x}  = 0, 
+%	$$
+%	with $a\in \mathbb{R}$ and initial data 
+%	\begin{align}
+%		u(x,0) = 
+%		\left\{
+%		\begin{array}{ll}
+%		1, & \text{for} \quad x<0,\\
+%		0, &\text{for} \quad x > 0,
+%		\end{array}
+%		\right.
+%	\end{align}
+%	is given by
+%	\begin{align} 
+%		u(x,t) = 
+%		\left\{
+%		\begin{array}{ll}
+%		1, & \text{for} \quad x<at,\\
+%		0, & \text{for} \quad x > at,
+%		\end{array}
+%		\right.
+%	\end{align}
+%\end{exercise}
+%
+%\begin{solution}
+%    
+%\end{solution}
 
 
 
-\begin{exercise}[Weak Solutions]
+%\begin{exercise}[Rarefaction Waves]
+%	Consider the initial value problem 
+%	\begin{align}
+%		\frac{\partial u}{\partial t}
+%		+
+%		\frac{\partial f(u)}{\partial x}
+%		=0,
+%		\quad
+%		u(x,0) = u_0(x),
+%	\end{align}
+%	with $f(u) =\frac{u^2}{2}$, and
+%	\begin{align}
+%		u_0(x)
+%		=
+%		\left \{
+%		\begin{array}{ll}
+%		2, \quad0<x<1, \\
+%		0, \quad\text{otherwise},
+%		\end{array}
+%		\right.
+%	\end{align}
+%	Here a rarefaction wave arises at one discontinuity and a shock at the other. 
+%	The goal of this exercise is to determine the exact solution for all $t>0$. 
+%	In this setup, the rarefaction wave catches up with the shock at some time $T_c>0$.
+%	\begin{itemize}
+%		\item[(i)]
+%		Draw the profile of $u_0(x)$
+%		and sketch the characteristics in the strip 
+%		$0 < t < T_c$ of the $x-t$ plane.
+%		\item[(ii)]
+%		Determine the exact solution for $0 < t < T_c$.
+%		\item[(iii)]
+%		Let $x_s(t)$ be shock's location at $t > T_c$. 
+%		By using the Rankine-Hugoniot jump condition construct an ODE to determine 
+%		$x_s(t)$ for all $t > T_c$. 
+%		In the sketch you drew in (i), extend the characteristic lines to $t > T_c$.
+%	\end{itemize}
+%	%\subsection*{Problem 3: Traffic Flow Equation}
+%	%Consider the traffic flow equation
+%	%\begin{align}
+%	%	\frac{\partial u}{\partial t}
+%	%	+
+%	%	\frac{\partial}{\partial x}
+%	%	\left(
+%	%		q
+%	%		U(q)
+%	%	\right)
+%	%	=
+%	%	0,
+%	%\end{align}
+%	%where $q(x,t)$ is the car density, $U(q)$ is the traffic speed
+%	%as a function of the car density. 
+%	%Let $f(q) = q U(q)$.
+%	%A simple model for traffic flow is obtained by taking
+%	%\begin{align}
+%	%	U(q)
+%	%	=
+%	%	u_m(1-q),
+%	%\end{align}
+%	%with $u_m>0$ and $0 \leq q \leq 1$.
+%	%At zero density (empty road) and the traffic speed is $u_m$.
+%	%As $q$ approaches 1, the speed decreases to zero. The model then reads
+%	%\begin{align}\label{eq:traffic}
+%	%	\frac{\partial u}{\partial t}
+%	%	+
+%	%	\frac{\partial}{\partial x}
+%	%	\left(
+%	%		u_m(q-q^2)
+%	%	\right)
+%	%	=
+%	%	0,
+%	%\end{align}
+%	%Show that for the traffic flow equation \eqref{eq:traffic}, 
+%	%the condition $q_l <q_r$ is required for a shock to be admissible. 
+%	%Do this by verifying each of the following conditions:
+%	%\begin{itemize}
+%	%	\item[(i)]
+%	%	The entropy condition $f'(q_l) >s f'(q_r)$.
+%	%	\item[(ii)]
+%	%	There exists an entropy function $\eta(q)$
+%	%	and a corresponding entropy flux 
+%	%	$\phi(q)$ such that
+%	%	\begin{align}
+%	%		s(\eta(q_r)-)
+%	%	\end{align}
+%	%\end{itemize}
+%\end{exercise}
+%
+%\begin{solution}
+%    
+%\end{solution}
+
+
+
+\begin{exercise}[Weak Solutions of the Linear Transport Equation]
     Show that a weak solution to the linear transport equation 
     \begin{gather*}
     	\frac{\partial u}{\partial t} 
